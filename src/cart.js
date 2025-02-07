@@ -122,6 +122,7 @@ let toCheckout = async () => {
   try {
     let response = await fetch("https://script.google.com/macros/s/AKfycbxo2PQvT5_UghjtIz3q7MTUy2JRBQ0W-kPzAUk8ciqyUxUBH7kNeVrMzqfSlCB3vcqe/exec", {
       method: "POST",
+      mode: "cors", // Fixes CORS issue
       headers: {
         "Content-Type": "application/json"
       },
