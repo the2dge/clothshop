@@ -123,7 +123,7 @@ let toCheckout = async () => {
     // 🔹 Send POST request with text/plain to avoid preflight
     let response = await fetch("https://script.google.com/macros/s/AKfycbxo2PQvT5_UghjtIz3q7MTUy2JRBQ0W-kPzAUk8ciqyUxUBH7kNeVrMzqfSlCB3vcqe/exec", {
       method: "POST",
-      mode: "cors",
+      mode: "no-cors",
       headers: {
         "Content-Type": "text/plain" // Simple content type
       },
