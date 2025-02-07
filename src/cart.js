@@ -120,9 +120,19 @@ let toCheckout = async () => {
   });
 
   try {
+    // 🔹 **Send a preflight request (OPTIONS)**
+    await fetch("https://script.google.com/macros/s/AKfycbxo2PQvT5_UghjtIz3q7MTUy2JRBQ0W-kPzAUk8ciqyUxUBH7kNeVrMzqfSlCB3vcqe/exec", {
+      method: "OPTIONS",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    // 🔹 **Send the actual POST request**
     let response = await fetch("https://script.google.com/macros/s/AKfycbxo2PQvT5_UghjtIz3q7MTUy2JRBQ0W-kPzAUk8ciqyUxUBH7kNeVrMzqfSlCB3vcqe/exec", {
       method: "POST",
-      mode: "cors", // Fixes CORS issue
+      mode: "cors",
       headers: {
         "Content-Type": "application/json"
       },
