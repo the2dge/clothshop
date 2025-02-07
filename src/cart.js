@@ -118,33 +118,22 @@ let toCheckout = async () => {
       total: x.item * search.price
     };
   });
-
+  
   try {
-    // 🔹 **Send a preflight request (OPTIONS)**
-    await fetch("https://script.google.com/macros/s/AKfycbxo2PQvT5_UghjtIz3q7MTUy2JRBQ0W-kPzAUk8ciqyUxUBH7kNeVrMzqfSlCB3vcqe/exec", {
-      method: "OPTIONS",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-
-    // 🔹 **Send the actual POST request**
+    // 🔹 Send POST request with text/plain to avoid preflight
     let response = await fetch("https://script.google.com/macros/s/AKfycbxo2PQvT5_UghjtIz3q7MTUy2JRBQ0W-kPzAUk8ciqyUxUBH7kNeVrMzqfSlCB3vcqe/exec", {
       method: "POST",
       mode: "cors",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "text/plain" // Simple content type
       },
-      body: JSON.stringify(dataToSave)
+      body: JSON.stringify(dataToSave) // Send as JSON string
     });
-
+    
     let result = await response.json();
-    console.log(result); // Debugging
-
     if (result.status === "success") {
       alert("Order saved successfully!");
-      window.location.href = "index.html"; // Redirect to Home
+      window.location.href = "index.html";
     } else {
       alert("Error saving order: " + result.message);
     }
