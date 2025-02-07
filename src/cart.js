@@ -108,6 +108,7 @@ let clearCart = () => {
   generateCartItems();
   localStorage.setItem("data", JSON.stringify(basket));
 };
+// === Frontend JavaScript ===
 let toCheckout = async () => {
   let dataToSave = basket.map((x) => {
     let search = shopItemsData.find((y) => y.id === x.id) || {};
@@ -120,26 +121,26 @@ let toCheckout = async () => {
   });
   
   try {
-    // 🔹 Send POST request with text/plain to avoid preflight
-    let response = await fetch("https://script.google.com/macros/s/AKfycbxo2PQvT5_UghjtIz3q7MTUy2JRBQ0W-kPzAUk8ciqyUxUBH7kNeVrMzqfSlCB3vcqe/exec", {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbxo2PQvT5_UghjtIz3q7MTUy2JRBQ0W-kPzAUk8ciqyUxUBH7kNeVrMzqfSlCB3vcqe/exec", {
       method: "POST",
-      mode: "no-cors",
+      mode: "no-cors", // Required for GAS
       headers: {
-        "Content-Type": "text/plain" // Simple content type
+        "Content-Type": "text/plain"
       },
-      body: JSON.stringify(dataToSave) // Send as JSON string
+      body: JSON.stringify({
+        orders: dataToSave,
+        timestamp: new Date().toISOString()
+      })
     });
+
+    // Since mode is 'no-cors', we can't access the response
+    // Instead, we'll assume success if no error is thrown
+    alert("Order submitted successfully!");
+    window.location.href = "index.html";
     
-    let result = await response.json();
-    if (result.status === "success") {
-      alert("Order saved successfully!");
-      window.location.href = "index.html";
-    } else {
-      alert("Error saving order: " + result.message);
-    }
   } catch (error) {
-    console.error("Fetch error:", error);
-    alert("Failed to save order.");
+    console.error("Checkout error:", error);
+    alert("Failed to save order. Please try again.");
   }
 };
 let TotalAmount = () => {
