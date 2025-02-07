@@ -1,0 +1,32 @@
+// === Frontend code (index.html for GitHub Pages) ===
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Save to Sheet Demo</title>
+</head>
+<body>
+    <button onclick="saveToSheet()">Save to Sheet</button>
+
+    <script>
+        const data = "Hello World";
+        const GAS_WEB_APP_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL';
+
+        async function saveToSheet() {
+            try {
+                const response = await fetch(GAS_WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ data: data })
+                });
+                
+                alert('Request sent successfully!');
+            } catch (error) {
+                alert('Error sending data: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
