@@ -26,13 +26,16 @@ a {
 **/
 
 .navbar {
+  position: fixed;
+  top:0;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   background-color: #212529;
   color: white;
   padding: 25px 60px;
-  margin-bottom: 30px;
+  margin-bottom: 100px;
 }
 
 .cart {
@@ -60,6 +63,7 @@ a {
 **/
 
 .shop {
+  margin-top: 100px;
   display: grid;
   grid-template-columns: repeat(4, 223px);
   gap: 30px;
@@ -117,6 +121,7 @@ a {
 **/
 
 .text-center {
+  margin-top: 140px;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -149,6 +154,7 @@ a {
 **/
 
 .shopping-cart {
+  margin-top: 80px;
   display: grid;
   grid-template-columns: repeat(1, 320px);
   justify-content: center;
