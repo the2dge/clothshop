@@ -155,9 +155,9 @@ let TotalAmount = () => {
       .reduce((x, y) => x + y, 0);
     // console.log(amount);
     label.innerHTML = `
-    <h2>Total Bill : $ ${amount}</h2>
-    <button onclick="toCheckout()" class="checkout">Checkout</button>
-    <button onclick="clearCart()" class="removeAll">Clear Cart</button>
+    <h2>總金額 : $ ${amount}</h2>
+    <button onclick="toCheckout()" class="checkout">結帳</button>
+    <button onclick="clearCart()" class="removeAll">清空購物車</button>
     `;
   } else return;
 };
