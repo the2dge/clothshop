@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.mrbean.tw">
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/Nf8M6szk/mrbean.jpg">
+  <meta name="keywords" content="T-shirt">
+  <title>Best quality T-Shirt</title>
+</head>
+<body>
+  <div id="iframe-container"></div>
+ <div id="store-info" style="display: none;">
+    <h2>Store Information</h2>
+    <p id="store-name"></p>
+    <p id="store-address"></p>
+    <p id="store-code"></p>
+  </div>
+  <script>
+    // Function to extract URL parameters
+    function getQueryParameter(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    // Capture parameters from the URL
+    const orderId = getQueryParameter('MerchantTradeNo');
+    const storeName = getQueryParameter('CVSStoreName');
+    const storeAddress = getQueryParameter('CVSAddress');
+    const storeCode = getQueryParameter('CVSStoreID');
+    const extraData = getQueryParameter('ExtraData');
+
+    // Check if store info exists
+    if (storeName && storeAddress && storeCode) {
+      // Display store information on the page
+      document.getElementById('store-info').style.display = 'block';
+      document.getElementById('store-name').innerText = `Store Name: ${storeName}`;
+      document.getElementById('store-address').innerText = `Store Address: ${storeAddress}`;
+      document.getElementById('store-code').innerText = `Store Code: ${storeCode}`;
+    }
+
+    // Build the original WebApp URL
+    const webAppUrl = `https://script.google.com/macros/s/AKfycbxo2PQvT5_UghjtIz3q7MTUy2JRBQ0W-kPzAUk8ciqyUxUBH7kNeVrMzqfSlCB3vcqe/exec?ExtraData=${extraData}&MerchantTradeNo=${orderId}&CVSStoreName=${encodeURIComponent(storeName)}&CVSAddress=${encodeURIComponent(storeAddress)}&CVSStoreID=${storeCode}`;
+    
+    // Log the WebApp URL for debugging
+    console.log('Redirecting back to WebApp:', webAppUrl);
+
+    // Embed the WebApp in an iframe or redirect to the WebApp
+    if (orderId) {
+      const iframeContainer = document.getElementById('iframe-container');
+      iframeContainer.innerHTML = `<iframe src="${webAppUrl}" width="100%" height="600px" style="border:none;"></iframe>`;
+    } else {
+      console.error('Order ID is missing!');
+    }
+  </script>
+</body>
+</html>
