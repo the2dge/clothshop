@@ -136,7 +136,7 @@ let toCheckout = async () => {
     // Since mode is 'no-cors', we can't access the response
     // Instead, we'll assume success if no error is thrown
     alert("Order submitted successfully!");
-    window.location.href = "index.html";
+    window.location.href = "https://the2dge.github.io/clothshop/order?v=D001";
     
   } catch (error) {
     console.error("Checkout error:", error);
