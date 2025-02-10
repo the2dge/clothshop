@@ -108,8 +108,8 @@ let clearCart = () => {
   generateCartItems();
   localStorage.setItem("data", JSON.stringify(basket));
 };
-// === Frontend JavaScript ===
 let toCheckout = async () => {
+  // Map the basket items into an array of order objects
   let dataToSave = basket.map((x) => {
     let search = shopItemsData.find((y) => y.id === x.id) || {};
     return {
@@ -120,23 +120,39 @@ let toCheckout = async () => {
     };
   });
   
+  // Generate orderId based on current date and the number of seconds since midnight.
+  // Format: YYYYMMDD_nnnnn
+  let now = new Date();
+  let year = now.getFullYear();
+  let month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed in JS
+  let day = String(now.getDate()).padStart(2, '0');
+  
+  // Calculate seconds since midnight
+  let midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  let secondsSinceMidnight = Math.floor((now - midnight) / 1000);
+  // Pad the seconds to ensure a fixed width (adjust length as needed, here 5 digits)
+  let secondsPadded = String(secondsSinceMidnight).padStart(5, '0');
+  
+  let orderId = `${year}${month}${day}_${secondsPadded}`;
+  
   try {
     const response = await fetch("https://script.google.com/macros/s/AKfycbxo2PQvT5_UghjtIz3q7MTUy2JRBQ0W-kPzAUk8ciqyUxUBH7kNeVrMzqfSlCB3vcqe/exec", {
       method: "POST",
-      mode: "no-cors", // Required for GAS
+      mode: "no-cors", // Required for Google Apps Script
       headers: {
         "Content-Type": "text/plain"
       },
       body: JSON.stringify({
         orders: dataToSave,
-        timestamp: new Date().toISOString()
+        timestamp: now.toISOString(),
+        orderId: orderId  // Send the orderId along with the order details if needed
       })
     });
 
-    // Since mode is 'no-cors', we can't access the response
-    // Instead, we'll assume success if no error is thrown
+    // Since the mode is 'no-cors', we can't access the response.
+    // Instead, assume success if no error is thrown.
     alert("Order submitted successfully!");
-    window.location.href = "https://the2dge.github.io/clothshop/order/?v=D001";
+    window.location.href = `https://the2dge.github.io/clothshop/order/?MerchantTradeNo=${orderId}`;
     
   } catch (error) {
     console.error("Checkout error:", error);
