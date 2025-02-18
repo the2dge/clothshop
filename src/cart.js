@@ -123,17 +123,24 @@ let toCheckout = async () => {
   // Generate orderId based on current date and the number of seconds since midnight.
   // Format: YYYYMMDD_nnnnn
   let now = new Date();
-  let year = now.getFullYear();
-  let month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed in JS
-  let day = String(now.getDate()).padStart(2, '0');
+  // Year and month encoding
+  let startYear = 2024; // Base year for encoding
+  let yearOffset = now.getFullYear() - startYear;
+  let totalMonths = yearOffset * 12 + now.getMonth(); // Total months since January 2024
+  // Encode month using AA, AB, AC... (continuous sequence)
+  let monthCode = String.fromCharCode(65 + Math.floor(totalMonths / 26)) + 
+                    String.fromCharCode(65 + (totalMonths % 26)); // Base 26 encoding
+
+  // Get day of the month
+  let dayCode = String(now.getDate()).padStart(2, '0');
+
+  // Calculate seconds since the start of the day
+  let secondsSinceStartOfDay = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+
+  // Format seconds as a 5-digit number
+  let secondsCode = String(secondsSinceStartOfDay).padStart(5, '0');
   
-  // Calculate seconds since midnight
-  let midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  let secondsSinceMidnight = Math.floor((now - midnight) / 1000);
-  // Pad the seconds to ensure a fixed width (adjust length as needed, here 5 digits)
-  let secondsPadded = String(secondsSinceMidnight).padStart(5, '0');
-  
-  let orderId = `${year}${month}${day}_${secondsPadded}`;
+  let orderId = `${monthCode}${dayCode}${secondsCode}`;
   
   try {
     const response = await fetch("https://script.google.com/macros/s/AKfycbxo2PQvT5_UghjtIz3q7MTUy2JRBQ0W-kPzAUk8ciqyUxUBH7kNeVrMzqfSlCB3vcqe/exec", {
