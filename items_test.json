@@ -1,0 +1,24 @@
+{
+  "p001": {
+    "id": "p001",
+    "name": "item1",
+    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/boutique_woman.jpg",
+    "description": "finest cotton!",
+    "price": "$1000",
+    "specs": {
+      "原產地": "Taiwan",
+      "成分": "cotton"
+    }
+  },
+  "item1": {
+    "id": "item1",
+    "name": "item1",
+    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/boutique_woman.jpg",
+    "description": "nice shirt",
+    "price": "$1000",
+    "specs": {
+      "原產地": "taiwan",
+      "成分": "cutton"
+    }
+  }
+}
