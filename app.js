@@ -1807,8 +1807,8 @@ document.addEventListener('DOMContentLoaded', () => {
             fetchData('banner.json'),
             fetchData('about.json'),
             fetchData('media.json'),
-            fetchData('products.json'),
-            fetchData('items.json')
+            fetchData('products_test.json'),
+            fetchData('items_test.json')
         ]);
 
         // --- Restore Cart & OrderId from SessionStorage ---
