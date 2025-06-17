@@ -1,1 +1,97 @@
 
+<html>
+<head>
+    <title>這是一個通用的後端管理系統</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="https://www.mrbean.tw">
+    <link rel="icon" type="image/png" href="https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/favicon.ico">
+    <meta name="keywords" content="這是一個通用的後端管理系統">
+    <style>
+        html, body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        .nav-container { 
+            background: #f8f9fa; 
+            padding: 10px; 
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+        .nav-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .nav-button:hover {
+            background: #0056b3;
+        }
+        .nav-button.active {
+            background: #28a745;
+        }
+        #webapp-frame {
+            border: none;
+            width: 100%;
+            height: calc(100vh - 60px);
+        }
+    </style>
+</head>
+<body>
+  <!-- LOGIN SCREEN -->
+  <div id="login-screen" style="max-width:300px;margin:5% auto;text-align:center;">
+    <h2>Member Login</h2>
+    <input id="login-user"     type="text"     placeholder="Username" style="width:100%;padding:8px;margin:8px 0;">
+    <input id="login-pass"     type="password" placeholder="Password" style="width:100%;padding:8px;margin:8px 0;">
+    <button id="login-btn"     style="width:100%;padding:10px;background:#007bff;color:#fff;border:none;">
+      Log in
+    </button>
+    <p id="login-error" style="color:#c00;display:none;">Invalid credentials</p>
+  </div>
+
+  <!-- APP SHELL, hidden by default -->
+  <div id="app-shell" style="display:none;">
+    <div class="nav-container">
+      <button><a href="https://www.mrbean.tw/">首頁</a></button>
+      <button class="nav-button" onclick="loadPage('home')">訂單總覽</button>
+      <button class="nav-button" onclick="loadPage('order')">訂單管理</button>
+      <button class="nav-button" onclick="loadPage('ecpay')">ECPay</button>
+      <button class="nav-button" onclick="loadPage('cms')">CMS</button>
+    </div>
+    <iframe id="webapp-frame" style="border:none;width:100%;height:calc(100vh - 60px)"></iframe>
+  </div>
+
+  <script>
+    const baseUrl = 'https://script.google.com/macros/s/AKfycbz0jhm5jQBLSi6OUJvkowLGkc6rNECeB1iW2_8VdNRTdWbZkr890bf77gS9LsNFoisY2Q/exec';
+
+    // 1) LOGIN FLOW
+    document.getElementById('login-btn').addEventListener('click', async () => {
+      const user = document.getElementById('login-user').value;
+      const pass = document.getElementById('login-pass').value;
+      const res  = await fetch(`${baseUrl}?action=validate&user=${encodeURIComponent(user)}&pass=${encodeURIComponent(pass)}`);
+      const obj  = await res.json();
+      if (obj.success) {
+        // hide login, show app
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('app-shell').style.display   = 'block';
+        loadPage('home');
+      } else {
+        document.getElementById('login-error').style.display = 'block';
+      }
+    });
+
+    // 2) NAV & IFRAME LOADING (unchanged)
+    function loadPage(page) {
+      document.querySelectorAll('.nav-button').forEach(b=>b.classList.remove('active'));
+      const btn = [...document.querySelectorAll('.nav-button')]
+        .find(b=>b.textContent.includes({ home:'訂單總覽',order:'訂單管理',ecpay:'ECPay',cms:'CMS' }[page]));
+      if (btn) btn.classList.add('active');
+
+      document.getElementById('webapp-frame')
+        .src = `${baseUrl}?v=${page}`;
+    }
+  </script>
+</body>
+</html>
