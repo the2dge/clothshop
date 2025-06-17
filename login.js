@@ -68,6 +68,219 @@ function copyDiscountCode() {
     Swal.fire('錯誤', '無法複製折扣碼', 'error');
   });
 }
+function getPaymentMethodInChinese(paymentMethod) {
+  const paymentMethodMap = {
+    'pay_at_store': '取貨時付款',
+    'credit_point': '儲值金已付款',
+    'credit_card_ecpay': '信用卡已付款'
+  };
+  
+  return paymentMethodMap[paymentMethod] || paymentMethod;
+}
+function handleOrdersClick(element) {
+    const originalText = element.textContent;
+    element.textContent = '正在處理...';
+    element.classList.add('processing');
+    
+    // Call your original function
+    checkOrders().then(() => {
+        // Restore original text after processing
+        element.textContent = originalText;
+        element.classList.remove('processing');
+    }).catch(() => {
+        // Handle error and restore text
+        element.textContent = originalText;
+        element.classList.remove('processing');
+    });
+}
+
+function handleMemberClick(element) {
+    const originalText = element.textContent;
+    element.textContent = '正在處理...';
+    element.classList.add('processing');
+    
+    // Call your original function
+    loadMemberInfo().then(() => {
+        element.textContent = originalText;
+        element.classList.remove('processing');
+    }).catch(() => {
+        element.textContent = originalText;
+        element.classList.remove('processing');
+    });
+}
+async function checkOrders() {
+  const lineUserId = sessionStorage.getItem('lineUserId');
+  if (!lineUserId) {
+    Swal.fire("請先登入以查看訂單");
+    return;
+  }
+
+  // 1) Define your status translation map
+  const statusMap = {
+    "New":        "新訂單",
+    "Processing": "已交付小7",
+    "Completed":  "已取貨",
+    "Cancelled":  "訂單取消"
+  };
+
+  try {
+    const res = await fetch(`https://script.google.com/macros/s/AKfycbzZhiPYkL62ZHeRMi1-RCkVQUodJDe6IR7UvNouwM1bkHmepJAfECA4JF1_HHLn9Zu7Yw/exec?mode=getOrders`);
+    const data = await res.json();
+
+    if (data.status !== 'success' || !Array.isArray(data.orders)) {
+      Swal.fire("查詢失敗", "無法獲取訂單資料", "error");
+      return;
+    }
+
+    // 2) Filter only this user’s orders
+    const userOrders = data.orders.filter(order => 
+      order.lineUserId && String(order.lineUserId).trim() === lineUserId.trim()
+    );
+
+    if (userOrders.length === 0) {
+      Swal.fire("目前沒有您的訂單紀錄");
+      return;
+    }
+
+    // 3) Build the HTML table including a “Status” column
+    let html = `
+      <h3>我的訂單</h3>
+      <table border="1" style="width:100%; text-align:left;">
+        <tr>
+          <th>訂單編號</th>
+          <th>付款方式</th>
+          <th>取貨門市</th>
+          <th>狀態</th>
+        </tr>`;
+
+    userOrders.forEach(order => {
+      // translate status or fallback to original
+      const rawStatus = order.Status || order.status || "";
+      const zhStatus  = statusMap[rawStatus] || rawStatus;
+
+      html += `
+        <tr>
+          <td>${order.Order_ID || ""}</td>
+          <td>${getPaymentMethodInChinese(order.Payment_Method) || ""}</td>
+          <td>${order.StoreAddress || ""}</td>
+          <td>${zhStatus}</td>
+        </tr>`;
+    });
+
+    html += `</table>`;
+
+    // 4) Show it in a Swal modal
+    Swal.fire({
+      title: '您的訂單查詢',
+      html: html,
+      width: '90%',
+      confirmButtonText: '關閉'
+    });
+
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    Swal.fire("錯誤", "查詢訂單時發生錯誤", "error");
+  }
+}
+async function checkOrdersB() {
+  const lineUserId = sessionStorage.getItem('lineUserId');
+  if (!lineUserId) {
+    Swal.fire("請先登入以查看訂單");
+    return;
+  }
+
+  try {
+    const res = await fetch(`https://script.google.com/macros/s/AKfycbz8-LmbE9L_0ebvl5-mN09nWH5bkEGZshaK9HjELxlVqU5rbhk5KTpfdmv9Sn8yeDQ3Bg/exec?mode=getOrders`);
+    const data = await res.json();
+
+    if (data.status !== 'success' || !Array.isArray(data.orders)) {
+      Swal.fire("查詢失敗", "無法獲取訂單資料", "error");
+      return;
+    }
+
+    const userOrders = data.orders.filter(order => 
+      order.lineUserId && order.lineUserId.toString().trim() === lineUserId.trim()
+    );
+
+    if (userOrders.length === 0) {
+      Swal.fire("目前沒有您的訂單紀錄");
+      return;
+    }
+    console.log("Orders are: ", userOrders);
+    // Create a simple display
+    let html = '<h3>我的訂單</h3><table border="1" style="width:100%; text-align:left;"><tr><th>訂單編號</th><th>付款方式</th><th>取貨門市</th></tr>';
+    userOrders.forEach(order => {
+      html += `<tr>
+        <td>${order.Order_ID || ''}</td>
+        <td>${getPaymentMethodInChinese(order.Payment_Method) || ''}</td>
+        <td>${order.StoreAddress || ''}</td>
+      </tr>`;
+    });
+    html += '</table>';
+
+    Swal.fire({
+      title: '您的訂單查詢',
+      html: html,
+      width: '90%',
+      confirmButtonText: '關閉'
+    });
+
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    Swal.fire("錯誤", "查詢訂單時發生錯誤", "error");
+  }
+}
+
+function handleTopup(amount) {
+  if (!amount || isNaN(amount)) {
+    Swal.fire('錯誤', '無效的儲值金額', 'error');
+    return;
+  }
+
+  const loginName = sessionStorage.getItem('lineUserName') || 'Unknown';
+  const lineUserId = sessionStorage.getItem('lineUserId') || ' Unkown';
+  const timestamp = new Date().toISOString().replace(/[-T:.Z]/g, '').slice(0, 14); // e.g., 20240521123045
+  const orderId = `TU${timestamp}`;
+  console.log("User Name is: ", loginName);
+  const ecpayData = {
+    name: loginName,
+    orderId: orderId,
+    totalAmount: amount,
+    itemName: "儲值金額", 
+    tradeDesc: "Top Up",
+    customField1: "Top Up",
+    customField2: lineUserId,
+    customField3: "Top Up",
+    customField4: "Top Up",
+    returnUrl: 'https://asia-east1-ecpay-rtnmessage.cloudfunctions.net/handleECPayPost', 
+    clientBackUrl: 'https://www.mrbean.tw/' 
+  };
+
+  console.log("Sending topup data:", ecpayData);
+
+  fetch('https://mrbean-creditpayment-production-545199463340.asia-east1.run.app', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(ecpayData)
+  })
+  .then(response => {
+    if (!response.ok) {
+      return response.text().then(text => {
+        throw new Error(`Server responded with ${response.status}: ${text}`);
+      });
+    }
+    return response.text();
+  })
+  .then(html => {
+    document.open();
+    document.write(html);
+    document.close();
+  })
+  .catch(error => {
+    console.error('Error initiating payment:', error);
+    Swal.fire('Failed 未能付款。請重試。 Error: ' + error.message);
+  });
+}
 async function handleLINELoginReturn() {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get('code');
@@ -140,14 +353,81 @@ async function updateNavbarWithUserName(userName) {
   const loginBtn = document.getElementById('member-login-button');
   const memberService = document.getElementById('member-service-container');
   const storedUserId = sessionStorage.getItem('lineUserId');
+
+  if (!storedUserId) return;
+
+  try {
+   const res = await fetch(`https://script.google.com/macros/s/AKfycbzZhiPYkL62ZHeRMi1-RCkVQUodJDe6IR7UvNouwM1bkHmepJAfECA4JF1_HHLn9Zu7Yw/exec?mode=getMemberInfo&lineUserId=${storedUserId}`);
+   const data = await res.json();
+
+    if (data.status === 'success') {
+      isMember = true;
+    }
+
+    if (loginBtn) {
+      loginBtn.textContent = `👤 ${userName}`;
+      loginBtn.disabled = true;
+    }
+
+    if (isMember) {
+      memberService.style.display = "block";
+    } else {
+      // Ask to complete registration
+      const { value: phoneNumber } = await Swal.fire({
+        title: '歡迎加入會員 🎉',
+        text: '是否願意提供電話號碼以完成會員註冊？',
+        input: 'tel',
+        inputLabel: '手機號碼',
+        inputPlaceholder: '請輸入您的手機號碼',
+        inputAttributes: {
+          maxlength: 12,
+          autocapitalize: 'off',
+          autocorrect: 'off'
+        },
+        confirmButtonText: '提交',
+        showCancelButton: true,
+        cancelButtonText: '稍後再說'
+      });
+
+      if (phoneNumber) {
+        // Send registration request
+        await fetch('https://script.google.com/macros/s/AKfycbzZhiPYkL62ZHeRMi1-RCkVQUodJDe6IR7UvNouwM1bkHmepJAfECA4JF1_HHLn9Zu7Yw/exec', {
+          method: 'POST',
+          mode: "no-cors",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            mode: 'registerMember',
+            lineUserId: storedUserId,
+            lineUserName: userName,
+            telephone: phoneNumber
+          })
+        });
+
+        Swal.fire('完成註冊', '感謝您提供資料！已成功註冊會員。', 'success');
+        memberService.style.display = "block";
+      }
+    }
+
+    console.log("LineId is:", storedUserId, "IsMember:", isMember);
+
+  } catch (err) {
+    console.error('Error checking membership:', err);
+  }
+}
+/*
+async function updateNavbarWithUserName(userName) {
+  let isMember = false;
+  const loginBtn = document.getElementById('member-login-button');
+  const memberService = document.getElementById('member-service-container');
+  const storedUserId = sessionStorage.getItem('lineUserId');
   if (storedUserId) {
   const res = await fetch(`https://script.google.com/macros/s/AKfycbzZhiPYkL62ZHeRMi1-RCkVQUodJDe6IR7UvNouwM1bkHmepJAfECA4JF1_HHLn9Zu7Yw/exec?mode=getMemberInfo&lineUserId=${storedUserId}`);
       const data = await res.json();
       if (data.status === 'success') {
         isMember = true;
       }
-  } else{
-    alert{"You are not a member yet. Please signup "};
   }
   console.log("LineId is: ", storedUserId, isMember);
   if (loginBtn && isMember) {
@@ -156,7 +436,7 @@ async function updateNavbarWithUserName(userName) {
     memberService.style.display ="block";
   }
 }
-
+*/
 async function setupCreditPointValidation() {
   const lineUserId = sessionStorage.getItem('lineUserId');
   if (!lineUserId) return;
@@ -220,19 +500,4 @@ function generateCustomOrderId() {
 // Call this after login is confirmed
 const storedUserName = sessionStorage.getItem('lineUserName');
 if (storedUserName) updateNavbarWithUserName(storedUserName);
-function generateCustomOrderId() {
-  const now = new Date();
-
-  // AA logic → month count since Jan 2025
-  const startDate = new Date(2025, 0, 1); // Jan 1, 2025
-  const monthsPassed = (now.getFullYear() - 2025) * 12 + now.getMonth(); // 0-based
-  const aaCode = String.fromCharCode(65 + Math.floor(monthsPassed / 26)) + String.fromCharCode(65 + (monthsPassed % 26)); // AA, AB, AC...
-
-  const day = String(now.getDate()).padStart(2, '0');
-
-  const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const secondsSinceMidnight = Math.floor((now - midnight) / 1000);
-  const yyy = String(secondsSinceMidnight).padStart(7, '0');
-
-  return `${aaCode}${day}${yyy}`;
-}
+  
