@@ -220,4 +220,19 @@ function generateCustomOrderId() {
 // Call this after login is confirmed
 const storedUserName = sessionStorage.getItem('lineUserName');
 if (storedUserName) updateNavbarWithUserName(storedUserName);
-  
+function generateCustomOrderId() {
+  const now = new Date();
+
+  // AA logic → month count since Jan 2025
+  const startDate = new Date(2025, 0, 1); // Jan 1, 2025
+  const monthsPassed = (now.getFullYear() - 2025) * 12 + now.getMonth(); // 0-based
+  const aaCode = String.fromCharCode(65 + Math.floor(monthsPassed / 26)) + String.fromCharCode(65 + (monthsPassed % 26)); // AA, AB, AC...
+
+  const day = String(now.getDate()).padStart(2, '0');
+
+  const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const secondsSinceMidnight = Math.floor((now - midnight) / 1000);
+  const yyy = String(secondsSinceMidnight).padStart(7, '0');
+
+  return `${aaCode}${day}${yyy}`;
+}
