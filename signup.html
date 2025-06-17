@@ -1,0 +1,174 @@
+<!DOCTYPE html> <!--On the Github Page-->
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>NEW YORK</title>
+</head>
+<body>
+<iframe src="https://script.google.com/macros/s/AKfycbz0jhm5jQBLSi6OUJvkowLGkc6rNECeB1iW2_8VdNRTdWbZkr890bf77gS9LsNFoisY2Q/exec?v=signup" style="width: 100%; height: 800px"></iframe>
+</body>
+</html>
+<!--On the GAS side-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/c1X1F948/doudou.png">
+  <meta name="keywords" content="超低溫烘焙,精品堅果, 養生堅果,堅果多,營養早餐">
+  <title>荳荳先生精品堅果 超低溫養生堅果 Signup Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .signup-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .signup-container h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .form-group input:disabled {
+      background-color: #f0f0f0;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <h2>註冊會員 / Sign Up</h2>
+    <form id="signupForm">
+      <div class="form-group">
+        <label for="name">姓名 / Name</label>
+        <input type="text" id="name" name="name" value="${lineUserEmail}" required>
+      </div>
+      <div class="form-group">
+        <label for="email">電子郵件 / Email</label>
+        <input type="email" id="email" name="email" required disabled>
+      </div>
+      <div class="form-group">
+        <label for="tel">手機號碼 / Telephone</label>
+        <input type="tel" id="tel" name="tel" required>
+      </div>
+      <button type="submit" class="submit-btn">提交註冊 / Submit</button>
+    </form>
+  </div>
+
+  <script>
+  	<script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        liff.init({ liffId: "2007420785-nWz56ek1" }) // Replace with MrBEAN LIFF ID
+            .then(() => {
+                if (liff.isLoggedIn()) {
+                    getUserProfile();
+                } else {
+                    liff.login(); // Auto-login if not logged in
+                }
+            })
+            .catch(err => console.error('LIFF Initialization failed', err));
+    });
+
+    function getUserProfile() {
+        liff.getProfile()
+            .then(profile => {
+                document.getElementById("name").value = profile.displayName;
+                document.getElementById("userId").value = profile.userId;
+                document.getElementById("email").value = profile.email;
+                console.log("User ID:", profile.userId); // Debugging
+            })
+            .catch(err => console.error('Error getting profile:', err));
+    }
+</script>
+<script>
+    // Assume you retrieve LINE profile from LIFF SDK or backend
+    const lineProfile = {
+      name: "王小明",
+      email: "ming@example.com"
+    };
+
+    // Auto-fill name and email
+    document.getElementById("name").value = lineProfile.name;
+    document.getElementById("email").value = lineProfile.email;
+
+    // Handle form submission
+    document.getElementById("signupForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const tel = document.getElementById("tel").value;
+
+      if (!tel.trim()) {
+        alert("請輸入電話號碼 / Please enter your phone number.");
+        return;
+      }
+
+      const formData = {
+        name: lineProfile.name,
+        email: lineProfile.email,
+        tel: tel
+      };
+
+      console.log("Submitting sign-up data:", formData);
+
+      // Example: Submit to Google Apps Script function
+      google.script.run
+        .withSuccessHandler(function(response) {
+          alert("註冊成功！/ Sign up successful!");
+          // Optionally redirect or refresh
+        })
+        .withFailureHandler(function(error) {
+          console.error("Error during sign-up:", error);
+          alert("註冊失敗，請稍後再試 / Sign up failed. Please try again later.");
+        })
+        .registerNewMember(formData); // GAS function
+    });
+  </script>
+</body>
+</html>

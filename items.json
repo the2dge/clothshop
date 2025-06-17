@@ -1,0 +1,203 @@
+{
+  "p001": {
+    "id": "p001",
+    "name": "原味花生",
+    "largeImageUrl": "image/peanut.webp",
+    "description": "精選原味花生，低溫烘焙，讓堅果內外質地均勻，入口香氣濃厚。",
+    "price": "$150",
+    "specs": { "原產地": "國家01", "成分": "花生" }
+  },
+  "p002": {
+    "id": "p002",
+    "name": "蒜味花生",
+    "largeImageUrl": "image/peanutgarlic.jpg",
+    "description": "精選蒜味花生，低溫烘焙，讓堅果內外質地均勻，入口香氣濃厚。精選美國核桃，低溫烘焙，讓堅果內外質地均勻，入口香氣濃厚。",
+    "price": "$150",
+    "specs": { "原產地": "國家02", "成分": "花生"  }
+  },
+  "p003": {
+    "id": "p003",
+    "name": "南瓜子",
+    "largeImageUrl": "image/pumpkinseed.jpg",
+    "description": "精選美國核桃，低溫烘焙，讓堅果內外質地均勻，入口香氣濃厚。",
+    "price": "$175",
+    "specs": { "原產地": "國家03", "成分": "南瓜子" }
+  },
+  "p004": {
+    "id": "p004",
+    "name": "腰果",
+    "largeImageUrl": "image/cashew.jpg",
+    "description": "精選腰果，低溫烘焙，讓堅果內外質地均勻，入口香氣濃厚。",
+    "price": "$300",
+    "specs": { "原產地": "國家04", "成分": "腰果" }
+  },
+  "p005": {
+    "id": "p005",
+    "name": "巨無霸大腰果",
+    "largeImageUrl": "image/giantcashew.jpg",
+    "description": "精選巨無霸大腰果，低溫烘焙，讓堅果內外質地均勻，入口香氣濃厚。",
+    "price": "$350",
+    "specs": { "原產地": "國家05", "成分": "腰果" }
+  },
+  "p006": {
+    "id": "p006",
+    "name": "鹽焗帶皮腰果",
+    "largeImageUrl": "image/cashewwithpeel.jpg",
+    "description": "精選帶皮腰果，低溫烘焙，讓堅果內外質地均勻，入口香氣濃厚。",
+    "price": "$300",
+    "specs": { "原產地": "國家06", "成分": "鹽, 帶皮腰果" }
+  },
+  "p007": {
+    "id": "p007",
+    "name": "杏仁",
+    "largeImageUrl": "image/almond.jpg",
+    "description": "精選杏仁，低溫烘焙，讓堅果內外質地均勻，入口香氣濃厚。",
+    "price": "$300",
+    "specs": { "原產地": "國家07", "成分": "杏仁" }
+  },
+  "p008": {
+    "id": "p008",
+    "name": "杏仁條",
+    "largeImageUrl": "image/almondslice.jpg",
+    "description": "精選杏仁，低溫烘焙，讓堅果內外質地均勻，入口香氣濃厚。",
+    "price": "$300",
+    "specs": { "原產地": "國家08", "成分": "杏仁" }
+  },
+  "p011": {
+    "id": "p011",
+    "name": "完整核桃",
+    "largeImageUrl": "image/walnut.jpg",
+    "description": "精選美國核桃，低溫烘焙，讓堅果內外質地均勻，入口香氣濃厚。",
+    "price": "$350",
+    "specs": { "原產地": "美國", "成分": "核桃" }
+  },
+  "p012": {
+    "id": "p012",
+    "name": "完整胡桃",
+    "largeImageUrl": "image/pecan.jpg",
+    "description": "精選完整胡桃，低溫烘焙，讓堅果內外質地均勻，入口香氣濃厚。",
+    "price": "$400",
+    "specs": { "原產地": "國家10", "成分": "胡桃" }
+  },
+  "p013": {
+    "id": "p013",
+    "name": "榛果",
+    "largeImageUrl": "image/hazelnut.jpg",
+    "description": "精選榛果，低溫烘焙，讓堅果內外質地均勻，入口香氣濃厚。",
+    "price": "$400",
+    "specs": { "原產地": "國家11", "成分": "榛果" }
+  },
+  "p014": {
+    "id": "p014",
+    "name": "夏威夷豆",
+    "largeImageUrl": "image/macadamia.jpg",
+    "description": "精選夏威夷豆，低溫烘焙，讓堅果內外質地均勻，入口香氣濃厚。",
+    "price": "$400",
+    "specs": { "原產地": "國家11", "成分": "夏威夷豆" }
+  },
+  "p015": {
+    "id": "p015",
+    "name": "松子",
+    "largeImageUrl": "image/pinenut.jpg",
+    "description": "精選松子，低溫烘焙，讓堅果內外質地均勻，入口香氣濃厚。",
+    "price": "$550",
+    "specs": { "原產地": "國家11", "成分": "松子" }
+  },
+  "p016": {
+    "id": "p016",
+    "name": "開心果",
+    "largeImageUrl": "image/pistachio.jpg",
+    "description": "精選榛果，低溫烘焙，讓堅果內外質地均勻，入口香氣濃厚。",
+    "price": "$300",
+    "specs": { "原產地": "國家11", "成分": "榛果" }
+  },
+  "p019": {
+    "id": "p019",
+    "name": "黑豆",
+    "largeImageUrl": "image/blackbean.jpg",
+    "description": "精選黑豆，低溫烘焙，讓黑豆內外質地均勻，入口香氣濃厚。",
+    "price": "$110",
+    "specs": { "原產地": "國家11", "成分": "黑豆" }
+  },
+  "p020": {
+    "id": "p020",
+    "name": "綜合豆",
+    "largeImageUrl": "image/mixbeans.jpg",
+    "description": "精選綜合豆，低溫烘焙，讓綜合豆內外質地均勻，入口香氣濃厚。",
+    "price": "$110",
+    "specs": { "原產地": "國家11", "成分": "黑豆" }
+  },
+  "p034": {
+    "id": "p034",
+    "name": "綜合葡萄",
+    "largeImageUrl": "image/mixgrapes.jpg",
+    "description": "精選綜合葡，內外質地均勻，入口香氣濃厚。",
+    "price": "$200",
+    "specs": { "原產地": "國家11", "成分": "綜合葡萄" }
+  },
+  "p035": {
+    "id": "p035",
+    "name": "智利黑葡萄",
+    "largeImageUrl": "image/blackgrape.jpg",
+    "description": "精選智利黑葡萄，內外質地均勻，入口香氣濃厚。",
+    "price": "$200",
+    "specs": { "原產地": "智利", "成分": "黑葡萄" }
+  },
+  "p036": {
+    "id": "p036",
+    "name": "吐魯番青葡萄",
+    "largeImageUrl": "image/greengrape.jpg",
+    "description": "精選吐魯番青葡萄，內外質地均勻，入口香氣濃厚。",
+    "price": "$200",
+    "specs": { "原產地": "國家11", "成分": "青葡萄" }
+  },
+  "p037": {
+    "id": "p037",
+    "name": "美國金黃葡萄",
+    "largeImageUrl": "image/goldengrape.jpg",
+    "description": "精選美國金黃葡萄，內外質地均勻，入口香氣濃厚。",
+    "price": "$110",
+    "specs": { "原產地": "美國", "成分": "金黃葡萄" }
+  },
+  "p043": {
+    "id": "p043",
+    "name": "紅心芭樂乾",
+    "largeImageUrl": "image/redgrava.jpg",
+    "description": "精選紅心芭樂乾，內外質地均勻，入口香氣濃厚。",
+    "price": "$300",
+    "specs": { "原產地": "國家11", "成分": "紅心芭樂乾" }
+  },
+  "p053": {
+    "id": "p053",
+    "name": "大枸杞",
+    "largeImageUrl": "image/wolfberry.jpg",
+    "description": "精選大枸杞，內外質地均勻，入口香氣濃厚。",
+    "price": "$250",
+    "specs": { "原產地": "國家11", "成分": "大枸杞" }
+  },
+  "p060": {
+    "id": "p060",
+    "name": "杏仁小魚乾/葷",
+    "largeImageUrl": "image/almondfishlet.jpg",
+    "description": "精選杏仁小魚乾，低溫烘焙，讓內外質地均勻，入口香氣濃厚。",
+    "price": "$350",
+    "specs": { "原產地": "國家11", "成分": "杏仁小魚乾" }
+  },
+  "p061": {
+    "id": "p061",
+    "name": "海苔杏仁片",
+    "largeImageUrl": "image/seaweedalmond.jpg",
+    "description": "精選海苔杏仁片，低溫烘焙，讓內外質地均勻，入口香氣濃厚。",
+    "price": "$400",
+    "specs": { "原產地": "國家11", "成分": "海苔杏仁片" }
+  },
+  "p062": {
+    "id": "p062",
+    "name": "巴西乳酪絲",
+    "largeImageUrl": "image/cheeseslice.jpg",
+    "description": "精選巴西乳酪絲，低溫烘焙，讓內外質地均勻，入口香氣濃厚。",
+    "price": "$900",
+    "specs": { "原產地": "巴西", "成分": "巴西乳酪絲" }
+  }
+
+}

@@ -1,0 +1,257 @@
+[
+    {
+        "id": "p001",
+        "name": "原味花生 300g",
+        "price": "$150",
+        "imgUrl": "image/peanut.webp",
+        "imgUrl": "image/peanut.webp",
+        "title": "最好的原味花生",
+        "flipper": "../image/almond2.jpg",
+        "category": "堅果",
+        "stock": "Y"
+    },
+    {
+        "id": "p002",
+        "name": "蒜味花生 300g",
+        "price": "$150",
+        "imgUrl": "image/peanutgarlic.jpg",
+        "imgUrl": "image/peanutgarlic.jpg",
+        "title": "最好的蒜味花生",
+        "flipper": "images/almond2.jpg",
+        "category": "堅果",
+        "stock": "N"
+    },
+    {
+        "id": "p003",
+        "name": "南瓜子 300g",
+        "price": "$175",
+        "imgUrl": "image/pumpkinseed.jpg",
+        "imgUrl": "image/pumpkinseed.jpg",
+        "title": "最好的南瓜子",
+        "flipper": "images/grapes2.jpg",
+        "category": "堅果",
+        "stock": "N"
+    },
+    {
+        "id": "p004",
+        "name": "腰果 300g",
+        "price": "$300",
+        "imgUrl": "image/cashew.jpg",
+        "imgUrl": "image/cashew.jpg",
+        "title": "最好的腰果",
+        "flipper": "images/cashew2.jpg",
+        "category": "堅果",
+        "stock": "N"
+    },
+    {
+        "id": "p005",
+        "name": "巨無霸大腰果 300g",
+        "price": "$350",
+        "thumbnailUrl": "image/giantcashew.jpg",
+        "imgUrl": "image/giantcashew.jpg",
+        "title": "最好的巨無霸大腰果",
+        "flipper": "images/grapes2.jpg",
+        "category": "堅果",
+        "stock": "N"
+    },
+    {
+        "id": "p006",
+        "name": "鹽焗帶皮腰果 300g",
+        "price": "$300",
+        "thumbnailUrl": "image/cashewwithpeel.jpg",
+        "largeImageUrl": "image/cashewwithpeel.jpg",
+        "title": "最好的鹽焗帶皮腰果",
+        "flipper": "images/grapes2.jpg",
+        "category": "堅果"
+    },
+    {
+        "id": "p007",
+        "name": "杏仁 300g",
+        "price": "$300",
+        "thumbnailUrl": "image/almond.jpg",
+        "largeImageUrl": "image/almond.jpg",
+        "title": "最好的杏仁",
+        "flipper": "images/grapes2.jpg",
+        "category": "堅果"
+    },
+    {
+        "id": "p008",
+        "name": "杏仁條 300g",
+        "price": "$300",
+        "thumbnailUrl": "image/almondslice.jpg",
+        "largeImageUrl": "image/almondslice.jpg",
+        "title": "最好的杏仁條",
+        "flipper": "images/grapes2.jpg",
+        "category": "堅果"
+    },
+    {
+        "id": "p011",
+        "name": "完整核桃 300g",
+        "price": "$350",
+        "thumbnailUrl": "image/walnut.jpg",
+        "largeImageUrl": "image/walnut.jpg",
+        "title": "最好的核桃",
+        "flipper": "images/grapes2.jpg",
+        "category": "堅果"
+    },
+    {
+        "id": "p012",
+        "name": "完整胡桃 300g",
+        "price": "$400",
+        "thumbnailUrl": "image/pecan.jpg",
+        "largeImageUrl": "image/pecan.jpg",
+        "title": "最好的完整胡桃",
+        "flipper": "images/grapes2.jpg",
+        "category": "堅果"
+    },
+    {
+        "id": "p013",
+        "name": "榛果 300g",
+        "price": "$400",
+        "thumbnailUrl": "image/hazelnut.jpg",
+        "largeImageUrl": "image/hazelnut.jpg",
+        "title": "最好的榛果",
+        "flipper": "images/grapes2.jpg",
+        "category": "堅果"
+    },
+    {
+        "id": "p014",
+        "name": "夏威夷豆 300g",
+        "price": "$400",
+        "thumbnailUrl": "image/macadamia.jpg",
+        "largeImageUrl": "image/macadamia.jpg",
+        "title": "最好的夏威夷豆",
+        "flipper": "images/grapes2.jpg",
+        "category": "堅果"
+    },
+    {
+        "id": "p015",
+        "name": "松子 300g",
+        "price": "$550",
+        "thumbnailUrl": "image/pinenut.jpg",
+        "largeImageUrl": "image/pinenut.jpg",
+        "title": "最好的松子",
+        "flipper": "images/grapes2.jpg",
+        "category": "堅果"
+    },
+    {
+        "id": "p016",
+        "name": "開心果 300g",
+        "price": "$300",
+        "thumbnailUrl": "image/pistachio.jpg",
+        "largeImageUrl": "image/pistachio.jpg",
+        "title": "最好的開心果",
+        "flipper": "images/grapes2.jpg",
+        "category": "堅果"
+    },
+    {
+        "id": "p019",
+        "name": "黑豆 300g",
+        "price": "$110",
+        "thumbnailUrl": "image/blackbean.jpg",
+        "largeImageUrl": "image/blackbean.jpg",
+        "title": "最好的黑豆",
+        "flipper": "images/grapes2.jpg",
+        "category": "雜糧"
+    },
+    {
+        "id": "p020",
+        "name": "綜合豆 300g",
+        "price": "$110",
+        "thumbnailUrl": "image/mixbeans.jpg",
+        "largeImageUrl": "image/mixbeans.jpg",
+        "title": "最好的綜合豆",
+        "flipper": "images/dairy2.jpg",
+        "category": "雜糧"
+    },
+    {
+        "id": "p034",
+        "name": "綜合葡萄 300g",
+        "price": "$200",
+        "thumbnailUrl": "image/mixgrapes.jpg",
+        "largeImageUrl": "image/mixgrapes.jpg",
+        "title": "最好的綜合葡萄",
+        "flipper": "images/dairy2.jpg",
+        "category": "乾果"
+    },
+    {
+        "id": "p035",
+        "name": "智利黑葡萄 300g",
+        "price": "$200",
+        "thumbnailUrl": "image/blackgrape.jpg",
+        "largeImageUrl": "image/blackgrape.jpg",
+        "title": "最好的黑葡萄",
+        "flipper": "images/dairy2.jpg",
+        "category": "乾果"
+    },
+    {
+        "id": "p036",
+        "name": "吐魯番青葡萄 300g",
+        "price": "$200",
+        "thumbnailUrl": "image/greengrape.jpg",
+        "largeImageUrl": "image/greengrape.jpg",
+        "title": "最好的青葡萄",
+        "flipper": "images/dairy2.jpg",
+        "category": "乾果"
+    },
+    {
+        "id": "p037",
+        "name": "美國金黃葡萄 300g",
+        "price": "$200",
+        "thumbnailUrl": "image/goldengrape.jpg",
+        "largeImageUrl": "image/goldengrape.jpg",
+        "title": "最好的金黃葡萄",
+        "flipper": "images/dairy2.jpg",
+        "category": "乾果"
+    },
+    {
+        "id": "p043",
+        "name": "紅心芭樂乾 300g",
+        "price": "$300",
+        "thumbnailUrl": "image/redgrava.jpg",
+        "largeImageUrl": "image/redgrava.jpg",
+        "title": "最好的紅心芭樂乾",
+        "flipper": "images/dairy2.jpg",
+        "category": "乾果"
+    },
+    {
+        "id": "p053",
+        "name": "大枸杞 300g",
+        "price": "$250",
+        "thumbnailUrl": "image/wolfberry.jpg",
+        "largeImageUrl": "image/wolfberry.jpg",
+        "title": "最好的大枸杞",
+        "flipper": "images/dairy2.jpg",
+        "category": "乾果"
+    },
+    {
+        "id": "p060",
+        "name": "杏仁小魚乾/葷 300g",
+        "price": "$350",
+        "thumbnailUrl": "image/almondfishlet.jpg",
+        "largeImageUrl": "image/almondfishlet.jpg",
+        "title": "最好的杏仁小魚乾",
+        "flipper": "images/dairy2.jpg",
+        "category": "休閒養生"
+    },
+    {
+        "id": "p061",
+        "name": "海苔杏仁片 300g",
+        "price": "$400",
+        "thumbnailUrl": "image/seaweedalmond.jpg",
+        "largeImageUrl": "image/seaweedalmond.jpg",
+        "title": "最好的海苔杏仁片",
+        "flipper": "images/dairy2.jpg",
+        "category": "休閒養生"
+    },
+    {
+        "id": "p062",
+        "name": "巴西乳酪絲 300g",
+        "price": "$900",
+        "thumbnailUrl": "image/cheeseslice.jpg",
+        "largeImageUrl": "image/cheeseslice.jpg",
+        "title": "最好的乳酪絲",
+        "flipper": "images/dairy2.jpg",
+        "category": "休閒養生"
+    }
+]

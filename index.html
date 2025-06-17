@@ -1,38 +1,302 @@
-<!-- https://github.com/JoyShaheb/Responsive-Startup-Website -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clothing Store</title>
-  <link rel="stylesheet" href="src/style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr.Bean website </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <div class="navbar">
-    <a href="index.html">
-      <h2>Online T-shirt 小店</h2>
-    </a>
+<div class="backTopBtn" id="backTopBtn" style="display:block;">
+        <i class="fa fa-arrow-circle-up"></i>
+</div>
+<header class="navbar">
+  <div class="navbar-container">
+    <!-- Logo -->
+    <div class="logo">
+      <img src="image/logo.png" alt="Mr.Bean Logo">
+    </div>
 
-    <a href="cart.html">
-      <div class="cart">
-        <i class="bi bi-cart2"></i>
-        <div id="cartAmount" class="cartAmount">0</div>
+    <!-- Full nav links (desktop only) -->
+    <nav class="nav-links desktop-only">
+      <ul>
+        <li><a href="#" id="nav-product">荳荳精選</a></li>
+        <li><a href="#" id="nav-about">關於荳荳</a></li>
+        <li><a href="#" id="nav-media">荳荳頻道</a></li>
+        <li><a href="#" id="nav-member">荳荳會員</a></li>
+        <li><a href="#" id="nav-contact">聯絡我們</a></li>
+      </ul>
+    </nav>
+
+    <!-- Member login + Cart + Hamburger -->
+    <div class="nav-right">
+      <button id="member-login-button" style="color: orange;font-size:1rem"><a href="#" onclick="loginWithLINE()">會員登入</a></button>
+  <!-- Member Service (shown after login) -->
+  <div id="member-service-container" style="display: none; position: relative;">
+    <button id="member-service-toggle" style="font-size: 1.1rem;">會員服務 ▾</button>
+    
+    <!-- Hidden dropdown menu -->
+    <ul id="member-service-menu" class="member-service-menu" style="display: none;">
+      <li><a href="#" id="ordersLink" onclick="handleOrdersClick(this)">我的訂單</a></li>
+      <li><a href="#" id="memberLink" onclick="handleMemberClick(this)">帳號資訊</a></li>
+        <li class="topup-item">
+            <a href="#">信用卡儲值</a>
+            <ul class="topup-submenu">
+              <li><a href="#" onclick="handleTopup(1000)">儲值 $1000</a></li>
+              <li><a href="#" onclick="handleTopup(3000)">儲值 $3000</a></li>
+              <li><a href="#" onclick="handleTopup(5000)">儲值 $5000</a></li>
+              <li><a href="#" onclick="handleTopup(10000)">儲值 $10000</a></li>
+              <li><a href="#" onclick="handleTopup(20000)">儲值 $20000</a></li>
+              <li><a href="#" onclick="handleTopup(50000)">儲值 $50000</a></li>
+            </ul>
+        </li>
+      <li><a href="#" onclick="logout()">登出</a></li>
+    </ul>
+  </div>
+
+      <div class="cart-icon-container">
+        <button id="cart-icon">
+          <img src="image/shopping-cart.png" alt="Shopping Cart">
+          <span id="cart-item-count">0</span>
+        </button>
       </div>
-    </a>
 
+      <!-- Hamburger icon (mobile only) -->
+      <button class="hamburger mobile-only" id="hamburger-toggle">
+        <span>☰</span>
+      </button>
+    </div>
   </div>
 
-  <div class="shop" id="shop">
+  <!-- Collapsible mobile nav -->
+  <nav class="mobile-nav mobile-only" id="mobile-nav">
+    <ul>
+      <li><a href="#" id="nav-product-mobile">荳荳精選</a></li>
+      <li><a href="#" id="nav-about-mobile">關於荳荳</a></li>
+      <li><a href="#" id="nav-media-mobile">荳荳頻道</a></li>
+      <li><a href="#" id="nav-member-mobile">荳荳會員</a></li>
+      <li><a href="#" id="nav-contact-mobile">聯絡我們</a></li>
+    </ul>
+  </nav>
+</header>
 
+    <main class="main-body">
+        <div id="content-wrapper" class="wrapper active">
+            <section id="banner-slider-container">
+                </section>
 
-  </div>
+            <section id="product-container">
+                <h2>荳荳精選</h2>
+                        <!-- Category Tabs -->
+                <div class="category-filters center">
+                    <button class="category-btn active" data-category="All">全部</button>
+                    <button class="category-btn" data-category="堅果">堅果</button>
+                    <button class="category-btn" data-category="乾果">嚴選果乾</button>
+                    <button class="category-btn" data-category="雜糧">養生雜糧</button>
+                    <button class="category-btn" data-category="休閒養生">休閒養生</button>
+                    <button class="category-btn" data-category="美妝保健">美妝保健</button>
+                </div>
+                <div class="product-grid">
+                </div>
+            </section>
+
+            <section id="about-container">
+            </section>
+            <section id="media-container">
+                  <h2 style="color: orange;">荳荳 YouTube 頻道</h2>
+                  <div id="media-grid" class="media-grid"></div>
+            </section>
+            <section id="membership-container" style="padding: 40px 20px; background: #f9f9f9; font-family: 'Helvetica Neue', sans-serif;">
+                  <div style="max-width: 900px; margin: 0 auto;">
+                    <h2 style="text-align:center; color: orange; margin-bottom: 20px;">會員專屬福利</h2>
+                    <p style="text-align:center; color: #666;">用 LINE 快速註冊，享有豐富的會員獎勵、儲值優惠與折扣。</p>
+
+                    <hr style="margin: 30px 0;">
+
+                    <h3>📱 簡易註冊流程</h3>
+                    <ul style="line-height: 1.8;">
+                      <li>使用 LINE ID 登入</li>
+                      <li>首次登入，系統將要求提供手機號碼</li>
+                      <li>完成註冊即可享優惠</li>
+                    </ul>
+
+                    <h3>🏅 會員等級制度</h3>
+                    <table style="width:100%; border-collapse: collapse; margin-bottom: 20px; text-align: center;">
+                      <thead>
+                        <tr style="background-color: #ddd;">
+                          <th style="padding: 10px;">等級</th>
+                          <th>儲值門檻</th>
+                          <th>年消費門檻</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr><td>銅級</td><td>$1,000</td><td>$1,000</td></tr>
+                        <tr><td>銀級</td><td>$10,000</td><td>$11,000</td></tr>
+                        <tr><td>金級</td><td>$20,000</td><td>$22,000</td></tr>
+                        <tr><td>鑽石級</td><td>$50,000</td><td>$55,000</td></tr>
+                      </tbody>
+                    </table>
+
+                    <h3>💰 儲值回饋方案 透過 綠界科技(ECPay) 刷卡</h3>
+                    <ul style="line-height: 1.8;">
+                      <li>$1,000 儲值 ➜ 獲得 $1,020 儲值金 (2% 優惠)</li>
+                      <li>$3,000 儲值 ➜ 獲得 $3,090 儲值金 (3% 優惠)</li>
+                      <li>$5,000 儲值 ➜ 獲得 $5,200 儲值金 (4% 優惠)</li>
+                      <li>$10,000 儲值 ➜ 獲得 $10,500 儲值金 (5% 優惠)</li>
+                      <li>$20,000 儲值 ➜ 獲得 $21,400 儲值金 (7% 優惠)</li>
+                      <li>$50,000 儲值 ➜ 獲得 $55,000 儲值金 (10% 優惠)</li>
+                    </ul>
+
+                    <h3>🛒 會員折扣</h3>
+                    <table style="width:100%; border-collapse: collapse; margin-bottom: 20px; text-align: center;">
+                      <thead>
+                        <tr style="background-color: #ddd;">
+                          <th style="padding: 10px;">等級</th>
+                          <th>線上購物折扣</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr><td>銅會員</td><td>2% 折扣</td></tr>
+                        <tr><td>銀會員</td><td>3% 折扣</td></tr>
+                        <tr><td>金會員</td><td>5% 折扣</td></tr>
+                        <tr><td>鑽石會員</td><td>10% 折扣</td></tr>
+                      </tbody>
+                    </table>
+
+                    <h3>🔗 分享折扣碼賺積分</h3>
+                    <ol style="line-height: 1.8;">
+                      <li>將折扣碼分享給朋友</li>
+                      <li>朋友購物可享折扣</li>
+                      <li>您可獲得等級對應的獎勵積分</li>
+                      <li>2% / 3% / 5% / 10% 根據您的會員等級</li>
+                      <li>每累積 500 積分 ➜ 可兌換為儲值積分</li>
+                    </ol>
+
+                    <p style="text-align:center; margin-top: 40px;">
+                      <a href="javascript:void(0)" 
+                         style="background: #ff9900; color: white; padding: 10px 25px; border-radius: 5px; text-decoration: none; font-weight: bold;" 
+                         onclick="loginWithLINE()">
+                         立即加入會員
+                      </a>
+                    </p>
+                  </div>
+                </section>
+        </div>
+
+        <div id="item-wrapper" class="wrapper">
+            </div>
+
+        <div id="checkout-wrapper" class="wrapper">
+            <div id="pickup-store-info"></div>
+            <div id="store-name"></div>
+            <div id="store-address"></div>
+            <div id="store-code"></div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <img src="image/logo.png" width="100px">
+            <p>&copy; [2025] [荳荳先生]. All rights reserved.</p>
+            <p>非會員訂單查詢: 首先進入 <a href="https://line.me/ti/p/~@657teosg" style="text-decoration: none; color:#876">荳荳先生</a> LINE官方帳號，然後輸入 <span style="color:black">&nbsp訂單查詢: 09xxxxxxx</span></p>
+            <p>客服信箱： mrbean@gmail.com | [客服專線： <a href="tel:0925528072">0925 528 072</a>]</p>
+            <p>[台北市內湖區康寧路三段99巷10弄1號]</p>
+            <p>營業人統一編號： 88395197</p>
+            <p>本公司已投保產品責任險一千萬元(投保金額不等同理賠金額)</p>
+            <p>保單號碼 0525字第25AML0004616號</p>
+            </div>
+    </footer>
+
+    <aside id="side-cart" class="side-cart">
+        <div class="side-cart-header">
+            <h3>🛒 🛒 購物車</h3>
+            <button id="close-cart-btn">X</button>
+        </div>
+        <div id="side-cart-items" class="side-cart-items">
+            </div>
+        <div class="side-cart-footer">
+            <p>總金額: <span id="cart-total">$0.00</span></p>
+            <button id="checkout-btn">去買單</button>
+        </div>
+    </aside>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="app.js"></script>
+    <script src="login.js"></script>
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+  const hamburger = document.getElementById('hamburger-toggle');
+  const mobileNav = document.getElementById('mobile-nav');
+
+  if (hamburger && mobileNav) {
+    hamburger.addEventListener('click', function () {
+      mobileNav.classList.toggle('active');
+    });
+  }
+
+  const toggleBtn = document.getElementById('member-service-toggle');
+  const menu = document.getElementById('member-service-menu');
+
+  if (toggleBtn && menu) {
+    toggleBtn.addEventListener('click', function () {
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Optional: click outside to close
+    document.addEventListener('click', function (e) {
+      if (!document.getElementById('member-service-container').contains(e.target)) {
+        menu.style.display = 'none';
+      }
+    });
+  }
+});
+// Function to handle scroll event
+window.onscroll = function() {
+    scrollFunction();
+};
+function scrollFunction() {
+    // Get the backTopBtn element
+    const backTopBtn = document.getElementById('backTopBtn');
+    
+    // Check if the scroll has passed 30% of the document height
+    if (document.body.scrollTop > (document.documentElement.scrollHeight * 0.34) || 
+        document.documentElement.scrollTop > (document.documentElement.scrollHeight * 0.34)) {
+        // Show the button
+        backTopBtn.style.display = "block";
+    } else {
+        // Hide the button
+        backTopBtn.style.display = "none";
+    }
+}
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const backTopBtn = document.getElementById('backTopBtn');
+
+    // Show/hide button when scrolling
+    window.addEventListener('scroll', function () {
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      const triggerHeight = document.body.scrollHeight / 3;
+
+      if (scrollY > triggerHeight) {
+        backTopBtn.style.display = 'block';
+      } else {
+        backTopBtn.style.display = 'none';
+      }
+    });
+
+    // Scroll smoothly to top on click
+    backTopBtn.addEventListener('click', function () {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  });
+</script>
 
 </body>
-<script src="src/data.js"></script>
-<script src="src/main.js"></script>
-
 </html>
