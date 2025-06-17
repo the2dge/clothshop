@@ -478,7 +478,7 @@ function openLogisticsMap(orderId, ExtraData) {
     // Build URL with both orderId and ExtraData parameters
     const params = new URLSearchParams({
         orderId: orderId,
-        ExtraData: ExtraData || 'bean0428' // Use provided ExtraData or default fallback
+        ExtraData: ExtraData || 'clothshop' // Use provided ExtraData or default fallback
     });
     
     const url = `https://pickup-store-selection-545199463340.asia-east1.run.app?${params.toString()}`;
