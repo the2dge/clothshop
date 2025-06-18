@@ -302,6 +302,114 @@ function renderProductGrid(products) {
         });
     }
 */ 
+function renderItemDetails(productId) {
+    const itemData = allItemDetails[productId];
+    if (!itemData) {
+        mainBody.itemWrapper.innerHTML = `<p>Error: Product details not found for ID ${productId}.</p>`;
+        switchView('content');
+        return;
+    }
+
+    const thumbnails = (itemData.thumbnailUrls || [])
+        .map(url => `<img class="thumbnail" src="${url}" alt="thumbnail" style="width: 80px; height: 80px; margin: 4px; cursor: pointer;">`)
+        .join('');
+
+    // Parse sizes and stock
+    const sizes = itemData.size ? itemData.size.split(' / ') : [];
+    const stockArray = itemData.stock ? itemData.stock.split('/') : [];
+
+    const sizeDropdown = sizes.length && stockArray.length
+        ? `<label for="sizeSelect"><strong>尺寸：</strong></label>
+           <select id="sizeSelect">
+                ${sizes.map((size, idx) => {
+                    const inStock = stockArray[idx] === 'Y';
+                    return `<option value="${size}" ${inStock ? '' : 'disabled'}>${size}${inStock ? '' : '（無庫存）'}</option>`;
+                }).join('')}
+            </select>`
+        : '';
+
+    mainBody.itemWrapper.innerHTML = `
+        <article class="item-detail">
+            <div class="image-gallery">
+                <img class="main-image" src="${itemData.imgUrl}" alt="${itemData.name}" style="max-width: 100%; height: auto;">
+                <div class="thumbnail-container" style="margin-top: 10px; display: flex; flex-wrap: wrap;">
+                    ${thumbnails}
+                </div>
+            </div>
+            <div class="item-info">
+                <h2>${itemData.name}</h2>
+                <p>${itemData.description}</p>
+                ${sizeDropdown}
+                ${itemData.specs ? `<ul>${Object.entries(itemData.specs).map(([key, value]) => `<li><strong>${key}:</strong> ${value}</li>`).join('')}</ul>` : ''}
+                <p class="price">${itemData.price}</p>
+                <div class="button-row">
+                    <button class="add-to-cart-btn" data-product-id="${itemData.id}">加入購物車</button>
+                    <button class="back-to-products-btn" style="cursor: pointer;">返回產品頁</button>
+                </div>
+            </div>
+        </article>
+    `;
+
+    // Thumbnail click = change main image
+    const mainImage = mainBody.itemWrapper.querySelector('.main-image');
+    const thumbnailImgs = mainBody.itemWrapper.querySelectorAll('.thumbnail');
+    thumbnailImgs.forEach(thumb => {
+        thumb.addEventListener('click', () => {
+            mainImage.src = thumb.src;
+        });
+    });
+
+    // Back button
+    const backBtn = mainBody.itemWrapper.querySelector('.back-to-products-btn');
+    if (backBtn) {
+        backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (currentView !== 'content') switchView('content');
+            document.getElementById('product-container')?.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+}
+function renderSideCart() {
+    sideCart.itemsContainer.innerHTML = ''; // Clear current items
+
+    if (cart.length === 0) {
+        sideCart.itemsContainer.innerHTML = '<p>您的購物車是空的。</p>';
+        setTimeout(() => {
+            switchView('content');
+        }, 1500);
+    } else {
+        cart.forEach(item => {
+            const cartItemDiv = document.createElement('div');
+            cartItemDiv.classList.add('side-cart-item');
+            cartItemDiv.setAttribute('data-cart-item-id', item.id);
+
+            cartItemDiv.innerHTML = `
+                <img src="${item.imgUrl}" alt="${item.name}">
+                <div class="item-info">
+                    <p class="name">${item.name}</p>
+                    <p class="size">尺寸：${item.size || '未選擇'}</p>
+                    <p class="price">${item.price}</p>
+                    <div class="quantity-control">
+                        <button class="decrease-qty-btn" data-product-id="${item.id}" data-size="${item.size}">➖</button>
+                        <span class="quantity">${item.quantity}</span>
+                        <button class="increase-qty-btn" data-product-id="${item.id}" data-size="${item.size}">➕</button>
+                    </div>
+                </div>
+                <button class="remove-item-btn">刪除</button>
+            `;
+
+            sideCart.itemsContainer.appendChild(cartItemDiv);
+        });
+    }
+
+    // Update total and item count
+    sideCart.totalSpan.textContent = calculateTotal();
+    navbar.cartItemCountSpan.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+    // Show/hide checkout button
+    sideCart.checkoutBtn.style.display = cart.length > 0 ? 'block' : 'none';
+}
+/* Retire it as no thumbnailImages and S/M/L support
     function renderItemDetails(productId) {
         const itemData = allItemDetails[productId];
         if (!itemData) {
@@ -334,8 +442,9 @@ function renderProductGrid(products) {
             document.getElementById('product-container')?.scrollIntoView({ behavior: 'smooth' });
           });
         }
-    }
+    }*/
 
+/*Retire as different is now included
     function renderSideCart() {
         sideCart.itemsContainer.innerHTML = ''; // Clear current items
         if (cart.length === 0) {
@@ -350,7 +459,7 @@ function renderProductGrid(products) {
                 cartItemDiv.classList.add('side-cart-item');
                 cartItemDiv.setAttribute('data-cart-item-id', item.id);
                 cartItemDiv.innerHTML = `
-                    <img src="${item.img}" alt="${item.name}">
+                    <img src="${item.imgUrl}" alt="${item.name}">
                     <div class="item-info">
                         <p class="name">${item.name}</p>
                         <p class="price">${item.price}</p>
@@ -374,7 +483,7 @@ function renderProductGrid(products) {
         // Show/hide checkout button based on cart content
         sideCart.checkoutBtn.style.display = cart.length > 0 ? 'block' : 'none';
     }
-
+*/
     // --- View Switching ---
     function switchView(viewName) {
         currentView = viewName;
@@ -400,6 +509,47 @@ function renderProductGrid(products) {
 
     // --- Cart Logic ---
     function addToCart(productId) {
+    const productToAdd = allProductsData.find(p => p.id === productId);
+    const itemDetails = allItemDetails[productId];
+
+    if (!productToAdd || !itemDetails) {
+        console.error("Cannot add product to cart: Data missing.");
+        alert("Sorry, there was an error adding this item.");
+        return;
+    }
+
+    // Get selected size from the dropdown
+    const sizeSelect = document.getElementById('sizeSelect');
+    const selectedSize = sizeSelect ? sizeSelect.value : null;
+
+    if (!selectedSize || sizeSelect.options[sizeSelect.selectedIndex].disabled) {
+        alert("請選擇有庫存的尺寸");
+        return;
+    }
+
+    // Check if the same product with the same size is already in the cart
+    const existingCartItemIndex = cart.findIndex(item => item.id === productId && item.size === selectedSize);
+
+    if (existingCartItemIndex > -1) {
+        // Item with same size already in cart, increase quantity
+        cart[existingCartItemIndex].quantity += 1;
+    } else {
+        // Add new item to cart
+        cart.push({
+            id: productId,
+            name: productToAdd.name,
+            price: productToAdd.price,
+            imgUrl: productToAdd.imgUrl,
+            size: selectedSize,
+            quantity: 1
+        });
+    }
+
+    console.log("Cart updated:", cart);
+    renderSideCart();
+}
+    /*
+    function addToCart(productId) {
         const productToAdd = allProductsData.find(p => p.id === productId);
         const itemDetails = allItemDetails[productId]; // Get details for image etc.
 
@@ -420,7 +570,7 @@ function renderProductGrid(products) {
                 id: productId,
                 name: productToAdd.name,
                 price: productToAdd.price, // Use price from product grid data
-                img: productToAdd.ImgUrl, // Use thumbnail for cart
+                imgUrl: productToAdd.imgUrl, // Use thumbnail for cart
                 quantity: 1
             });
         }
@@ -431,7 +581,7 @@ function renderProductGrid(products) {
         // sideCart.aside.classList.add('open');
         // setTimeout(() => sideCart.aside.classList.remove('open'), 1500); // Auto close after 1.5s
     }
-
+*/
     function removeFromCart(productId) {
         cart = cart.filter(item => item.id !== productId);
         console.log("Cart updated after removal:", cart);
@@ -741,33 +891,48 @@ dropdown.appendChild(creditBalance);
 
 // --- Helper for "我訂購的商品" Title, List, and Totals Placeholders ---
 function renderOrderedItemsSummaryDOM(cartItems) {
+    // Clear previous content if re-rendering
+    mainBody.checkoutWrapper.innerHTML = '';
+
     const itemsHeader = document.createElement('h2');
-    itemsHeader.textContent = '結帳 -- 感謝您選擇荳荳先生';
+    itemsHeader.textContent = '結帳 -- 感謝您選擇EDGE';
     mainBody.checkoutWrapper.appendChild(itemsHeader);
+
     const itemsTitle = document.createElement('h3');
     itemsTitle.textContent = '我訂購的商品';
     itemsTitle.style.marginTop = '20px';
     mainBody.checkoutWrapper.appendChild(itemsTitle);
 
     const listElement = document.createElement('div');
-    listElement.className = 'checkout-items-list'; // Add class for styling
+    listElement.className = 'checkout-items-list';
+
     if (!cartItems || cartItems.length === 0) {
         listElement.innerHTML = '<p>您的購物車是空的。</p>';
     } else {
         cartItems.forEach(item => {
             const itemDiv = document.createElement('div');
-            itemDiv.className = 'checkout-item-display'; // Add class for styling
+            itemDiv.className = 'checkout-item-display';
             itemDiv.style.display = 'flex';
             itemDiv.style.justifyContent = 'space-between';
+            itemDiv.style.alignItems = 'center';
             itemDiv.style.padding = '5px 0';
+
+            const sizeLabel = item.size ? `<div style="font-size: 0.9em; color: #555;">尺寸：${item.size}</div>` : '';
+
             itemDiv.innerHTML = `
-                <span style="flex-basis: 50%;"><img src="${item.img}" alt="${item.name}" style="width:30px; height:30px; margin-right:10px; vertical-align:middle;"> ${item.name}</span>
+                <div style="flex-basis: 50%;">
+                    <img src="${item.imgUrl}" alt="${item.name}" style="width:30px; height:30px; margin-right:10px; vertical-align:middle;">
+                    <span>${item.name}</span>
+                    ${sizeLabel}
+                </div>
                 <span style="flex-basis: 20%; text-align:center;">x ${item.quantity}</span>
                 <span style="flex-basis: 30%; text-align:right;">${item.price}</span>
             `;
+
             listElement.appendChild(itemDiv);
         });
     }
+
     mainBody.checkoutWrapper.appendChild(listElement);
 
     const totalsContainer = document.createElement('div');
@@ -776,11 +941,20 @@ function renderOrderedItemsSummaryDOM(cartItems) {
     totalsContainer.style.paddingTop = '15px';
     totalsContainer.style.borderTop = '1px solid #eee';
     totalsContainer.innerHTML = `
-        <div id="order-subtotal" style="display:flex; justify-content:space-between;"><strong>商品總額:</strong> <span>$0.00</span></div>
-        <div id="order-discount" style="display:none; justify-content:space-between; color:green;"><strong>折扣:</strong> <span>-$0.00</span></div>
-        <div id="order-shipping" style="display:none; justify-content:space-between; color:red;"><strong>運費:(滿$1200可免)</strong> <span>$0.00</span></div>
-        <div id="order-final-total" style="font-weight:bold; margin-top:10px; display:flex; justify-content:space-between; font-size:1.2em;"><strong>總金額:</strong> <span>$0.00</span></div>
+        <div id="order-subtotal" style="display:flex; justify-content:space-between;">
+            <strong>商品總額:</strong> <span>$0.00</span>
+        </div>
+        <div id="order-discount" style="display:none; justify-content:space-between; color:green;">
+            <strong>折扣:</strong> <span>-$0.00</span>
+        </div>
+        <div id="order-shipping" style="display:none; justify-content:space-between; color:red;">
+            <strong>運費:(滿$1200可免)</strong> <span>$0.00</span>
+        </div>
+        <div id="order-final-total" style="font-weight:bold; margin-top:10px; display:flex; justify-content:space-between; font-size:1.2em;">
+            <strong>總金額:</strong> <span>$0.00</span>
+        </div>
     `;
+
     mainBody.checkoutWrapper.appendChild(totalsContainer);
 }
 
