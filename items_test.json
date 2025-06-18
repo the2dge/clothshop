@@ -9,7 +9,8 @@
     "specs": {
       "原產地": "Taiwan",
       "材質": "100%純棉"
-    }
+    },
+    "size": "S / M / L / XL"
   },
   "p002": {
     "id": "p002",
@@ -21,19 +22,21 @@
     "specs": {
       "原產地": "taiwan",
       "材質": "100%純棉"
-    }
+    },
+    "size": "S / M / L / XL"
   },
   "p003": {
     "id": "p003",
     "name": "Yellow Shirt",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/yellow_shirt.jpg",
     "description": "nice shirt",
-    "stock": "",
+    "stock": "Y/Y/Y/Y",
     "price": "$1000",
     "specs": {
       "原產地": "taiwan",
       "材質": "cutton"
-    }
+    },
+    "size": "S / M / L / XL"
   },
   "p004": {
     "id": "p004",
