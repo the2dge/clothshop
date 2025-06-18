@@ -522,10 +522,7 @@ function renderSideCart() {
     const sizeSelect = document.getElementById('sizeSelect');
     const selectedSize = sizeSelect ? sizeSelect.value : null;
 
-    if (!selectedSize || sizeSelect.options[sizeSelect.selectedIndex].disabled) {
-        alert("請選擇有庫存的尺寸");
-        return;
-    }
+   
 
     // Check if the same product with the same size is already in the cart
     const existingCartItemIndex = cart.findIndex(item => item.id === productId && item.size === selectedSize);
@@ -548,40 +545,7 @@ function renderSideCart() {
     console.log("Cart updated:", cart);
     renderSideCart();
 }
-    /*
-    function addToCart(productId) {
-        const productToAdd = allProductsData.find(p => p.id === productId);
-        const itemDetails = allItemDetails[productId]; // Get details for image etc.
 
-        if (!productToAdd || !itemDetails) {
-            console.error("Cannot add product to cart: Data missing.");
-            alert("Sorry, there was an error adding this item.");
-            return;
-        }
-
-        const existingCartItemIndex = cart.findIndex(item => item.id === productId);
-
-        if (existingCartItemIndex > -1) {
-            // Item already in cart, increase quantity
-            cart[existingCartItemIndex].quantity += 1;
-        } else {
-            // Add new item to cart
-            cart.push({
-                id: productId,
-                name: productToAdd.name,
-                price: productToAdd.price, // Use price from product grid data
-                imgUrl: productToAdd.imgUrl, // Use thumbnail for cart
-                quantity: 1
-            });
-        }
-
-        console.log("Cart updated:", cart);
-        renderSideCart(); // Update the visual cart display
-        // Optional: Briefly open the side cart to show the item was added
-        // sideCart.aside.classList.add('open');
-        // setTimeout(() => sideCart.aside.classList.remove('open'), 1500); // Auto close after 1.5s
-    }
-*/
     function removeFromCart(productId) {
         cart = cart.filter(item => item.id !== productId);
         console.log("Cart updated after removal:", cart);
