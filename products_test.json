@@ -16,5 +16,14 @@
     "title": "item",
     "category": "服裝",
     "stock": ""
+  },
+  {
+    "id": "p002",
+    "name": "綠色 Polo 衫",
+    "price": "$1000",
+    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg",
+    "title": "100%純棉",
+    "category": "服裝",
+    "stock": ""
   }
 ]
