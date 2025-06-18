@@ -64,5 +64,16 @@
       "原產地": "Taiwan",
       "成分": "100% 真牛皮"
     }
+  },
+  "p007": {
+    "id": "p007",
+    "name": "麻質手提包",
+    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/cutton_handbag.jpg",
+    "description": "麻質手提包 質手提包",
+    "price": "$6399",
+    "specs": {
+      "原產地": "Taiwan",
+      "成分": "麻"
+    }
   }
 }
