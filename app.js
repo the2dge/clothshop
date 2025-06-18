@@ -1297,10 +1297,8 @@ console.log("Order Data for Submission to GAS (New Structure):", JSON.stringify(
             totalAmount: sessionStorage.getItem('finalOrderAmountForSubmission') || 0,
             customField1: pickupOption,
             customField2: cvsStoreIDValue || null,
-            customField3: "Ming",
-            customField4: "0933333333",
-          //  customField3: nameInput.value || "Ming",
-          //  customField4: phoneInput.value || "0933333333",
+            customField3: nameInput.value,
+            customField4: phoneInput.value,
             tradeDesc: 'Order Description', // Replace with your order description
             itemName: itemsString, // Replace with your product name
             returnUrl: 'https://creditcard-paid-message-forwarder-545199463340.europe-west1.run.app', // Replace with your ReturnURL
