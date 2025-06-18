@@ -1,13 +1,13 @@
 {
   "p001": {
     "id": "p001",
-    "name": "item1",
-    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/boutique_woman.jpg",
-    "description": "finest cotton!",
+    "name": "海軍藍 Polo 衫",
+    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
+    "description": "100%純棉",
     "price": "$1000",
     "specs": {
       "原產地": "Taiwan",
-      "成分": "cotton"
+      "成分": "100%純棉"
     }
   },
   "item1": {
