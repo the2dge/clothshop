@@ -10,17 +10,6 @@
       "成分": "100%純棉"
     }
   },
-  "item1": {
-    "id": "item1",
-    "name": "item1",
-    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/boutique_woman.jpg",
-    "description": "nice shirt",
-    "price": "$1000",
-    "specs": {
-      "原產地": "taiwan",
-      "成分": "cutton"
-    }
-  },
   "p002": {
     "id": "p002",
     "name": "綠色 Polo 衫",
@@ -41,6 +30,17 @@
     "specs": {
       "原產地": "taiwan",
       "成分": "cutton"
+    }
+  },
+  "p004": {
+    "id": "p004",
+    "name": "White Shirt",
+    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/white_shirt.jpg",
+    "description": "100% Pure Cotton",
+    "price": "$1200",
+    "specs": {
+      "原產地": "Taiwan",
+      "成分": "Cutton"
     }
   }
 }
