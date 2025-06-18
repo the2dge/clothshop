@@ -1,55 +1,32 @@
 {
   "p001": {
-  "id": "p001",
-  "name": "海軍藍 Polo 衫",
-  "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
-  "thumbnailUrls": [
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg"
-  ],
-  "description": "100%純棉",
-  "price": "$1000",
-  "size": "S / M / L / XL",
-  "stock": "Y/Y/N/N",
-  "specs": {
-    "原產地": "Taiwan",
-    "成分": "100%純棉"
-  }
-},
+    "id": "p001",
+    "name": "海軍藍 Polo 衫",
+    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
+    "description": "100%純棉",
+    "price": "$1000",
+    "specs": {
+      "原產地": "Taiwan",
+      "成分": "100%純棉"
+    }
+  },
   "p002": {
-  "id": "p002",
-  "name": "海軍藍 Polo 衫",
-  "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg",
-  "thumbnailUrls": [
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg"
-  ],
-  "description": "100%純棉",
-  "price": "$1000",
-  "size": "S / M / L / XL",
-  "stock": "Y/Y/N/N",
-  "specs": {
-    "原產地": "Taiwan",
-    "成分": "100%純棉"
-  }
-},
+    "id": "p002",
+    "name": "綠色 Polo 衫",
+    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg",
+    "description": "100%純棉",
+    "price": "$1000",
+    "specs": {
+      "原產地": "taiwan",
+      "成分": "100%純棉"
+    }
+  },
   "p003": {
     "id": "p003",
     "name": "Yellow Shirt",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/yellow_shirt.jpg",
-    "thumbnailUrls": [
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg"
-  ],
     "description": "nice shirt",
     "price": "$1000",
-    "size": "S / M / L / XL",
-    "stock": "Y/Y/N/N",
     "specs": {
       "原產地": "taiwan",
       "成分": "cutton"
@@ -59,16 +36,8 @@
     "id": "p004",
     "name": "White Shirt",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/white_shirt.jpg",
-    "thumbnailUrls": [
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg"
-  ],
     "description": "100% Pure Cotton",
     "price": "$1200",
-    "size": "S / M / L / XL",
-    "stock": "Y/Y/N/N",
     "specs": {
       "原產地": "Taiwan",
       "成分": "Cutton"
@@ -78,12 +47,6 @@
     "id": "p005",
     "name": "1970年代復古時尚組合",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/seventy_fashion.jpg",
-    "thumbnailUrls": [
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg"
-  ],
     "description": "這套1970年代復古時尚組合充滿濃厚的復古風情，包括六件經典單品。橘色皮革外套搭配高腰喇叭褲，展現大膽優雅的氣質。綠色高跟長靴與黃色厚底短靴，增添了獨特的復古魅力。彩色頭巾以花卉圖案點綴，搭配橘色墨鏡，完美呼應整體風格。這套裝扮融合了70年代的自由與個性，適合派對或主題活動。皮革材質感細膩，靴子厚底設計提升氣場，頭巾和墨鏡則為造型增添趣味。整體色調明亮協調，適合自信且愛冒險的穿搭者，喚起那個充滿創意與活力的時代記憶。",
     "price": "$12800",
     "specs": {
@@ -95,12 +58,6 @@
     "id": "p006",
     "name": "真皮手提包",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/leather_handbag.jpg",
-    "thumbnailUrls": [
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg"
-  ],
     "description": "100% 真牛皮",
     "price": "$12000",
     "specs": {
@@ -112,12 +69,6 @@
     "id": "p007",
     "name": "鉤針編織手提包",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/cutton_handbag.jpg",
-    "thumbnailUrls": [
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
-    "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg"
-  ],
     "description": "這款時尚手提包以其精緻的鉤針編織工藝吸引眼球，採用灰白色調交織設計，展現出自然優雅的氣質。手袋採用柔軟的棉質紗線製作，觸感舒適，重量輕盈，非常適合日常使用。圓潤的造型搭配粗壯的手柄，增添了實用性和時尚感。手袋表面點綴著獨特的花卉圖案，細節處展現手工匠心，適合搭配各種裝扮。無論是休閒旅遊或輕便購物，這款手提包都能提升您的整體造型。尺寸適中，內部空間足以存放必需品，同時保持簡約風格。置於窗台前，與綠植相得益彰，凸顯自然與時尚的完美融合。",
     "price": "$6399",
     "specs": {
