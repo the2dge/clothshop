@@ -387,7 +387,7 @@ function renderSideCart() {
                 <img src="${item.imgUrl}" alt="${item.name}">
                 <div class="item-info">
                     <p class="name">${item.name}</p>
-                    <p class="size">尺寸：${item.size || '未選擇'}</p>
+                    ${item.size ? `<p class="size">尺寸：${item.size}</p>` : ''}
                     <p class="price">${item.price}</p>
                     <div class="quantity-control">
                         <button class="decrease-qty-btn" data-product-id="${item.id}" data-size="${item.size}">➖</button>
