@@ -43,5 +43,14 @@
     "title": "組合中有 6 件物品",
     "category": "特色商品",
     "stock": ""
+  },
+  {
+    "id": "p006",
+    "name": "真皮手提包",
+    "price": "$12000",
+    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/leather_handbag.jpg",
+    "title": "100% 真牛皮",
+    "category": "配件",
+    "stock": ""
   }
 ]
