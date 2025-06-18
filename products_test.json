@@ -25,5 +25,14 @@
     "title": "100%純棉",
     "category": "服裝",
     "stock": ""
+  },
+  {
+    "id": "p003",
+    "name": "item1",
+    "price": "$1000",
+    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/yellow_shirt.jpg",
+    "title": "item",
+    "category": "服裝",
+    "stock": ""
   }
 ]
