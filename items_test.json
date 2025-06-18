@@ -31,5 +31,16 @@
       "原產地": "taiwan",
       "成分": "100%純棉"
     }
+  },
+  "p003": {
+    "id": "p003",
+    "name": "item1",
+    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/yellow_shirt.jpg",
+    "description": "nice shirt",
+    "price": "$1000",
+    "specs": {
+      "原產地": "taiwan",
+      "成分": "cutton"
+    }
   }
 }
