@@ -86,16 +86,16 @@
       "材質": "麻"
     }
   },
-  "P1001": {
-    "id": "P1001",
-    "name": "Handbag",
-    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/handbag1_leather.jpg",
-    "description": "",
+  "p10001": {
+    "id": "p10001",
+    "name": "Leather Handbag",
+    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/handbag_LuxuriousCognacTote.jpg",
+    "description": "Handbag",
     "stock": "Y",
-    "price": "$22300",
+    "price": "$22000",
     "specs": {
-      "原產地": "",
-      "材質": ""
+      "原產地": "Italy",
+      "材質": "Leather"
     }
   }
 }
