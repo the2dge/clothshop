@@ -1976,7 +1976,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Initialization Function ---
     async function init() {
-        localStorage.removeItem('cart'); 
+
         // Fetch all necessary data concurrently
         const [bannerData, aboutData,mediaData, productsData, itemDetailsData] = await Promise.all([
             fetchData('banner.json'),
