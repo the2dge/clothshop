@@ -61,23 +61,5 @@
     "title": "採用柔軟的棉質紗線製作，觸感舒適，重量輕盈。",
     "category": "配件",
     "stock": ""
-  },
-  {
-    "id": "p0010",
-    "name": "TEST",
-    "price": "$1200",
-    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/polo_yellow.jpg",
-    "title": "trest",
-    "category": "服裝",
-    "stock": "Y/Y/Y/Y"
-  },
-  {
-    "id": "p0012",
-    "name": "test",
-    "price": "$1200",
-    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/navy_polo.jpg",
-    "title": "",
-    "category": "服裝",
-    "stock": "Y"
   }
 ]
