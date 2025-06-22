@@ -4,71 +4,71 @@
     "name": "海軍藍 Polo 衫",
     "price": "$1000",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
+    "images": "",
     "title": "100%純棉",
-    "category": "服裝",
-    "stock": "Y/Y/N/N"
+    "category": "服裝"
   },
   {
     "id": "p002",
     "name": "綠色 Polo 衫",
     "price": "$1000",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg",
+    "images": "",
     "title": "100%純棉",
-    "category": "服裝",
-    "stock": "N/Y/Y/N"
+    "category": "服裝"
   },
   {
     "id": "p003",
     "name": "Yellow Shirt",
     "price": "$1000",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/yellow_shirt.jpg",
+    "images": "",
     "title": "100% Pure Cutton",
-    "category": "服裝",
-    "stock": "Y/Y/Y/Y"
+    "category": "服裝"
   },
   {
     "id": "p004",
     "name": "White Shirt",
     "price": "$1200",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/white_shirt.jpg",
+    "images": "",
     "title": "100% Pure Cutton",
-    "category": "服裝",
-    "stock": ""
+    "category": "服裝"
   },
   {
     "id": "p005",
     "name": "1970年代復古時尚組合",
     "price": "$12800",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/seventy_fashion.jpg",
+    "images": "",
     "title": "濃濃復古風情，包括六件經典單品。",
-    "category": "特色商品",
-    "stock": "N"
+    "category": "特色商品"
   },
   {
     "id": "p006",
     "name": "真皮手提包",
     "price": "$12000",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/leather_handbag.jpg",
+    "images": "",
     "title": "優質皮革打造，觸感細膩，質感奢華。",
-    "category": "配件",
-    "stock": "Y"
+    "category": "配件"
   },
   {
     "id": "p007",
     "name": "鉤針編織手提包",
     "price": "$6399",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/cutton_handbag.jpg",
+    "images": "",
     "title": "採用柔軟的棉質紗線製作，觸感舒適，重量輕盈。",
-    "category": "配件",
-    "stock": ""
+    "category": "配件"
   },
   {
     "id": "p10001",
     "name": "Leather Handbag",
     "price": "$22000",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/handbag_LuxuriousCognacTote.jpg",
+    "images": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/handbag_LuxuriousCognacTote.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/handbag1_leather.jpg\"]",
     "title": "Leather handbag",
-    "category": "配件",
-    "stock": "Y"
+    "category": "配件"
   }
 ]
