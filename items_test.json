@@ -85,30 +85,5 @@
       "原產地": "Taiwan",
       "材質": "麻"
     }
-  },
-  "p0010": {
-    "id": "p0010",
-    "name": "TEST",
-    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/polo_yellow.jpg",
-    "description": "",
-    "stock": "Y/Y/Y/Y",
-    "price": "$1200",
-    "specs": {
-      "原產地": "",
-      "材質": ""
-    },
-    "size": "S / M / L / XL"
-  },
-  "p0012": {
-    "id": "p0012",
-    "name": "test",
-    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/navy_polo.jpg",
-    "description": "",
-    "stock": "Y",
-    "price": "$1200",
-    "specs": {
-      "原產地": "",
-      "材質": ""
-    }
   }
 }
