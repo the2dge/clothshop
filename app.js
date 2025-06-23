@@ -476,6 +476,42 @@ function renderItemDetailsT(productId) {
 }
 function renderSideCart() {
     sideCart.itemsContainer.innerHTML = ''; // Clear current items
+    if (cart.length === 0) {
+        sideCart.itemsContainer.innerHTML = '<p>您的購物車是空的。</p>';
+        setTimeout(() => {
+            switchView('content');
+        }, 1500);
+    } else {
+        cart.forEach(item => {
+            const cartItemDiv = document.createElement('div');
+            cartItemDiv.classList.add('side-cart-item');
+            cartItemDiv.setAttribute('data-cart-item-id', item.id);
+            cartItemDiv.innerHTML = `
+                <img src="${item.imgUrl}" alt="${item.name}">
+                <div class="item-info">
+                    <p class="name">${item.name}</p>
+                    ${item.color ? `<p class="color">顏色：${item.color}</p>` : ''}
+                    ${item.size ? `<p class="size">尺寸：${item.size}</p>` : ''}
+                    <p class="price">${item.price}</p>
+                    <div class="quantity-control">
+                        <button class="decrease-qty-btn" data-product-id="${item.id}" data-size="${item.size || ''}" data-color="${item.color || ''}">➖</button>
+                        <span class="quantity">${item.quantity}</span>
+                        <button class="increase-qty-btn" data-product-id="${item.id}" data-size="${item.size || ''}" data-color="${item.color || ''}">➕</button>
+                    </div>
+                </div>
+                <button class="remove-item-btn" data-product-id="${item.id}" data-size="${item.size || ''}" data-color="${item.color || ''}">刪除</button>
+            `;
+            sideCart.itemsContainer.appendChild(cartItemDiv);
+        });
+    }
+    // Update total and item count
+    sideCart.totalSpan.textContent = calculateTotal();
+    navbar.cartItemCountSpan.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    // Show/hide checkout button
+    sideCart.checkoutBtn.style.display = cart.length > 0 ? 'block' : 'none';
+}
+function renderSideCartTMP() {
+    sideCart.itemsContainer.innerHTML = ''; // Clear current items
 
     if (cart.length === 0) {
         sideCart.itemsContainer.innerHTML = '<p>您的購物車是空的。</p>';
