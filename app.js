@@ -303,118 +303,87 @@ function renderProductGrid(products) {
     }
 */ 
 function renderItemDetails(productId) {
-  const itemData = allItemDetails[productId];
-  if (!itemData) {
-    mainBody.itemWrapper.innerHTML = `<p>Error: Product details not found for ID ${productId}.</p>`;
-    switchView('content');
-    return;
-  }
-
-  // --- 1. Parse thumbnails into an array ---
-  let thumbnailUrls = [];
-  if (Array.isArray(itemData.thumbnails)) {
-    thumbnailUrls = itemData.thumbnails;
-  } else if (typeof itemData.thumbnails === 'string') {
-    try {
-      const parsed = JSON.parse(itemData.thumbnails);
-      if (Array.isArray(parsed)) thumbnailUrls = parsed;
-    } catch (e) {
-      console.warn('Invalid thumbnails JSON for', productId, e);
+    const itemData = allItemDetails[productId];
+    if (!itemData) {
+        mainBody.itemWrapper.innerHTML = `<p>Error: Product details not found for ID ${productId}.</p>`;
+        switchView('content');
+        return;
     }
-  }
-  // Fallback to the single imgUrl if no thumbnails found
-  if (thumbnailUrls.length === 0 && itemData.imgUrl) {
-    thumbnailUrls = [ itemData.imgUrl ];
-  }
 
-  // --- 2. Build thumbnail HTML ---
-  const thumbnailsHtml = thumbnailUrls
-    .map(url => `
-      <img
-        class="thumbnail"
-        src="${url}"
-        alt="thumbnail"
-        style="width: 80px; height: 80px; margin: 4px; cursor: pointer; object-fit: cover;"
-      >`)
-    .join('');
+    // Parse JSON string fields if needed
+    const thumbnails = Array.isArray(itemData.thumbnailUrls)
+        ? itemData.thumbnailUrls
+        : JSON.parse(itemData.thumbnails || '[]');
 
-  // --- 3. Parse sizes & stock ---
-  const sizes      = itemData.size  ? itemData.size.split(' / ') : [];
-  const stockArray = itemData.stock ? itemData.stock.split('/')   : [];
-  const sizeDropdown = (sizes.length && stockArray.length)
-    ? `<label for="sizeSelect"><strong>尺寸：</strong></label>
-       <select id="sizeSelect">
-         ${sizes.map((size, idx) => {
-           const inStock = stockArray[idx] === 'Y';
-           return `<option value="${size}" ${inStock ? '' : 'disabled'}>
-                     ${size}${inStock ? '' : '（無庫存）'}
-                   </option>`;
-         }).join('')}
-       </select>`
-    : '';
+    const colors = Array.isArray(itemData.colors)
+        ? itemData.colors
+        : JSON.parse(itemData.colors || '[]');
 
-  // --- 4. Render the detail view ---
-  const initialMainSrc = thumbnailUrls[0] || itemData.imgUrl;
-  mainBody.itemWrapper.innerHTML = `
-    <article class="item-detail">
-      <div class="image-gallery">
-        <img
-          class="main-image"
-          src="${initialMainSrc}"
-          alt="${itemData.name}"
-          style="max-width: 100%; height: auto; display: block;"
-        >
-        <div
-          class="thumbnail-container"
-          style="margin-top: 10px; display: flex; flex-wrap: wrap;"
-        >
-          ${thumbnailsHtml}
-        </div>
-      </div>
-      <div class="item-info">
-        <h2>${itemData.name}</h2>
-        <p>${itemData.description}</p>
-        ${sizeDropdown}
-        ${itemData.specs
-          ? `<ul>
-               ${Object.entries(itemData.specs)
-                 .map(([k, v]) => `<li><strong>${k}:</strong> ${v}</li>`)
-                 .join('')}
-             </ul>`
-          : ''}
-        <p class="price">${itemData.price}</p>
-        <div class="button-row">
-          <button class="add-to-cart-btn" data-product-id="${itemData.id}">
-            加入購物車
-          </button>
-          <button class="back-to-products-btn" style="cursor: pointer;">
-            返回產品頁
-          </button>
-        </div>
-      </div>
-    </article>
-  `;
+    const stockArray = itemData.stock ? itemData.stock.split('/') : [];
+    const sizes = itemData.size ? itemData.size.split(' / ') : [];
 
-  // --- 5. Thumbnail click handler ---
-  const mainImage   = mainBody.itemWrapper.querySelector('.main-image');
-  const thumbEls    = mainBody.itemWrapper.querySelectorAll('.thumbnail');
-  thumbEls.forEach(thumb => {
-    thumb.addEventListener('click', () => {
-      mainImage.src = thumb.src;
+    // Generate thumbnail HTML
+    const thumbnailHTML = thumbnails.map(url =>
+        `<img class="thumbnail" src="${url}" alt="thumbnail" style="width: 80px; height: 80px; margin: 4px; cursor: pointer;">`
+    ).join('');
+
+    // Color Dropdown
+    const colorDropdown = colors.length > 0
+        ? `<label for="colorSelect"><strong>顏色：</strong></label>
+           <select id="colorSelect">
+                ${colors.map(color => `<option value="${color}">${color}</option>`).join('')}
+           </select><br><br>`
+        : '';
+
+    // Size Dropdown
+    const sizeDropdown = (sizes.length && stockArray.length)
+        ? `<label for="sizeSelect"><strong>尺寸：</strong></label>
+           <select id="sizeSelect">
+                ${sizes.map((size, idx) => {
+                    const inStock = stockArray[idx] === 'Y';
+                    return `<option value="${size}" ${inStock ? '' : 'disabled'}>${size}${inStock ? '' : '（無庫存）'}</option>`;
+                }).join('')}
+           </select><br><br>`
+        : '';
+
+    // Main HTML
+    mainBody.itemWrapper.innerHTML = `
+        <article class="item-detail">
+            <div class="image-gallery">
+                <img class="main-image" src="${itemData.imgUrl}" alt="${itemData.name}" style="max-width: 100%; height: auto;">
+                <div class="thumbnail-container" style="margin-top: 10px; display: flex; flex-wrap: wrap;">
+                    ${thumbnailHTML}
+                </div>
+            </div>
+            <div class="item-info">
+                <h2>${itemData.name}</h2>
+                <p>${itemData.description}</p>
+                ${colorDropdown}
+                ${sizeDropdown}
+                ${itemData.specs ? `<ul>${Object.entries(itemData.specs).map(([key, value]) => `<li><strong>${key}:</strong> ${value}</li>`).join('')}</ul>` : ''}
+                <p class="price">${itemData.price}</p>
+                <div class="button-row">
+                    <button class="add-to-cart-btn" data-product-id="${itemData.id}">加入購物車</button>
+                    <button class="back-to-products-btn" style="cursor: pointer;">返回產品頁</button>
+                </div>
+            </div>
+        </article>
+    `;
+
+    // Thumbnail click event
+    const mainImage = mainBody.itemWrapper.querySelector('.main-image');
+    mainBody.itemWrapper.querySelectorAll('.thumbnail').forEach(thumb => {
+        thumb.addEventListener('click', () => {
+            mainImage.src = thumb.src;
+        });
     });
-  });
 
-  // --- 6. Back button handler ---
-  const backBtn = mainBody.itemWrapper.querySelector('.back-to-products-btn');
-  if (backBtn) {
-    backBtn.addEventListener('click', e => {
-      e.preventDefault();
-      if (currentView !== 'content') switchView('content');
-      document
-        .getElementById('product-container')
-        ?.scrollIntoView({ behavior: 'smooth' });
+    // Back button event
+    mainBody.itemWrapper.querySelector('.back-to-products-btn')?.addEventListener('click', e => {
+        e.preventDefault();
+        if (currentView !== 'content') switchView('content');
+        document.getElementById('product-container')?.scrollIntoView({ behavior: 'smooth' });
     });
-  }
 }
 function renderItemDetailsT(productId) {
     const itemData = allItemDetails[productId];
