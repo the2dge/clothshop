@@ -303,6 +303,120 @@ function renderProductGrid(products) {
     }
 */ 
 function renderItemDetails(productId) {
+  const itemData = allItemDetails[productId];
+  if (!itemData) {
+    mainBody.itemWrapper.innerHTML = `<p>Error: Product details not found for ID ${productId}.</p>`;
+    switchView('content');
+    return;
+  }
+
+  // --- 1. Parse thumbnails into an array ---
+  let thumbnailUrls = [];
+  if (Array.isArray(itemData.thumbnails)) {
+    thumbnailUrls = itemData.thumbnails;
+  } else if (typeof itemData.thumbnails === 'string') {
+    try {
+      const parsed = JSON.parse(itemData.thumbnails);
+      if (Array.isArray(parsed)) thumbnailUrls = parsed;
+    } catch (e) {
+      console.warn('Invalid thumbnails JSON for', productId, e);
+    }
+  }
+  // Fallback to the single imgUrl if no thumbnails found
+  if (thumbnailUrls.length === 0 && itemData.imgUrl) {
+    thumbnailUrls = [ itemData.imgUrl ];
+  }
+
+  // --- 2. Build thumbnail HTML ---
+  const thumbnailsHtml = thumbnailUrls
+    .map(url => `
+      <img
+        class="thumbnail"
+        src="${url}"
+        alt="thumbnail"
+        style="width: 80px; height: 80px; margin: 4px; cursor: pointer; object-fit: cover;"
+      >`)
+    .join('');
+
+  // --- 3. Parse sizes & stock ---
+  const sizes      = itemData.size  ? itemData.size.split(' / ') : [];
+  const stockArray = itemData.stock ? itemData.stock.split('/')   : [];
+  const sizeDropdown = (sizes.length && stockArray.length)
+    ? `<label for="sizeSelect"><strong>尺寸：</strong></label>
+       <select id="sizeSelect">
+         ${sizes.map((size, idx) => {
+           const inStock = stockArray[idx] === 'Y';
+           return `<option value="${size}" ${inStock ? '' : 'disabled'}>
+                     ${size}${inStock ? '' : '（無庫存）'}
+                   </option>`;
+         }).join('')}
+       </select>`
+    : '';
+
+  // --- 4. Render the detail view ---
+  const initialMainSrc = thumbnailUrls[0] || itemData.imgUrl;
+  mainBody.itemWrapper.innerHTML = `
+    <article class="item-detail">
+      <div class="image-gallery">
+        <img
+          class="main-image"
+          src="${initialMainSrc}"
+          alt="${itemData.name}"
+          style="max-width: 100%; height: auto; display: block;"
+        >
+        <div
+          class="thumbnail-container"
+          style="margin-top: 10px; display: flex; flex-wrap: wrap;"
+        >
+          ${thumbnailsHtml}
+        </div>
+      </div>
+      <div class="item-info">
+        <h2>${itemData.name}</h2>
+        <p>${itemData.description}</p>
+        ${sizeDropdown}
+        ${itemData.specs
+          ? `<ul>
+               ${Object.entries(itemData.specs)
+                 .map(([k, v]) => `<li><strong>${k}:</strong> ${v}</li>`)
+                 .join('')}
+             </ul>`
+          : ''}
+        <p class="price">${itemData.price}</p>
+        <div class="button-row">
+          <button class="add-to-cart-btn" data-product-id="${itemData.id}">
+            加入購物車
+          </button>
+          <button class="back-to-products-btn" style="cursor: pointer;">
+            返回產品頁
+          </button>
+        </div>
+      </div>
+    </article>
+  `;
+
+  // --- 5. Thumbnail click handler ---
+  const mainImage   = mainBody.itemWrapper.querySelector('.main-image');
+  const thumbEls    = mainBody.itemWrapper.querySelectorAll('.thumbnail');
+  thumbEls.forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      mainImage.src = thumb.src;
+    });
+  });
+
+  // --- 6. Back button handler ---
+  const backBtn = mainBody.itemWrapper.querySelector('.back-to-products-btn');
+  if (backBtn) {
+    backBtn.addEventListener('click', e => {
+      e.preventDefault();
+      if (currentView !== 'content') switchView('content');
+      document
+        .getElementById('product-container')
+        ?.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+}
+function renderItemDetailsT(productId) {
     const itemData = allItemDetails[productId];
     if (!itemData) {
         mainBody.itemWrapper.innerHTML = `<p>Error: Product details not found for ID ${productId}.</p>`;
