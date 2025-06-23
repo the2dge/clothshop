@@ -310,46 +310,58 @@ function renderItemDetails(productId) {
         return;
     }
 
+    // Parse thumbnails and colors safely
     const thumbnails = Array.isArray(itemData.thumbnailUrls)
         ? itemData.thumbnailUrls
         : JSON.parse(itemData.thumbnails || '[]');
-
     const colors = Array.isArray(itemData.colors)
         ? itemData.colors
         : JSON.parse(itemData.colors || '[]');
-
     const sizes = itemData.size ? itemData.size.split(' / ') : [];
-    const stockMatrix = itemData.stock
-        .split(';')
-        .map(row => row.split('/')); // stockMatrix[colorIndex][sizeIndex] = 'Y' or 'N'
 
+    // Parse stock matrix; handle cases where stock is empty or malformed
+    let stockMatrix = [];
+    if (itemData.stock) {
+        try {
+            stockMatrix = itemData.stock.split(';').map(row => row.split('/'));
+        } catch (e) {
+            console.error('Error parsing stock matrix:', e);
+        }
+    }
+
+    // Generate thumbnail HTML
     const thumbnailHTML = thumbnails.map(url =>
         `<img class="thumbnail" src="${url}" alt="thumbnail" style="width: 80px; height: 80px; margin: 4px; cursor: pointer;">`
     ).join('');
 
     // Color dropdown
-    const colorDropdownHTML = `
+    const colorDropdownHTML = colors.length > 0 ? `
         <label for="colorSelect"><strong>顏色：</strong></label>
         <select id="colorSelect">
             ${colors.map((color, idx) => `<option value="${idx}">${color}</option>`).join('')}
-        </select><br><br>`;
+        </select><br><br>` : '';
 
-    // Size dropdown (initially based on first color)
+    // Size dropdown (initially based on first color or no color)
     const generateSizeOptions = (colorIndex) => {
+        if (sizes.length === 0) return '';
         return sizes.map((size, idx) => {
-            const inStock = stockMatrix[colorIndex][idx] === 'Y';
+            const inStock = stockMatrix[colorIndex] && stockMatrix[colorIndex][idx] === 'Y';
             return `<option value="${size}" ${inStock ? '' : 'disabled'}>${size}${inStock ? '' : '（無庫存）'}</option>`;
         }).join('');
     };
 
-    const initialSizeOptions = generateSizeOptions(0); // default to first color
+    const initialSizeOptions = colors.length > 0 ? generateSizeOptions(0) : (sizes.length > 0 ? sizes.map(size => `<option value="${size}">${size}</option>`).join('') : '');
 
-    const sizeDropdownHTML = `
+    const sizeDropdownHTML = sizes.length > 0 ? `
         <label for="sizeSelect"><strong>尺寸：</strong></label>
         <select id="sizeSelect">
             ${initialSizeOptions}
-        </select><br><br>`;
+        </select><br><br>` : '';
 
+    // Stock status message
+    const stockStatusHTML = `<p id="stockStatus" style="color: red; display: none;">所選組合無庫存</p>`;
+
+    // Render the item details
     mainBody.itemWrapper.innerHTML = `
         <article class="item-detail">
             <div class="image-gallery">
@@ -363,10 +375,11 @@ function renderItemDetails(productId) {
                 <p>${itemData.description}</p>
                 ${colorDropdownHTML}
                 ${sizeDropdownHTML}
+                ${stockStatusHTML}
                 ${itemData.specs ? `<ul>${Object.entries(itemData.specs).map(([key, value]) => `<li><strong>${key}:</strong> ${value}</li>`).join('')}</ul>` : ''}
                 <p class="price">${itemData.price}</p>
                 <div class="button-row">
-                    <button class="add-to-cart-btn" data-product-id="${itemData.id}">加入購物車</button>
+                    <button class="add-to-cart-btn" data-product-id="${itemData.id}" disabled>加入購物車</button>
                     <button class="back-to-products-btn" style="cursor: pointer;">返回產品頁</button>
                 </div>
             </div>
@@ -381,14 +394,50 @@ function renderItemDetails(productId) {
         });
     });
 
-    // Update size options on color change
+    // Function to update stock status and button state
+    const updateStockStatus = () => {
+        const colorSelect = mainBody.itemWrapper.querySelector('#colorSelect');
+        const sizeSelect = mainBody.itemWrapper.querySelector('#sizeSelect');
+        const addToCartBtn = mainBody.itemWrapper.querySelector('.add-to-cart-btn');
+        const stockStatus = mainBody.itemWrapper.querySelector('#stockStatus');
+
+        if (!colorSelect || !sizeSelect || !stockMatrix.length) {
+            // If no color/size or stock data, enable button if stock is 'Y' or undefined
+            const isInStock = !itemData.stock || itemData.stock === 'Y';
+            addToCartBtn.disabled = !isInStock;
+            stockStatus.style.display = isInStock ? 'none' : 'block';
+            return;
+        }
+
+        const colorIndex = parseInt(colorSelect.value, 10);
+        const sizeIndex = sizes.indexOf(sizeSelect.value);
+        const isInStock = stockMatrix[colorIndex] && stockMatrix[colorIndex][sizeIndex] === 'Y';
+
+        addToCartBtn.disabled = !isInStock;
+        stockStatus.style.display = isInStock ? 'none' : 'block';
+    };
+
+    // Update size options and stock status on color change
     const colorSelect = mainBody.itemWrapper.querySelector('#colorSelect');
     const sizeSelect = mainBody.itemWrapper.querySelector('#sizeSelect');
 
-    colorSelect.addEventListener('change', () => {
-        const colorIndex = parseInt(colorSelect.value, 10);
-        sizeSelect.innerHTML = generateSizeOptions(colorIndex);
-    });
+    if (colorSelect) {
+        colorSelect.addEventListener('change', () => {
+            const colorIndex = parseInt(colorSelect.value, 10);
+            if (sizeSelect) {
+                sizeSelect.innerHTML = generateSizeOptions(colorIndex);
+            }
+            updateStockStatus();
+        });
+    }
+
+    // Update stock status on size change
+    if (sizeSelect) {
+        sizeSelect.addEventListener('change', updateStockStatus);
+    }
+
+    // Initial stock status check
+    updateStockStatus();
 
     // Back button
     mainBody.itemWrapper.querySelector('.back-to-products-btn')?.addEventListener('click', e => {
