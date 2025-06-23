@@ -49,7 +49,7 @@
     "name": "真皮手提包",
     "price": "$12000",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/leather_handbag.jpg",
-    "images": "",
+    "images": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/leather_handbag.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/handbag1_leather.jpg\"]",
     "title": "優質皮革打造，觸感細膩，質感奢華。",
     "category": "配件"
   },
