@@ -310,7 +310,6 @@ function renderItemDetails(productId) {
         return;
     }
 
-    // Parse JSON string fields if needed
     const thumbnails = Array.isArray(itemData.thumbnailUrls)
         ? itemData.thumbnailUrls
         : JSON.parse(itemData.thumbnails || '[]');
@@ -319,34 +318,38 @@ function renderItemDetails(productId) {
         ? itemData.colors
         : JSON.parse(itemData.colors || '[]');
 
-    const stockArray = itemData.stock ? itemData.stock.split('/') : [];
     const sizes = itemData.size ? itemData.size.split(' / ') : [];
+    const stockMatrix = itemData.stock
+        .split(';')
+        .map(row => row.split('/')); // stockMatrix[colorIndex][sizeIndex] = 'Y' or 'N'
 
-    // Generate thumbnail HTML
     const thumbnailHTML = thumbnails.map(url =>
         `<img class="thumbnail" src="${url}" alt="thumbnail" style="width: 80px; height: 80px; margin: 4px; cursor: pointer;">`
     ).join('');
 
-    // Color Dropdown
-    const colorDropdown = colors.length > 0
-        ? `<label for="colorSelect"><strong>顏色：</strong></label>
-           <select id="colorSelect">
-                ${colors.map(color => `<option value="${color}">${color}</option>`).join('')}
-           </select><br><br>`
-        : '';
+    // Color dropdown
+    const colorDropdownHTML = `
+        <label for="colorSelect"><strong>顏色：</strong></label>
+        <select id="colorSelect">
+            ${colors.map((color, idx) => `<option value="${idx}">${color}</option>`).join('')}
+        </select><br><br>`;
 
-    // Size Dropdown
-    const sizeDropdown = (sizes.length && stockArray.length)
-        ? `<label for="sizeSelect"><strong>尺寸：</strong></label>
-           <select id="sizeSelect">
-                ${sizes.map((size, idx) => {
-                    const inStock = stockArray[idx] === 'Y';
-                    return `<option value="${size}" ${inStock ? '' : 'disabled'}>${size}${inStock ? '' : '（無庫存）'}</option>`;
-                }).join('')}
-           </select><br><br>`
-        : '';
+    // Size dropdown (initially based on first color)
+    const generateSizeOptions = (colorIndex) => {
+        return sizes.map((size, idx) => {
+            const inStock = stockMatrix[colorIndex][idx] === 'Y';
+            return `<option value="${size}" ${inStock ? '' : 'disabled'}>${size}${inStock ? '' : '（無庫存）'}</option>`;
+        }).join('');
+    };
 
-    // Main HTML
+    const initialSizeOptions = generateSizeOptions(0); // default to first color
+
+    const sizeDropdownHTML = `
+        <label for="sizeSelect"><strong>尺寸：</strong></label>
+        <select id="sizeSelect">
+            ${initialSizeOptions}
+        </select><br><br>`;
+
     mainBody.itemWrapper.innerHTML = `
         <article class="item-detail">
             <div class="image-gallery">
@@ -358,8 +361,8 @@ function renderItemDetails(productId) {
             <div class="item-info">
                 <h2>${itemData.name}</h2>
                 <p>${itemData.description}</p>
-                ${colorDropdown}
-                ${sizeDropdown}
+                ${colorDropdownHTML}
+                ${sizeDropdownHTML}
                 ${itemData.specs ? `<ul>${Object.entries(itemData.specs).map(([key, value]) => `<li><strong>${key}:</strong> ${value}</li>`).join('')}</ul>` : ''}
                 <p class="price">${itemData.price}</p>
                 <div class="button-row">
@@ -370,7 +373,7 @@ function renderItemDetails(productId) {
         </article>
     `;
 
-    // Thumbnail click event
+    // Thumbnail click
     const mainImage = mainBody.itemWrapper.querySelector('.main-image');
     mainBody.itemWrapper.querySelectorAll('.thumbnail').forEach(thumb => {
         thumb.addEventListener('click', () => {
@@ -378,7 +381,16 @@ function renderItemDetails(productId) {
         });
     });
 
-    // Back button event
+    // Update size options on color change
+    const colorSelect = mainBody.itemWrapper.querySelector('#colorSelect');
+    const sizeSelect = mainBody.itemWrapper.querySelector('#sizeSelect');
+
+    colorSelect.addEventListener('change', () => {
+        const colorIndex = parseInt(colorSelect.value, 10);
+        sizeSelect.innerHTML = generateSizeOptions(colorIndex);
+    });
+
+    // Back button
     mainBody.itemWrapper.querySelector('.back-to-products-btn')?.addEventListener('click', e => {
         e.preventDefault();
         if (currentView !== 'content') switchView('content');
