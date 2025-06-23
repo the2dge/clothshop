@@ -420,7 +420,7 @@ function renderItemDetailsT(productId) {
         .join('');
 
     // Parse sizes and stock
-    const sizes = itemData.size ? itemData.size.split(' / ') : [];
+    const sizes = itemData.sizes ? itemData.size.split(' / ') : [];
     const stockArray = itemData.stock ? itemData.stock.split('/') : [];
 
     const sizeDropdown = sizes.length && stockArray.length
