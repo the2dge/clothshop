@@ -318,7 +318,7 @@ function renderItemDetails(productId) {
         ? itemData.colors
         : JSON.parse(itemData.colors || '[]');
 
-    const sizes = itemData.size ? itemData.size.split(' / ') : [];
+    const sizes = itemData.sizes ? itemData.size.split(' / ') : [];
     const stockMatrix = itemData.stock
         .split(';')
         .map(row => row.split('/')); // stockMatrix[colorIndex][sizeIndex] = 'Y' or 'N'
