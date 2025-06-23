@@ -310,7 +310,7 @@ function renderItemDetails(productId) {
         return;
     }
 
-    // Parse thumbnails and colors safely
+    // Parse thumbnails, colors, and sizes safely
     const thumbnails = Array.isArray(itemData.thumbnailUrls)
         ? itemData.thumbnailUrls
         : JSON.parse(itemData.thumbnails || '[]');
@@ -319,13 +319,13 @@ function renderItemDetails(productId) {
         : JSON.parse(itemData.colors || '[]');
     const sizes = itemData.size ? itemData.size.split(' / ') : [];
 
-    // Parse stock matrix; handle cases where stock is empty or malformed
+    // Parse stock matrix; handle missing or malformed stock data
     let stockMatrix = [];
     if (itemData.stock) {
         try {
             stockMatrix = itemData.stock.split(';').map(row => row.split('/'));
         } catch (e) {
-            console.error('Error parsing stock matrix:', e);
+            console.error(`Error parsing stock for product ${productId}:`, e);
         }
     }
 
@@ -334,23 +334,23 @@ function renderItemDetails(productId) {
         `<img class="thumbnail" src="${url}" alt="thumbnail" style="width: 80px; height: 80px; margin: 4px; cursor: pointer;">`
     ).join('');
 
-    // Color dropdown
+    // Color dropdown (only if colors exist)
     const colorDropdownHTML = colors.length > 0 ? `
         <label for="colorSelect"><strong>顏色：</strong></label>
         <select id="colorSelect">
             ${colors.map((color, idx) => `<option value="${idx}">${color}</option>`).join('')}
         </select><br><br>` : '';
 
-    // Size dropdown (initially based on first color or no color)
+    // Size dropdown (based on selected color)
     const generateSizeOptions = (colorIndex) => {
-        if (sizes.length === 0) return '';
+        if (!sizes.length || !stockMatrix[colorIndex]) return '';
         return sizes.map((size, idx) => {
-            const inStock = stockMatrix[colorIndex] && stockMatrix[colorIndex][idx] === 'Y';
+            const inStock = stockMatrix[colorIndex][idx] === 'Y';
             return `<option value="${size}" ${inStock ? '' : 'disabled'}>${size}${inStock ? '' : '（無庫存）'}</option>`;
         }).join('');
     };
 
-    const initialSizeOptions = colors.length > 0 ? generateSizeOptions(0) : (sizes.length > 0 ? sizes.map(size => `<option value="${size}">${size}</option>`).join('') : '');
+    const initialSizeOptions = colors.length > 0 && stockMatrix.length ? generateSizeOptions(0) : sizes.map(size => `<option value="${size}">${size}</option>`).join('');
 
     const sizeDropdownHTML = sizes.length > 0 ? `
         <label for="sizeSelect"><strong>尺寸：</strong></label>
@@ -361,7 +361,7 @@ function renderItemDetails(productId) {
     // Stock status message
     const stockStatusHTML = `<p id="stockStatus" style="color: red; display: none;">所選組合無庫存</p>`;
 
-    // Render the item details
+    // Render item details
     mainBody.itemWrapper.innerHTML = `
         <article class="item-detail">
             <div class="image-gallery">
@@ -386,7 +386,7 @@ function renderItemDetails(productId) {
         </article>
     `;
 
-    // Thumbnail click
+    // Thumbnail click to update main image
     const mainImage = mainBody.itemWrapper.querySelector('.main-image');
     mainBody.itemWrapper.querySelectorAll('.thumbnail').forEach(thumb => {
         thumb.addEventListener('click', () => {
@@ -401,37 +401,42 @@ function renderItemDetails(productId) {
         const addToCartBtn = mainBody.itemWrapper.querySelector('.add-to-cart-btn');
         const stockStatus = mainBody.itemWrapper.querySelector('#stockStatus');
 
-        if (!colorSelect || !sizeSelect || !stockMatrix.length) {
-            // If no color/size or stock data, enable button if stock is 'Y' or undefined
-            const isInStock = !itemData.stock || itemData.stock === 'Y';
+        // Case 1: No color/size dropdowns (e.g., single stock field)
+        if (!colorSelect && !sizeSelect) {
+            const isInStock = itemData.stock === 'Y' || !itemData.stock; // Default to in-stock if undefined
             addToCartBtn.disabled = !isInStock;
             stockStatus.style.display = isInStock ? 'none' : 'block';
             return;
         }
 
-        const colorIndex = parseInt(colorSelect.value, 10);
-        const sizeIndex = sizes.indexOf(sizeSelect.value);
-        const isInStock = stockMatrix[colorIndex] && stockMatrix[colorIndex][sizeIndex] === 'Y';
+        // Case 2: Color and size dropdowns exist
+        if (colorSelect && sizeSelect && stockMatrix.length) {
+            const colorIndex = parseInt(colorSelect.value, 10);
+            const sizeIndex = sizes.indexOf(sizeSelect.value);
+            const isInStock = stockMatrix[colorIndex] && stockMatrix[colorIndex][sizeIndex] === 'Y';
+            addToCartBtn.disabled = !isInStock;
+            stockStatus.style.display = isInStock ? 'none' : 'block';
+            return;
+        }
 
-        addToCartBtn.disabled = !isInStock;
-        stockStatus.style.display = isInStock ? 'none' : 'block';
+        // Case 3: Fallback for partial data
+        addToCartBtn.disabled = true; // Disable by default if data is incomplete
+        stockStatus.style.display = 'block';
     };
 
-    // Update size options and stock status on color change
+    // Event listeners for color and size changes
     const colorSelect = mainBody.itemWrapper.querySelector('#colorSelect');
     const sizeSelect = mainBody.itemWrapper.querySelector('#sizeSelect');
 
     if (colorSelect) {
         colorSelect.addEventListener('change', () => {
-            const colorIndex = parseInt(colorSelect.value, 10);
-            if (sizeSelect) {
-                sizeSelect.innerHTML = generateSizeOptions(colorIndex);
+            if (sizeSelect && stockMatrix.length) {
+                sizeSelect.innerHTML = generateSizeOptions(parseInt(colorSelect.value, 10));
             }
             updateStockStatus();
         });
     }
 
-    // Update stock status on size change
     if (sizeSelect) {
         sizeSelect.addEventListener('change', updateStockStatus);
     }
