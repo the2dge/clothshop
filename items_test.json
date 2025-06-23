@@ -105,5 +105,18 @@
       "原產地": "",
       "材質": ""
     }
+  },
+  "P011": {
+    "id": "P011",
+    "name": "MING",
+    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/goldengrape.jpg",
+    "thumbnails": "",
+    "description": "NICE",
+    "stock": "",
+    "price": "$11",
+    "specs": {
+      "原產地": "Taiwan",
+      "材質": "nuts!"
+    }
   }
 }
