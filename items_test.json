@@ -5,9 +5,9 @@
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
     "thumbnails": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/Polo_shirt_red.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/Polo_shirt_green.jpg\"]",
     "description": "100%純棉",
-    "colors": "[]",
-    "sizes": "",
-    "stock": "",
+    "colors": "[\"藍色\",\"綠色\",\"紅色\"]",
+    "sizes": "中 / 大",
+    "stock": "Y/Y/Y/Y;Y/Y/Y/Y;Y/Y/Y/Y",
     "price": "$1000",
     "specs": {
       "原產地": "Taiwan",
