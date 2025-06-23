@@ -386,20 +386,19 @@ function renderItemDetails(productId) {
     const sizeSelect = mainBody.itemWrapper.querySelector('#sizeSelect');
 
     colorSelect.addEventListener('change', () => {
-        const colorIndex = parseInt(colorSelect.value, 10);
-               // Clear existing options
-        sizeSelect.innerHTML = '';
-        
-        // Add new options based on selected color
-        sizes.forEach((size, idx) => {
-            const inStock = stockMatrix[colorIndex][idx] === 'Y';
-            const option = document.createElement('option');
-            option.value = size;
-            option.textContent = inStock ? size : `${size}（無庫存）`;
-            if (!inStock) option.disabled = true;
-            sizeSelect.appendChild(option);
-        });
+    const colorIndex = parseInt(colorSelect.value, 10);
+
+    // Update size dropdown options dynamically
+    sizeSelect.innerHTML = '';
+    sizes.forEach((size, idx) => {
+        const inStock = stockMatrix[colorIndex][idx] === 'Y';
+        const option = document.createElement('option');
+        option.value = size;
+        option.textContent = inStock ? size : `${size}（無庫存）`;
+        if (!inStock) option.disabled = true;
+        sizeSelect.appendChild(option);
     });
+});
 
     // Back button
     mainBody.itemWrapper.querySelector('.back-to-products-btn')?.addEventListener('click', e => {
