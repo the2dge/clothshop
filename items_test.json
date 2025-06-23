@@ -3,10 +3,10 @@
     "id": "p001",
     "name": "海軍藍 Polo 衫",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
-    "thumbnails": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/green_polo.jpg\"]",
+    "thumbnails": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/green_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/Polo_shirt_red.jpg\"]",
     "description": "100%純棉",
-    "colors": "[\"BLUE\",\"GREN\"]",
-    "stock": "Y/Y/Y/N;Y/Y/N/N",
+    "colors": "[\"BLUE\",\"GREEN\",\"RED\"]",
+    "stock": "Y/Y/Y/Y;Y/Y/Y/Y;Y/Y/Y/Y",
     "price": "$1000",
     "specs": {
       "原產地": "Taiwan",
