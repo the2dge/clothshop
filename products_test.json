@@ -76,7 +76,7 @@
     "name": "tesy",
     "price": "$122",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/green_polo.jpg",
-    "images": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/green_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/navy_polo.jpg\"]",
+    "images": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/green_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/navy_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/yellow_shirt.jpg\"]",
     "title": "rrrr",
     "category": "服裝"
   }
