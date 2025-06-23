@@ -112,11 +112,12 @@
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/goldengrape.jpg",
     "thumbnails": "",
     "description": "NICE",
-    "stock": "",
+    "stock": "Y/Y/Y/Y",
     "price": "$11",
     "specs": {
       "原產地": "Taiwan",
       "材質": "nuts!"
-    }
+    },
+    "size": "S / M / L / XL"
   }
 }
