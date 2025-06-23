@@ -3,7 +3,7 @@
     "id": "p001",
     "name": "海軍藍 Polo 衫",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
-    "thumbnails": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/green_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/yellow_shirt.jpg\"]",
+    "thumbnails": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg\"]",
     "description": "100%純棉",
     "stock": "Y/Y/N/N",
     "price": "$1000",
