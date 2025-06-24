@@ -17,12 +17,12 @@
   "p002": {
     "id": "p002",
     "name": "綠色 Polo 衫",
-    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg",
+    "imgUrl": "",
     "thumbnails": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/navy_polo.jpg\"]",
     "description": "100%純棉",
-    "colors": "[]",
-    "sizes": "S / M / L",
-    "stock": "",
+    "colors": "[\"[\",\"]\"]",
+    "sizes": "",
+    "stock": "Y/Y/Y/N;N/N/N/N",
     "price": "$1200",
     "specs": {
       "原產地": "taiwan",
