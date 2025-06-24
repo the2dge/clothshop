@@ -64,12 +64,12 @@
   },
   {
     "id": "p00112",
-    "name": "水餃HANDBAG",
-    "price": "$12000",
-    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/cutton_handbag.jpg",
-    "images": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/cutton_handbag.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/handbag1_leather.jpg\"]",
-    "title": "",
-    "category": ""
+    "name": "TEST",
+    "price": "$100",
+    "imgUrl": "",
+    "images": "[]",
+    "title": "test",
+    "category": "test"
   },
   {
     "id": "P011",
