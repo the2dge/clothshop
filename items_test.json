@@ -2,17 +2,18 @@
   "p001": {
     "id": "p001",
     "name": "Polo 衫",
-    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
+    "imgUrl": "",
     "thumbnails": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/Polo_shirt_red.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/Polo_shirt_green.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/yellow_shirt.jpg\"]",
     "description": "100% Cotton",
-    "colors": "[]",
-    "sizes": "S / M / L / XL",
-    "stock": "Y",
+    "colors": "[\"Color 1\"]",
+    "sizes": "S , M , L , XL",
+    "stock": "Y/Y/Y/N",
     "price": "$1210",
     "specs": {
       "原產地": "Taiwan",
       "材質": "100%純棉"
-    }
+    },
+    "size": "S / M / L / XL"
   },
   "p002": {
     "id": "p002",
