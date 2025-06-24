@@ -70,23 +70,5 @@
     "images": "[]",
     "title": "test",
     "category": "test"
-  },
-  {
-    "id": "P011",
-    "name": "MING",
-    "price": "$11",
-    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/goldengrape.jpg",
-    "images": "",
-    "title": "TITLE",
-    "category": "堅果"
-  },
-  {
-    "id": "P1013",
-    "name": "TESTING",
-    "price": "$1290",
-    "imgUrl": "",
-    "images": "[]",
-    "title": "TESTING",
-    "category": "TEST"
   }
 ]
