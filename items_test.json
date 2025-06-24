@@ -6,8 +6,8 @@
     "thumbnails": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/Polo_shirt_red.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/Polo_shirt_green.jpg\"]",
     "description": "100% Cotton",
     "colors": "[\"RED\",\"BLUE\",\"GREEN\",\"YELLOW\"]",
-    "sizes": "S , M , L",
-    "stock": "N/N/Y;Y/N/N;Y/Y/Y;Y/Y/Y",
+    "sizes": "S , M , L, XL",
+    "stock": "N/N/Y/Y;Y/N/N/Y;Y/Y/Y/N;Y/Y/Y/N",
     "price": "$1200",
     "specs": {
       "原產地": "Taiwan",
@@ -103,21 +103,6 @@
     "specs": {
       "原產地": "Taiwan",
       "材質": "麻"
-    }
-  },
-  "p00112": {
-    "id": "p00112",
-    "name": "TEST",
-    "imgUrl": "",
-    "thumbnails": "[]",
-    "description": "dddd",
-    "colors": "[\"PURPLE\",\"BLACK\"]",
-    "sizes": "S,M,L,XL,XXL",
-    "stock": "N/N/N/Y/Y;Y/N/N/N/Y",
-    "price": "$100",
-    "specs": {
-      "原產地": "HK",
-      "材質": "textile"
     }
   }
 }
