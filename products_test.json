@@ -3,7 +3,7 @@
     "id": "p001",
     "name": "Polo 衫",
     "price": "$1210",
-    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
+    "imgUrl": "",
     "images": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/Polo_shirt_red.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/Polo_shirt_green.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/yellow_shirt.jpg\"]",
     "title": "100%純棉",
     "category": "服裝"
