@@ -20,9 +20,9 @@
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg",
     "thumbnails": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/navy_polo.jpg\"]",
     "description": "100%純棉",
-    "colors": "[]",
-    "sizes": "",
-    "stock": "",
+    "colors": "[\"Blue\",\"Green\"]",
+    "sizes": "S / M / L",
+    "stock": "Y/Y/Y/Y;Y/Y/Y/Y",
     "price": "$1099",
     "specs": {
       "原產地": "taiwan",
