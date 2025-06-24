@@ -135,5 +135,20 @@
       "材質": "nuts!"
     },
     "size": "S / M / L / XL"
+  },
+  "P1013": {
+    "id": "P1013",
+    "name": "TESTING",
+    "imgUrl": "",
+    "thumbnails": "[]",
+    "description": "TESTING",
+    "colors": "[\"RED\",\"BLUE\"]",
+    "sizes": "",
+    "stock": "Y/Y/Y/N;Y/Y/N/N",
+    "price": "$1290",
+    "specs": {
+      "原產地": "Taiwan",
+      "材質": "Cotton"
+    }
   }
 }
