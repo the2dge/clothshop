@@ -321,7 +321,7 @@ function renderItemDetails(productId) {
     const sizes = (itemData.sizes || itemData.size || '').split(' , ').filter(s => s.trim());
     const stockMatrix = itemData.stock
         .split(';')
-        .map(row => row.split('/')); // stockMatrix[colorIndex][sizeIndex] = 'Y' or 'N'
+        .map(row => row.split('/')); 
 
     const thumbnailHTML = thumbnails.map(url =>
         `<img class="thumbnail" src="${url}" alt="thumbnail" style="width: 80px; height: 80px; margin: 4px; cursor: pointer;">`
@@ -660,8 +660,13 @@ function renderSideCartTMP() {
     }
 
     // Get selected size from the dropdown
-    const sizeSelect = document.getElementById('sizeSelect');
-    const selectedSize = sizeSelect ? sizeSelect.value : null;
+    // Get selected size & color
+    const sizeSelect  = document.getElementById('sizeSelect');
+    const colorSelect = document.getElementById('colorSelect');
+    const selectedSize  = sizeSelect  ? sizeSelect.value  : '';
+    const selectedColor = colorSelect
+     ? colorSelect.options[colorSelect.selectedIndex].text
+     : '';
 
    /* if (!selectedSize || sizeSelect.options[sizeSelect.selectedIndex].disabled) {
         alert("請選擇有庫存的尺寸");
@@ -669,21 +674,25 @@ function renderSideCartTMP() {
     }*/
 
     // Check if the same product with the same size is already in the cart
-    const existingCartItemIndex = cart.findIndex(item => item.id === productId && item.size === selectedSize);
-
+    const existingCartItemIndex = cart.findIndex(item =>
+     item.id    === productId      &&
+     item.size  === selectedSize   &&
+     item.color === selectedColor
+    );
     if (existingCartItemIndex > -1) {
         // Item with same size already in cart, increase quantity
         cart[existingCartItemIndex].quantity += 1;
     } else {
         // Add new item to cart
-        cart.push({
-            id: productId,
-            name: productToAdd.name,
-            price: productToAdd.price,
-            imgUrl: productToAdd.imgUrl,
-            size: selectedSize,
-            quantity: 1
-        });
+          cart.push({
+          id:    productId,
+          name:  productToAdd.name,
+          price: productToAdd.price,
+          imgUrl:productToAdd.imgUrl,
+          size:  selectedSize,
+          color: selectedColor,
+          quantity: 1
+      });
     }
 
     console.log("Cart updated:", cart);
@@ -723,9 +732,12 @@ function renderSideCartTMP() {
         // setTimeout(() => sideCart.aside.classList.remove('open'), 1500); // Auto close after 1.5s
     }
 */
-    function removeFromCart(productId) {
-        cart = cart.filter(item => item.id !== productId);
-        console.log("Cart updated after removal:", cart);
+    function removeFromCart(productId, size, color) {
+        cart = cart.filter(item =>
+            !(item.id === productId &&
+            item.size === size  &&
+            item.color=== color)
+     );
         renderSideCart(); // Update the visual cart display
     }
 
@@ -745,9 +757,12 @@ function renderSideCartTMP() {
 
       return `$${total.toFixed(2)}`;
     }
-    function changeCartQuantity(productId, changeAmount) {
-        const cartItemIndex = cart.findIndex(item => item.id === productId);
-        if (cartItemIndex > -1) {
+    function changeCartQuantity(productId, size, color, changeAmount) {
+     const cartItemIndex = cart.findIndex(item =>
+       item.id    === productId &&
+       item.size  === size      &&
+       item.color === color
+     );if (cartItemIndex > -1) {
             cart[cartItemIndex].quantity += changeAmount;
 
             if (cart[cartItemIndex].quantity <= 0) {
@@ -1976,7 +1991,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Remove Item from Cart Click (Event Delegation)
-        sideCart.itemsContainer.addEventListener('click', (e) => {
+        sideCart.itemsContainer.addEventListener('click', e => {
+          const btn = e.target;
+          if (btn.classList.contains('remove-item-btn')) {
+            const { productId, size, color } = btn.dataset;
+            removeFromCart(productId, size, color);
+          }
+          if (btn.classList.contains('increase-qty-btn')) {
+            const { productId, size, color } = btn.dataset;
+            changeCartQuantity(productId, size, color, +1);
+          }
+          if (btn.classList.contains('decrease-qty-btn')) {
+            const { productId, size, color } = btn.dataset;
+            changeCartQuantity(productId, size, color, -1);
+          }
+        });
+      /* sideCart.itemsContainer.addEventListener('click', (e) => {
             if (e.target.classList.contains('remove-item-btn')) {
                 const cartItemDiv = e.target.closest('.side-cart-item');
                 if (cartItemDiv) {
@@ -1991,7 +2021,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 changeCartQuantity(productId, -1); // Decrease quantity by 1
             }
         });
-        
+        */
 
         // Checkout Button Click (in Side Cart)
         sideCart.checkoutBtn.addEventListener('click', () => {
