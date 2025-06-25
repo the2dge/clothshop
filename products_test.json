@@ -19,19 +19,10 @@
   },
   {
     "id": "p003",
-    "name": "Yellow Shirt",
-    "price": "$1000",
+    "name": "牛津襯衫",
+    "price": "$1500",
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/yellow_shirt.jpg",
-    "images": "",
-    "title": "100% Pure Cutton",
-    "category": "服裝"
-  },
-  {
-    "id": "p004",
-    "name": "White Shirt",
-    "price": "$1200",
-    "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/white_shirt.jpg",
-    "images": "",
+    "images": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/yellow_shirt.jpg\"]",
     "title": "100% Pure Cutton",
     "category": "服裝"
   },
