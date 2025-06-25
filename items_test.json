@@ -21,7 +21,7 @@
     "thumbnails": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/navy_polo.jpg\"]",
     "description": "100%純棉;它是一款百搭的服裝，以兼具休閒舒適感和正式感而聞名，適合各種場合。 Polo衫通常與馬球和網球等運動聯繫在一起，但它已成為時尚的必備單品，無論是休閒裝還是商務休閒裝，都能輕鬆駕馭。",
     "colors": "[\"藍色\",\"綠色\"]",
-    "sizes": "S,M,L",
+    "sizes": "S, M, L",
     "stock": "Y/Y/N;N/Y/Y",
     "price": "$1200",
     "specs": {
