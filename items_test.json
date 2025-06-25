@@ -36,7 +36,7 @@
     "thumbnails": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/yellow_shirt.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/white_shirt.jpg\"]",
     "description": "牛津襯衫是一種紐帶襯衫，由牛津布製成，牛津布是一種耐用、略帶紋理且透氣的面料。它的特點是籃狀編織結構，通常搭配紐扣領。牛津襯衫起源於蘇格蘭，因其舒適且富有彈性的特性，在英格蘭廣受歡迎，尤其是在大學生和馬球運動員中。",
     "colors": "[\"黃\",\"白\"]",
-    "sizes": "M, L",
+    "sizes": "M , L",
     "stock": "Y/Y;Y/N",
     "price": "$1500",
     "specs": {
