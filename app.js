@@ -1074,7 +1074,7 @@ function renderOrderedItemsSummaryDOM(cartItems) {
             itemDiv.style.padding = '5px 0';
 
             const sizeLabel = item.size ? `<div style="font-size: 0.9em; color: #555;">尺寸：${item.size}</div>` : '';
-
+            const colorLabel = item.color ? `<div style="font-size: 0.9em; color: #555;">顏色：${item.color}</div>` : '';
             itemDiv.innerHTML = `
                 <div style="flex-basis: 50%;">
                     <img src="${item.imgUrl}" alt="${item.name}" style="width:30px; height:30px; margin-right:10px; vertical-align:middle;">
