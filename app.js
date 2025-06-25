@@ -321,7 +321,7 @@ function renderItemDetails(productId) {
     const sizes = (itemData.sizes || itemData.size || '').split(' / ').filter(s => s.trim());
     const stockMatrix = itemData.stock
         .split(';')
-        .map(row => row.split('/')); // stockMatrix[colorIndex][sizeIndex] = 'Y' or 'N'
+        .map(row => row.split(',')); // stockMatrix[colorIndex][sizeIndex] = 'Y' or 'N'
 
     const thumbnailHTML = thumbnails.map(url =>
         `<img class="thumbnail" src="${url}" alt="thumbnail" style="width: 80px; height: 80px; margin: 4px; cursor: pointer;">`
