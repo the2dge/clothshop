@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
     //Re-calculate Cart Total
-    function calculateCartTotal() {
+  /*  function calculateCartTotal() {
         let total = 0;
         cart.forEach(item => {
             const price = parseFloat(item.price.replace(/[^0-9.-]+/g,""));
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
         return total;
-    }
+    }*/
     //Validate Promo Code
     function validateDiscountCode(inputCode) {
       const member = membershipData.find(m =>
@@ -1829,17 +1829,17 @@ function validateDiscountCode(inputCode) {
 
 // --- Utility: Calculate Cart Subtotal (Numeric) ---
 // Ensure 'cart' is accessible.
-function calculateCartTotal() {
-    let total = 0;
+function calculateCartTotal(cart) {
     if (!cart || cart.length === 0) return 0;
-    cart.forEach(item => {
-        const priceString = String(item.price); // Ensure it's a string before replacing
-        const price = parseFloat(priceString.replace(/[^0-9.-]+/g, ""));
-        if (!isNaN(price)) {
-            total += price * item.quantity;
-        }
-    });
-    return total;
+    
+    return cart.reduce((total, item) => {
+        // Convert price to string and remove any non-numeric characters (except decimal and minus)
+        const priceString = String(item.price).replace(/[^0-9.-]+/g, "");
+        const price = parseFloat(priceString);
+        
+        // Only add to total if price is a valid number
+        return !isNaN(price) ? total + price * item.quantity : total;
+    }, 0);
 }
 
 // --- Assumed globally available functions (you need to ensure these exist) ---
