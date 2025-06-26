@@ -1829,17 +1829,30 @@ function validateDiscountCode(inputCode) {
 
 // --- Utility: Calculate Cart Subtotal (Numeric) ---
 // Ensure 'cart' is accessible.
-function calculateCartTotal(cart) {
+function calculateCartTotal() {
+    let total = 0;
     if (!cart || cart.length === 0) return 0;
     
-    return cart.reduce((total, item) => {
-        // Convert price to string and remove any non-numeric characters (except decimal and minus)
-        const priceString = String(item.price).replace(/[^0-9.-]+/g, "");
-        const price = parseFloat(priceString);
+    cart.forEach(item => {
+        let price = 0;
         
-        // Only add to total if price is a valid number
-        return !isNaN(price) ? total + price * item.quantity : total;
-    }, 0);
+        // Handle different price formats
+        if (typeof item.price === 'number') {
+            // If it's already a number, use it directly
+            price = item.price;
+        } else if (typeof item.price === 'string') {
+            // If it's a string, clean it and parse
+            const cleanedPrice = item.price.replace(/[^0-9.-]+/g, "");
+            price = parseFloat(cleanedPrice);
+        }
+        
+        // Validate the price and quantity before adding to total
+        if (!isNaN(price) && price >= 0 && item.quantity > 0) {
+            total += price * item.quantity;
+        }
+    });
+    
+    return Math.round(total * 100) / 100; // Round to 2 decimal places
 }
 
 // --- Assumed globally available functions (you need to ensure these exist) ---
