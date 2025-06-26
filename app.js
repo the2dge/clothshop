@@ -62,17 +62,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             return null; // Return null or appropriate error indicator
         }
     }
-    //Re-calculate Cart Total
-  /*  function calculateCartTotal() {
-        let total = 0;
-        cart.forEach(item => {
-            const price = parseFloat(item.price.replace(/[^0-9.-]+/g,""));
-            if (!isNaN(price)) {
-                total += price * item.quantity;
-            }
-        });
-        return total;
-    }*/
+
     //Validate Promo Code
     function validateDiscountCode(inputCode) {
       const member = membershipData.find(m =>
@@ -741,22 +731,35 @@ function renderSideCartTMP() {
         renderSideCart(); // Update the visual cart display
     }
 
-    function calculateTotal(discountPercent = 0) {
-      let total = 0;
-
-      cart.forEach(item => {
-        const price = parseFloat(item.price.replace(/[^0-9.-]+/g, ''));
-        if (!isNaN(price)) {
-          total += price * item.quantity;
+function calculateTotal(discountPercent = 0) {
+    let total = 0;
+    
+    cart.forEach(item => {
+        let price = 0;
+        
+        // Handle different price formats
+        if (typeof item.price === 'number') {
+            // If it's already a number, use it directly
+            price = item.price;
+        } else if (typeof item.price === 'string') {
+            // If it's a string, clean it and parse
+            const cleanedPrice = item.price.replace(/[^0-9.-]+/g, "");
+            price = parseFloat(cleanedPrice);
         }
-      });
-
-      if (discountPercent > 0) {
+        
+        // Validate the price and quantity before adding to total
+        if (!isNaN(price) && price >= 0 && item.quantity > 0) {
+            total += price * item.quantity;
+        }
+    });
+    
+    // Apply discount if provided
+    if (discountPercent > 0) {
         total *= (1 - discountPercent / 100);
-      }
-
-      return `$${total.toFixed(2)}`;
     }
+    
+    return `${total.toFixed(2)}`;
+}
     function changeCartQuantity(productId, size, color, changeAmount) {
      const cartItemIndex = cart.findIndex(item =>
        item.id    === productId &&
@@ -1074,7 +1077,7 @@ function renderOrderedItemsSummaryDOM(cartItems) {
             itemDiv.style.padding = '5px 0';
 
             const sizeLabel = item.size ? `<div style="font-size: 0.9em; color: #555;">尺寸：${item.size}</div>` : '';
-            const colorLabel = item.color ? `<div style="font-size: 0.9em; color: #555;">顏色：${item.color}</div>` : '';
+            s
             itemDiv.innerHTML = `
                 <div style="flex-basis: 50%;">
                     <img src="${item.imgUrl}" alt="${item.name}" style="width:30px; height:30px; margin-right:10px; vertical-align:middle;">
@@ -1854,6 +1857,18 @@ function calculateCartTotal() {
     
     return Math.round(total * 100) / 100; // Round to 2 decimal places
 }
+/*function calculateCartTotal() {
+    let total = 0;
+    if (!cart || cart.length === 0) return 0;
+    cart.forEach(item => {
+        const priceString = String(item.price); // Ensure it's a string before replacing
+        const price = parseFloat(priceString.replace(/[^0-9.-]+/g, ""));
+        if (!isNaN(price)) {
+            total += price * item.quantity;
+        }
+    });
+    return total;
+}*/
 
 // --- Assumed globally available functions (you need to ensure these exist) ---
 // function loginWithLINE() { /* ... */ }
