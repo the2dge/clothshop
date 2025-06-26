@@ -2292,7 +2292,7 @@ function defer(callback) {
 //END of init()
 
     // --- Start the application ---
-    await loadMembershipData();
+    //await loadMembershipData();
     init();
     ECpayStoreDataBackTransfer();
 
