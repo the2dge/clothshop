@@ -108,8 +108,35 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
     // --- Rendering Functions ---
+function renderBanner(bannerData) {
+    const bannerContainer = $('#banner-slider-container');
+    bannerContainer.empty();
 
-     function renderBanner(bannerData) {
+    if (!bannerData || bannerData.length === 0) {
+        bannerContainer.html('<p>No banners available.</p>');
+        return false;
+    }
+
+    bannerData.forEach((banner, index) => {
+        const slide = $('<div>').addClass('banner-slide');
+
+        const img = $('<img>')
+            .attr('src', banner.imageUrl)
+            .attr('alt', banner.altText || '')
+            .attr('loading', 'lazy'); // ✅ Add this
+
+        slide.append(img);
+
+        if (index === 0) {
+            slide.show(); // First slide visible
+        }
+
+        bannerContainer.append(slide);
+    });
+
+    return true;
+}
+ /*    function renderBanner(bannerData) {
         const bannerContainer = $('#banner-slider-container'); // Use jQuery selector
         bannerContainer.empty(); // Clear previous content
         
@@ -133,7 +160,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
         return true; // Indicate success
     }
-
+*/
     // --- NEW: jQuery Slideshow Logic ---
     function startBannerSlideshow() {
         const $slides = $('.banner-slide'); // Get all slides
