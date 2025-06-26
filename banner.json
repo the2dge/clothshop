@@ -1,5 +1,5 @@
 [
-  { "id": "banner1", "imageUrl": "image/boutique_woman.webp", "altText": "Special Offer Banner" },
-  { "id": "banner2", "imageUrl": "image/boutique_man.webp", "altText": "New Arrivals Banner" },
-  { "id": "banner3", "imageUrl": "image/accessories.webp", "altText": "Seasonal Sale Banner" }
+  { "id": "banner1", "imageUrl": "../image/boutique_woman.webp", "altText": "Special Offer Banner" },
+  { "id": "banner2", "imageUrl": "../image/boutique_man.webp", "altText": "New Arrivals Banner" },
+  { "id": "banner3", "imageUrl": "../image/accessories.webp", "altText": "Seasonal Sale Banner" }
 ]
