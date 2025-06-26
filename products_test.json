@@ -6,7 +6,8 @@
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg",
     "images": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/Polo_shirt_red.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/Polo_shirt_green.jpg\"]",
     "title": "100%純棉",
-    "category": "服裝"
+    "category": "服裝",
+    "stock": "Y/Y/Y/N;Y/N/Y/N;Y/Y/N/N"
   },
   {
     "id": "p002",
@@ -15,7 +16,8 @@
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg",
     "images": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/green_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/navy_polo.jpg\"]",
     "title": "100%純棉",
-    "category": "服裝"
+    "category": "服裝",
+    "stock": "Y/Y/N;N/Y/Y"
   },
   {
     "id": "p003",
@@ -24,7 +26,8 @@
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/yellow_shirt.jpg",
     "images": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/yellow_shirt.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/white_shirt.jpg\"]",
     "title": "100% Pure Cutton",
-    "category": "服裝"
+    "category": "服裝",
+    "stock": "Y/Y;Y/N"
   },
   {
     "id": "p005",
@@ -33,7 +36,8 @@
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/seventy_fashion.jpg",
     "images": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/seventy_fashion.jpg\"]",
     "title": "濃濃復古風情，包括六件經典單品。",
-    "category": "特色商品"
+    "category": "特色商品",
+    "stock": "N"
   },
   {
     "id": "p006",
@@ -42,7 +46,8 @@
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/handbag1_leather.jpg",
     "images": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/handbag1_leather.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/handbag2_leather.jpg\"]",
     "title": "優質皮革打造，觸感細膩，質感奢華。",
-    "category": "配件"
+    "category": "配件",
+    "stock": "Y"
   },
   {
     "id": "p007",
@@ -51,6 +56,7 @@
     "imgUrl": "https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/cutton_handbag.jpg",
     "images": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/cutton_handbag.jpg\"]",
     "title": "採用柔軟的棉質紗線製作，觸感舒適，重量輕盈。",
-    "category": "配件"
+    "category": "配件",
+    "stock": "Y"
   }
 ]
