@@ -2289,7 +2289,7 @@ document.addEventListener('DOMContentLoaded', () => {
 }//END of init()
 
     // --- Start the application ---
-    await loadMembershipData();
+    // await loadMembershipData();
     init();
     ECpayStoreDataBackTransfer();
 
