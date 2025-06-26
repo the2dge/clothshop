@@ -473,11 +473,14 @@ function renderSideCart() {
         }, 1500);
     } else {
         cart.forEach(item => {
+            const imgSrc = Array.isArray(item.images) && item.colorIndex >= 0
+                ? item.images[item.colorIndex] || item.images[0] // Fallback to first image
+                : item.imgUrl;
             const cartItemDiv = document.createElement('div');
             cartItemDiv.classList.add('side-cart-item');
             cartItemDiv.setAttribute('data-cart-item-id', item.id);
             cartItemDiv.innerHTML = `
-                <img src="${item.imgUrl}" alt="${item.name}">
+                <img src="${imgSrc}" alt="${item.name}">
                 <div class="item-info">
                     <p class="name">${item.name}</p>
                     ${item.color ? `<p class="color">顏色：${item.color}</p>` : ''}
@@ -657,6 +660,7 @@ function renderSideCartTMP() {
     const selectedColor = colorSelect
      ? colorSelect.options[colorSelect.selectedIndex].text
      : '';
+    const selectedColorIndex = colorSelect ? colorSelect.selectedIndex : 0; 
 
    /* if (!selectedSize || sizeSelect.options[sizeSelect.selectedIndex].disabled) {
         alert("請選擇有庫存的尺寸");
@@ -678,9 +682,10 @@ function renderSideCartTMP() {
           id:    productId,
           name:  productToAdd.name,
           price: productToAdd.price,
-          imgUrl:productToAdd.imgUrl,
+          images: itemDetails.thumbnailUrls || JSON.parse(itemDetails.thumbnails || '[]'),
           size:  selectedSize,
           color: selectedColor,
+          colorIndex: selectedColorIndex,
           quantity: 1
       });
     }
@@ -1050,7 +1055,6 @@ dropdown.appendChild(creditBalance);
 
 // --- Helper for "我訂購的商品" Title, List, and Totals Placeholders ---
 function renderOrderedItemsSummaryDOM(cartItems) {
-    // Clear previous content if re-rendering
     mainBody.checkoutWrapper.innerHTML = '';
 
     const itemsHeader = document.createElement('h2');
@@ -1076,12 +1080,23 @@ function renderOrderedItemsSummaryDOM(cartItems) {
             itemDiv.style.alignItems = 'center';
             itemDiv.style.padding = '5px 0';
 
-            const sizeLabel = item.size ? `<div style="font-size: 0.9em; color: #555;">尺寸：${item.size}</div>` : '';
-            s
+            const imgSrc = Array.isArray(item.images) && item.colorIndex >= 0
+                ? item.images[item.colorIndex] || item.images[0]
+                : item.imgUrl;
+
+            const sizeLabel = item.size
+                ? `<div style="font-size: 0.9em; color: #555;">尺寸：${item.size}</div>`
+                : '';
+
+            const colorLabel = item.color
+                ? `<div style="font-size: 0.9em; color: #555;">顏色：${item.color}</div>`
+                : '';
+
             itemDiv.innerHTML = `
                 <div style="flex-basis: 50%;">
-                    <img src="${item.imgUrl}" alt="${item.name}" style="width:30px; height:30px; margin-right:10px; vertical-align:middle;">
+                    <img src="${imgSrc}" alt="${item.name}" style="width:30px; height:30px; margin-right:10px; vertical-align:middle;">
                     <span>${item.name}</span>
+                    ${colorLabel}
                     ${sizeLabel}
                 </div>
                 <span style="flex-basis: 20%; text-align:center;">x ${item.quantity}</span>
