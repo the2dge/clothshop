@@ -108,35 +108,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
     // --- Rendering Functions ---
-function renderBanner(bannerData) {
-    const bannerContainer = $('#banner-slider-container');
-    bannerContainer.empty();
 
-    if (!bannerData || bannerData.length === 0) {
-        bannerContainer.html('<p>No banners available.</p>');
-        return false;
-    }
-
-    bannerData.forEach((banner, index) => {
-        const slide = $('<div>').addClass('banner-slide');
-
-        const img = $('<img>')
-            .attr('src', banner.imageUrl)
-            .attr('alt', banner.altText || '')
-            .attr('loading', 'lazy'); // ✅ Add this
-
-        slide.append(img);
-
-        if (index === 0) {
-            slide.show(); // First slide visible
-        }
-
-        bannerContainer.append(slide);
-    });
-
-    return true;
-}
- /*    function renderBanner(bannerData) {
+     function renderBanner(bannerData) {
         const bannerContainer = $('#banner-slider-container'); // Use jQuery selector
         bannerContainer.empty(); // Clear previous content
         
@@ -160,7 +133,7 @@ function renderBanner(bannerData) {
         });
         return true; // Indicate success
     }
-*/
+
     // --- NEW: jQuery Slideshow Logic ---
     function startBannerSlideshow() {
         const $slides = $('.banner-slide'); // Get all slides
@@ -279,7 +252,7 @@ function renderProductGrid(products) {
         productDiv.setAttribute('data-product-id', product.id);
 
         let outOfStockOverlay = ''; // NEW: Variable for the overlay
-        
+        console.log("Stock Status: ", product.stock);
         // NEW: Check for stock status
         if (product.stock === 'N') {
             productDiv.classList.add('out-of-stock'); // Add class for styling and click handling
@@ -290,7 +263,7 @@ function renderProductGrid(products) {
         // Populate the inner HTML, including the overlay if needed
         productDiv.innerHTML = `
             ${outOfStockOverlay}
-            <img src="${product.imgUrl}" alt="${product.name}">
+            <img src="${product.imgUrl}" loading="lazy" alt="${product.name}">
             <h3>${product.name}</h3>
             <p>${product.price}</p>
             ${product.title ? `<p class="product-title">${product.title}</p>` : ''}
@@ -319,7 +292,11 @@ function renderProductGrid(products) {
         });
     }
 */ 
-function renderItemDetails(productId) {
+async function renderItemDetails(productId) {
+    if (!allItemDetails || !Object.keys(allItemDetails).length) {
+        allItemDetails = await fetchData('items_test.json');
+    }
+
     const itemData = allItemDetails[productId];
     if (!itemData) {
         mainBody.itemWrapper.innerHTML = `<p>Error: Product details not found for ID ${productId}.</p>`;
@@ -530,46 +507,7 @@ function renderSideCart() {
     // Show/hide checkout button
     sideCart.checkoutBtn.style.display = cart.length > 0 ? 'block' : 'none';
 }
-function renderSideCartTMP() {
-    sideCart.itemsContainer.innerHTML = ''; // Clear current items
 
-    if (cart.length === 0) {
-        sideCart.itemsContainer.innerHTML = '<p>您的購物車是空的。</p>';
-        setTimeout(() => {
-            switchView('content');
-        }, 1500);
-    } else {
-        cart.forEach(item => {
-            const cartItemDiv = document.createElement('div');
-            cartItemDiv.classList.add('side-cart-item');
-            cartItemDiv.setAttribute('data-cart-item-id', item.id);
-
-            cartItemDiv.innerHTML = `
-                <img src="${item.imgUrl}" alt="${item.name}">
-                <div class="item-info">
-                    <p class="name">${item.name}</p>
-                    ${item.size ? `<p class="size">尺寸：${item.size}</p>` : ''}
-                    <p class="price">${item.price}</p>
-                    <div class="quantity-control">
-                        <button class="decrease-qty-btn" data-product-id="${item.id}" data-size="${item.size}">➖</button>
-                        <span class="quantity">${item.quantity}</span>
-                        <button class="increase-qty-btn" data-product-id="${item.id}" data-size="${item.size}">➕</button>
-                    </div>
-                </div>
-                <button class="remove-item-btn">刪除</button>
-            `;
-
-            sideCart.itemsContainer.appendChild(cartItemDiv);
-        });
-    }
-
-    // Update total and item count
-    sideCart.totalSpan.textContent = calculateTotal();
-    navbar.cartItemCountSpan.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-    // Show/hide checkout button
-    sideCart.checkoutBtn.style.display = cart.length > 0 ? 'block' : 'none';
-}
 /* Retire it as no thumbnailImages and S/M/L support
     function renderItemDetails(productId) {
         const itemData = allItemDetails[productId];
@@ -2216,7 +2154,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- Initialization Function ---
-    async function init() {
+async function init() {
+    await renderMainContent();      // Step 1: Fast, above-the-fold content
+    defer(renderDeferredContent);  // Step 2: Lazy load background tasks
+}
+async function renderMainContent() {
+    try {
+        const [bannerData, aboutData, productData] = await Promise.all([
+            fetchData('banner.json'),
+            fetchData('about.json'),
+            fetchData('products_test.json'),
+        ]);
+
+        const bannerRendered = renderBanner(bannerData);
+        renderAbout(aboutData);
+        renderProductGrid(productData);
+        allProductsData = productData;
+
+        startSlideshowIfReady(bannerRendered);
+    } catch (error) {
+        console.error("Error rendering main content:", error);
+    }
+}
+
+function renderDeferredContent() {
+    fetchData('media.json').then(renderMedia);
+    loadMembershipData();  // Only needed for checkout or discounts
+    renderSideCart();      // UI enhancement only
+    setupEventListeners(); // DOM event bindings
+}
+
+function startSlideshowIfReady(bannerRendered) {
+    if (bannerRendered) {
+        startBannerSlideshow();
+    }
+}
+
+// Utility: Use browser idle time or fallback to timeout
+function defer(callback) {
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(callback);
+    } else {
+        setTimeout(callback, 200);
+    }
+}
+ /*   async function init() {
 
         // Fetch all necessary data concurrently
         const [bannerData, aboutData,mediaData, productsData, itemDetailsData] = await Promise.all([
@@ -2282,13 +2264,6 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log("Item saved !Return from LINE Login: ", savedCart);
       if (savedCart) cart = JSON.parse(savedCart);
       switchView('content');
-        /*
-      if (state === 'checkout') {
-        renderCheckoutPage(cart); // cart + user
-        switchView('checkout');
-      } else {
-        switchView('content');
-      }*/
       window.history.replaceState({}, document.title, window.location.pathname);
       return; // ✅ exit early
     }
@@ -2313,10 +2288,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Normal load ---
     switchView('content');
-}//END of init()
+}*/
+//END of init()
 
     // --- Start the application ---
-    // await loadMembershipData();
+    await loadMembershipData();
     init();
     ECpayStoreDataBackTransfer();
 
