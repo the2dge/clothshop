@@ -343,7 +343,31 @@ async function renderItemDetails(productId) {
         <select id="sizeSelect">
             ${initialSizeOptions}
         </select><br><br>`;
+    const sizesArr = sizes;
+    const chestWidths = itemData.chestWidth.split('/'); // ['50','52','54','58']
+    const bodyLengths = itemData.bodyLength.split('/'); // ['40','42','44','48']
 
+    const sizeTableHTML = `
+        <h3>尺寸表</h3>
+        <table class="size-chart" style="width:100%; border-collapse: collapse; margin-bottom: 1em; text-align: center;">
+            <thead>
+                <tr style="border-bottom: 2px solid #ccc;">
+                    <th style="padding: 8px; text-align: left;">尺寸</th>
+                    ${sizesArr.map(size => `<th style="padding: 8px;">${size}</th>`).join('')}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 8px; text-align: left;">胸寬 (cm)</td>
+                    ${chestWidths.map(val => `<td style="padding: 8px;">${val}</td>`).join('')}
+                </tr>
+                <tr>
+                    <td style="padding: 8px; text-align: left;">衣長 (cm)</td>
+                    ${bodyLengths.map(val => `<td style="padding: 8px;">${val}</td>`).join('')}
+                </tr>
+            </tbody>
+        </table>
+    `;
     mainBody.itemWrapper.innerHTML = `
         <article class="item-detail">
             <div class="image-gallery">
@@ -357,6 +381,7 @@ async function renderItemDetails(productId) {
                 <p>${itemData.description}</p>
                 ${colorDropdownHTML}
                 ${sizeDropdownHTML}
+                ${sizeTableHTML}
                 ${itemData.specs ? `<ul>${Object.entries(itemData.specs).map(([key, value]) => `<li><strong>${key}:</strong> ${value}</li>`).join('')}</ul>` : ''}
                 <p class="price">${itemData.price}</p>
                 <div class="button-row">
@@ -426,31 +451,7 @@ function renderItemDetailsT(productId) {
                 }).join('')}
             </select>`
         : '';
-    const sizesArr = sizes;
-const chestWidths = itemData.chestWidth.split('/'); // ['50','52','54','58']
-const bodyLengths = itemData.bodyLength.split('/'); // ['40','42','44','48']
 
-const sizeTableHTML = `
-    <h3>尺寸表</h3>
-    <table class="size-chart" style="width:100%; border-collapse: collapse; margin-bottom: 1em; text-align: center;">
-        <thead>
-            <tr style="border-bottom: 2px solid #ccc;">
-                <th style="padding: 8px; text-align: left;">尺寸</th>
-                ${sizesArr.map(size => `<th style="padding: 8px;">${size}</th>`).join('')}
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="padding: 8px; text-align: left;">胸寬 (cm)</td>
-                ${chestWidths.map(val => `<td style="padding: 8px;">${val}</td>`).join('')}
-            </tr>
-            <tr>
-                <td style="padding: 8px; text-align: left;">衣長 (cm)</td>
-                ${bodyLengths.map(val => `<td style="padding: 8px;">${val}</td>`).join('')}
-            </tr>
-        </tbody>
-    </table>
-`;
 
     mainBody.itemWrapper.innerHTML = `
         <article class="item-detail">
@@ -464,7 +465,6 @@ const sizeTableHTML = `
                 <h2>${itemData.name}</h2>
                 <p>${itemData.description}</p>
                 ${sizeDropdown}
-                ${sizeTableHTML}
                 ${itemData.specs ? `<ul>${Object.entries(itemData.specs).map(([key, value]) => `<li><strong>${key}:</strong> ${value}</li>`).join('')}</ul>` : ''}
                 <p class="price">${itemData.price}</p>
                 <div class="button-row">
