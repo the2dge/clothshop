@@ -23,7 +23,7 @@ body { margin: 0; font-family: sans-serif; }
 .wrapper.active { display: block; } /* Show the active wrapper */
 
 /* Navbar */
-.navbar { position: fixed; z-index: 900; margin: 0 10px 60px 0; width: 100%;background-color: #f8f8f8; border-bottom: 1px solid #e7e7e7; padding: 10px 20px; }
+.navbar { position: fixed; z-index: 900; top: 0;margin: 0 10px 60px 0; width: 100%;background-color: #f8f8f8; border-bottom: 1px solid #e7e7e7; padding: 10px 20px; }
 .navbar-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
 .logo img { max-height: 50px; }
 /*
