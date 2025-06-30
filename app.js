@@ -1986,6 +1986,7 @@ async function init() {
 
   // Case 2: Returning from 7-11 store selection
   if (CVSStoreID) {
+    renderCheckoutPage(cart);
     ECpayStoreDataBackTransfer();
     return;
   }
