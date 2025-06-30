@@ -8,6 +8,7 @@
     "colors": "[\"藍色\",\"紅色\",\"綠色\"]",
     "sizes": "S , M , L , XL",
     "chestWidth": "50/52/54/58;50/50/50/50;50/52/54/58",
+    "bodyLength": "40/42/46/48;40/42/46/48;40/42/44/46",
     "stock": "Y/Y/Y/N;Y/N/Y/N;Y/Y/N/N",
     "price": "$680",
     "specs": {
@@ -23,7 +24,8 @@
     "description": "100%純棉;它是一款百搭的服裝，以兼具休閒舒適感和正式感而聞名，適合各種場合。 Polo衫通常與馬球和網球等運動聯繫在一起，但它已成為時尚的必備單品，無論是休閒裝還是商務休閒裝，都能輕鬆駕馭。",
     "colors": "[\"藍色\",\"綠色\"]",
     "sizes": "S , M , L",
-    "chestWidth": "///;///",
+    "chestWidth": "50/52/54/;50/52/54/",
+    "bodyLength": "40/44/48;40/44/48",
     "stock": "Y/Y/N;N/Y/Y",
     "price": "$1200",
     "specs": {
@@ -40,6 +42,7 @@
     "colors": "[\"黃\",\"白\"]",
     "sizes": "M , L",
     "chestWidth": "///;/",
+    "bodyLength": "",
     "stock": "Y/Y;Y/N",
     "price": "$1500",
     "specs": {
@@ -56,6 +59,7 @@
     "colors": "[\"深咖啡色\"]",
     "sizes": "單品",
     "chestWidth": "///",
+    "bodyLength": "",
     "stock": "N",
     "price": "$12800",
     "specs": {
@@ -72,6 +76,7 @@
     "colors": "[\"棕色牛皮\"]",
     "sizes": "單品",
     "chestWidth": "///",
+    "bodyLength": "",
     "stock": "Y",
     "price": "$12000",
     "specs": {
@@ -88,6 +93,7 @@
     "colors": "[\"淡綠色和白色 Pale Green and White\"]",
     "sizes": "單品",
     "chestWidth": "",
+    "bodyLength": "",
     "stock": "Y",
     "price": "$6800",
     "specs": {
