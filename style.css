@@ -126,7 +126,7 @@ body { margin: 0; font-family: sans-serif; }
   display: block;
 }
 /* Main Body */
-.main-body { padding: 20px; max-width: 1200px; margin: 60px auto 20px auto; min-height: 60vh; } /* Ensure footer isn't too high */
+.main-body { padding: 20px 10px; max-width: 1200px; margin: 60px auto 20px auto; min-height: 60vh; } /* Ensure footer isn't too high */
 
 /* Content Wrapper Specifics */
 /* Add these styles to your existing style.css */
