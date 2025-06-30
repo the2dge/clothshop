@@ -272,26 +272,6 @@ function renderProductGrid(products) {
     });
 }
 
-/* IT was used before the product Category is used
-    function renderProductGrid(products) {
-        if (!products) {
-             contentContainers.productGrid.innerHTML = '<p>Error loading products.</p>';
-             return;
-         }
-        contentContainers.productGrid.innerHTML = ''; // Clear previous content
-        products.forEach(product => {
-            const productDiv = document.createElement('div');
-            productDiv.classList.add('product-item');
-            productDiv.setAttribute('data-product-id', product.id);
-            productDiv.innerHTML = `
-                <img src="${product.thumbnailUrl}" alt="${product.name}">
-                <h3>${product.name}</h3>
-                <p>${product.price}</p>
-            `;
-            contentContainers.productGrid.appendChild(productDiv);
-        });
-    }
-*/ 
 async function renderItemDetails(productId) {
     if (!allItemDetails || !Object.keys(allItemDetails).length) {
         allItemDetails = await fetchData('items_test.json');
@@ -534,81 +514,6 @@ function renderSideCart() {
     sideCart.checkoutBtn.style.display = cart.length > 0 ? 'block' : 'none';
 }
 
-/* Retire it as no thumbnailImages and S/M/L support
-    function renderItemDetails(productId) {
-        const itemData = allItemDetails[productId];
-        if (!itemData) {
-            mainBody.itemWrapper.innerHTML = `<p>Error: Product details not found for ID ${productId}.</p>`;
-            switchView('content'); // Go back if details aren't found
-            return;
-        }
-
-        mainBody.itemWrapper.innerHTML = `
-            <article class="item-detail">
-                <img src="${itemData.imgUrl}" alt="${itemData.name}">
-                <div class="item-info">
-                    <h2>${itemData.name}</h2>
-                    <p>${itemData.description}</p>
-                    ${itemData.specs ? `<ul>${Object.entries(itemData.specs).map(([key, value]) => `<li><strong>${key}:</strong> ${value}</li>`).join('')}</ul>` : ''}
-                    <p class="price">${itemData.price}</p>
-                    <div class="button-row">
-                     <button class="add-to-cart-btn" data-product-id="${itemData.id}">加入購物車</button>
-                     <button class="back-to-products-btn" styple="cursor: 'pointer">返回產品頁</button> 
-                    </div>
-                 </div>
-            </article>
-        `;
-         // Add listener specifically for the new back button
-        const backBtn = mainBody.itemWrapper.querySelector('.back-to-products-btn');
-        if (backBtn) {
-          backBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (currentView !== 'content') switchView('content');
-            document.getElementById('product-container')?.scrollIntoView({ behavior: 'smooth' });
-          });
-        }
-    }*/
-
-/*Retire as different is now included
-    function renderSideCart() {
-        sideCart.itemsContainer.innerHTML = ''; // Clear current items
-        if (cart.length === 0) {
-            sideCart.itemsContainer.innerHTML = '<p>您的購物車是空的。</p>';
-                setTimeout(() => {
-          switchView('content');
-        }, 1500);
-
-        } else {
-            cart.forEach(item => {
-                const cartItemDiv = document.createElement('div');
-                cartItemDiv.classList.add('side-cart-item');
-                cartItemDiv.setAttribute('data-cart-item-id', item.id);
-                cartItemDiv.innerHTML = `
-                    <img src="${item.imgUrl}" alt="${item.name}">
-                    <div class="item-info">
-                        <p class="name">${item.name}</p>
-                        <p class="price">${item.price}</p>
-                        <div class="quantity-control">
-                            <button class="decrease-qty-btn" data-product-id="${item.id}">➖</button>
-                            <span class="quantity">${item.quantity}</span>
-                            <button class="increase-qty-btn" data-product-id="${item.id}">➕</button>
-                        </div>
-                    </div>
-                    <button class="remove-item-btn">刪除</button>
-                `;
-                sideCart.itemsContainer.appendChild(cartItemDiv);
-            });
-            
-        }
-
-        // Update total and item count
-        sideCart.totalSpan.textContent = calculateTotal();
-        navbar.cartItemCountSpan.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-        // Show/hide checkout button based on cart content
-        sideCart.checkoutBtn.style.display = cart.length > 0 ? 'block' : 'none';
-    }
-*/
     // --- View Switching ---
     function switchView(viewName) {
         currentView = viewName;
@@ -1863,18 +1768,6 @@ function calculateCartTotal() {
     
     return Math.round(total * 100) / 100; // Round to 2 decimal places
 }
-/*function calculateCartTotal() {
-    let total = 0;
-    if (!cart || cart.length === 0) return 0;
-    cart.forEach(item => {
-        const priceString = String(item.price); // Ensure it's a string before replacing
-        const price = parseFloat(priceString.replace(/[^0-9.-]+/g, ""));
-        if (!isNaN(price)) {
-            total += price * item.quantity;
-        }
-    });
-    return total;
-}*/
 
 // --- Assumed globally available functions (you need to ensure these exist) ---
 // function loginWithLINE() { /* ... */ }
@@ -1967,23 +1860,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             renderProductGrid(allProductsData);
                         }
                     }
-                /*if (e.target.classList.contains('category-btn')) {
-                    const selectedCategory = e.target.dataset.category;
-                    if (selectedCategory !== currentFilterCategory) {
-                        // Update state
-                        currentFilterCategory = selectedCategory;
-
-                        // Update button active class
-                        contentContainers.categoryFiltersContainer.querySelectorAll('.filter-btn').forEach(btn => {
-                            btn.classList.remove('active');
-                        });
-                        e.target.classList.add('active');
-
-                        // Re-render the product grid with the filter applied
-                        // Pass the *original full list* of products
-                        renderProductGrid(allProductsData);
-                    }
-                }*/
+               
             });
         } else {
              console.warn("Category filters container not found for event listener setup.");
@@ -2040,22 +1917,7 @@ document.addEventListener('DOMContentLoaded', () => {
             changeCartQuantity(productId, size, color, -1);
           }
         });
-      /* sideCart.itemsContainer.addEventListener('click', (e) => {
-            if (e.target.classList.contains('remove-item-btn')) {
-                const cartItemDiv = e.target.closest('.side-cart-item');
-                if (cartItemDiv) {
-                    const productId = cartItemDiv.dataset.cartItemId;
-                    removeFromCart(productId);
-                }
-            } else if (e.target.classList.contains('increase-qty-btn')) {
-                const productId = e.target.dataset.productId;
-                changeCartQuantity(productId, 1); // Increase quantity by 1
-            } else if (e.target.classList.contains('decrease-qty-btn')) {
-                const productId = e.target.dataset.productId;
-                changeCartQuantity(productId, -1); // Decrease quantity by 1
-            }
-        });
-        */
+
 
         // Checkout Button Click (in Side Cart)
         sideCart.checkoutBtn.addEventListener('click', () => {
@@ -2071,47 +1933,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
      
     }
-    /*
-    async function checkLINELogin() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
-        const state = urlParams.get('state'); // <-- Get "state"
 
-        if (code) {
-            console.log('Detected LINE login code:', code);
-            console.log('Detected state:', state);
-
-            await exchangeCodeForToken(code); // Do the login exchange
-
-            // After login success, check state
-            if (state === 'checkout') {
-                console.log('State=checkout → Switch to checkout page');
-                renderCheckoutPage(cart); // ⬅️ Must render using restored cart
-                switchView('checkout');
-            } else {
-                switchView('content'); // Default
-            }
-
-            // Clean up URL (remove code/state)
-            window.history.replaceState({}, document.title, window.location.pathname);
-
-        } else {
-            // Normal page load
-            const storedUserName = sessionStorage.getItem('lineUserName');
-            console.log("userName is", storedUserName);
-            if (storedUserName) {
-                    const res = await fetch(`https://script.google.com/macros/s/AKfycbzZhiPYkL62ZHeRMi1-RCkVQUodJDe6IR7UvNouwM1bkHmepJAfECA4JF1_HHLn9Zu7Yw/exec?mode=getMemberInfo&lineUserId=${storedUserName}`);
-                    const data = await res.json();
-                    if (data.status === 'success') {
-                      isMember = true;
-                    }
-                  }
-            if (storedUserName && isMember) {
-                updateNavbarWithUserName(storedUserName);
-            }
-        }
-    }
-    */
     async function exchangeCodeForToken(code) {
       const cloudFunctionURL = 'https://mrbean-website-line-login-545199463340.asia-east1.run.app'; // <-- replace with your real function URL
 
@@ -2159,14 +1981,7 @@ document.addEventListener('DOMContentLoaded', () => {
             Swal.fire('❌ 訂單提交失敗，請稍後再試。');
         }
     }
-    /*
-    function updateNavbarWithUserName(userName) {
-      const loginBtn = document.getElementById('member-login-btn');
-      if (loginBtn) {
-        loginBtn.textContent = `👤 ${userName}`;
-        loginBtn.disabled = true; // Optional: prevent re-clicking
-      }
-    }*/
+
     function showUserDropdown(displayName) {
       document.getElementById('login-link').style.display = 'none';
       document.getElementById('user-name').textContent = displayName || '會員';
@@ -2180,9 +1995,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- Initialization Function ---
+/*
 async function init() {
     await renderMainContent();      // Step 1: Fast, above-the-fold content
     defer(renderDeferredContent);  // Step 2: Lazy load background tasks
+}*/
+
+async function init() {
+  await loadMembershipData();
+
+  // Restore cart from localStorage
+  const savedCart = localStorage.getItem('cart');
+  if (savedCart) {
+    cart = JSON.parse(savedCart);
+    renderSideCart();
+  }
+
+  // Handle URL parameters for special cases
+  const urlParams = new URLSearchParams(window.location.search);
+  const code = urlParams.get('code');
+  const CVSStoreID = urlParams.get('CVSStoreID');
+  const CVSStoreName = urlParams.get('CVSStoreName');
+  const CVSAddress = urlParams.get('CVSAddress');
+
+  // Case 1: Returning from LINE login
+  if (code) {
+    await exchangeCodeForToken(code);
+    window.history.replaceState({}, document.title, window.location.pathname);
+    
+    // Restore cart after login (if any)
+    const postLoginCart = localStorage.getItem('cart');
+    if (postLoginCart) cart = JSON.parse(postLoginCart);
+    
+    renderMainContent();
+    return;
+  }
+
+  // Case 2: Returning from 7-11 store selection
+  if (CVSStoreID && CVSStoreName && CVSAddress) {
+    const storeInfo = { CVSStoreID, CVSStoreName, CVSAddress };
+    sessionStorage.setItem('selectedStoreInfo', JSON.stringify(storeInfo));
+    
+    // Clean URL
+    window.history.replaceState({}, document.title, window.location.pathname);
+    
+    // Generate order ID if missing
+    if (!localStorage.getItem('currentOrderId')) {
+      const now = new Date();
+      const orderId = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}${String(now.getSeconds()).padStart(2,'0')}${Math.floor(Math.random()*1000)}`;
+      localStorage.setItem('currentOrderId', orderId);
+    }
+    
+    // Render checkout with stored cart
+    renderCheckoutPage(cart);
+    ECpayStoreDataBackTransfer(); // Update UI with store info
+    return;
+  }
+
+  // Case 3: Normal page load
+  renderMainContent();
+  defer(renderDeferredContent);
 }
 async function renderMainContent() {
     try {
@@ -2323,3 +2195,4 @@ function defer(callback) {
     ECpayStoreDataBackTransfer();
 
 }); // End DOMContentLoaded
+//?MerchantID=3428230&CVSStoreID=261658&CVSStoreName=權金門市&CVSAddress=台北市內湖區金湖路405號1樓&MerchantTradeNo=20250630111009377&ExtraData=clothshop
