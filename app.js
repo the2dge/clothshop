@@ -2049,6 +2049,7 @@ async function init() {
     // Render checkout with stored cart
     renderCheckoutPage(cart);
     ECpayStoreDataBackTransfer(); // Update UI with store info
+    switchView('checkout');
     return;
   }
 
