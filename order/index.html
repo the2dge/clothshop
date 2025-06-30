@@ -1,56 +1,96 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="canonical" href="https://www.mrbean.tw">
-  <link rel="icon" type="image/png" href="https://i.postimg.cc/Nf8M6szk/mrbean.jpg">
-  <meta name="keywords" content="T-shirt">
-  <title>Best quality T-Shirt</title>
+    <title>時尚精品店 時尚精品店</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="https://www.mrbean.tw">
+    <link rel="icon" type="image/png" href="https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/favicon.ico">
+    <meta name="keywords" content="內湖,時尚, 潮流,時髦的">
+    <style>
+        html, body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        .nav-container { 
+            background: #f8f9fa; 
+            padding: 10px; 
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+        .nav-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .nav-button:hover {
+            background: #0056b3;
+        }
+        .nav-button.active {
+            background: #28a745;
+        }
+        #webapp-frame {
+            border: none;
+            width: 100%;
+            height: calc(100vh - 60px);
+        }
+    </style>
 </head>
 <body>
-  <div id="iframe-container"></div>
- <div id="store-info" style="display: none;">
-    <h2>Store Information</h2>
-    <p id="store-name"></p>
-    <p id="store-address"></p>
-    <p id="store-code"></p>
+  <!-- LOGIN SCREEN -->
+  <div id="login-screen" style="max-width:300px;margin:5% auto;text-align:center;">
+    <h2>Member Login</h2>
+    <input id="login-user"     type="text"     placeholder="Username" style="width:100%;padding:8px;margin:8px 0;">
+    <input id="login-pass"     type="password" placeholder="Password" style="width:100%;padding:8px;margin:8px 0;">
+    <button id="login-btn"     style="width:100%;padding:10px;background:#007bff;color:#fff;border:none;">
+      Log in
+    </button>
+    <p id="login-error" style="color:#c00;display:none;">Invalid credentials</p>
   </div>
+
+  <!-- APP SHELL, hidden by default -->
+  <div id="app-shell" style="display:none;">
+    <div class="nav-container">
+      <button><a href="https://www.mrbean.tw/">首頁</a></button>
+      <button class="nav-button" onclick="loadPage('home')">訂單總覽</button>
+      <button class="nav-button" onclick="loadPage('order')">訂單管理</button>
+      <button class="nav-button" onclick="loadPage('ecpay')">ECPay</button>
+      <button class="nav-button" onclick="loadPage('cms')">CMS</button>
+    </div>
+    <iframe id="webapp-frame" style="border:none;width:100%;height:calc(100vh - 60px)"></iframe>
+  </div>
+
   <script>
-    // Function to extract URL parameters
-    function getQueryParameter(param) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(param);
-    }
+    const baseUrl = 'https://script.google.com/macros/s/AKfycbz13FGDhYelgaHnK1XVEUJR89yx22f6s2do-IjZo8GAhcqjkP6x64RQX4mEb-yrUo3e/exec';
 
-    // Capture parameters from the URL
-    const orderId = getQueryParameter('MerchantTradeNo');
-    const storeName = getQueryParameter('CVSStoreName');
-    const storeAddress = getQueryParameter('CVSAddress');
-    const storeCode = getQueryParameter('CVSStoreID');
-    const extraData = getQueryParameter('ExtraData');
+    // 1) LOGIN FLOW
+    document.getElementById('login-btn').addEventListener('click', async () => {
+      const user = document.getElementById('login-user').value;
+      const pass = document.getElementById('login-pass').value;
+      const res  = await fetch(`${baseUrl}?action=validate&user=${encodeURIComponent(user)}&pass=${encodeURIComponent(pass)}`);
+      const obj  = await res.json();
+      if (obj.success) {
+        // hide login, show app
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('app-shell').style.display   = 'block';
+        loadPage('home');
+      } else {
+        document.getElementById('login-error').style.display = 'block';
+      }
+    });
 
-    // Check if store info exists
-    if (storeName && storeAddress && storeCode) {
-      // Display store information on the page
-      document.getElementById('store-info').style.display = 'block';
-      document.getElementById('store-name').innerText = `Store Name: ${storeName}`;
-      document.getElementById('store-address').innerText = `Store Address: ${storeAddress}`;
-      document.getElementById('store-code').innerText = `Store Code: ${storeCode}`;
-    }
+    // 2) NAV & IFRAME LOADING (unchanged)
+    function loadPage(page) {
+      document.querySelectorAll('.nav-button').forEach(b=>b.classList.remove('active'));
+      const btn = [...document.querySelectorAll('.nav-button')]
+        .find(b=>b.textContent.includes({ home:'訂單總覽',order:'訂單管理',ecpay:'ECPay',cms:'CMS' }[page]));
+      if (btn) btn.classList.add('active');
 
-    // Build the original WebApp URL
-    const webAppUrl = `https://script.google.com/macros/s/AKfycbxo2PQvT5_UghjtIz3q7MTUy2JRBQ0W-kPzAUk8ciqyUxUBH7kNeVrMzqfSlCB3vcqe/exec?ExtraData=${extraData}&MerchantTradeNo=${orderId}&CVSStoreName=${encodeURIComponent(storeName)}&CVSAddress=${encodeURIComponent(storeAddress)}&CVSStoreID=${storeCode}`;
-    
-    // Log the WebApp URL for debugging
-    console.log('Redirecting back to WebApp:', webAppUrl);
-
-    // Embed the WebApp in an iframe or redirect to the WebApp
-    if (orderId) {
-      const iframeContainer = document.getElementById('iframe-container');
-      iframeContainer.innerHTML = `<iframe src="${webAppUrl}" width="100%" height="600px" style="border:none;"></iframe>`;
-    } else {
-      console.error('Order ID is missing!');
+      document.getElementById('webapp-frame')
+        .src = `${baseUrl}?v=${page}`;
     }
   </script>
 </body>
