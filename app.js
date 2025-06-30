@@ -1631,87 +1631,47 @@ console.log("Order Data for Submission to GAS (New Structure):", JSON.stringify(
     toggleSubmitButtonVisibility();
 }
 
-// --- Modified ECpayStoreDataBackTransfer ---
 // This function is assumed to be called on DOMContentLoaded or when ECPay redirects back.
 function ECpayStoreDataBackTransfer() {
     const urlParams = new URLSearchParams(window.location.search);
     const CVSStoreID = urlParams.get('CVSStoreID');
     const CVSStoreName = urlParams.get('CVSStoreName');
     const CVSAddress = urlParams.get('CVSAddress');
-    const MerchantTradeNo = urlParams.get('MerchantTradeNo'); // This is the orderId
+    const MerchantTradeNo = urlParams.get('MerchantTradeNo');
 
-    // Check if we are on the checkout page by looking for a specific element
-    const checkoutFormRefactored = document.getElementById('checkout-form-refactored');
-    console.log("CVSStoreID, CVSAddress, OrderID and checkout-form-refactored: ", CVSStoreID, CVSAddress, MerchantTradeNo, checkoutFormRefactored);
-    if (CVSStoreID && CVSStoreName && CVSAddress && MerchantTradeNo) {
+    // Only proceed if we have store information
+    if (CVSStoreID && CVSStoreName && CVSAddress) {
         const selectedStoreData = { CVSStoreID, CVSStoreName, CVSAddress, MerchantTradeNo };
         sessionStorage.setItem('selectedStoreInfo', JSON.stringify(selectedStoreData));
-        // Ensure currentOrderId in localStorage is also updated if it changed (it shouldn't from ECPay map)
         localStorage.setItem('currentOrderId', MerchantTradeNo);
 
-        const storeInfoDiv = document.getElementById('pickup-store-info-display');
-        const shippingSelect = document.getElementById('shipping-method');
+        // Clean URL to prevent reprocessing on refresh
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // Render checkout page which will create the needed DOM elements
+        renderCheckoutPage(cart);
+        
+        // Wait for DOM to update before accessing elements
+        setTimeout(() => {
+            const storeInfoDiv = document.getElementById('pickup-store-info-display');
+            const shippingSelect = document.getElementById('shipping-method');
 
-        if (storeInfoDiv) {
-            storeInfoDiv.innerHTML = `
-                <p style="margin:0;"><strong>已選擇 7-11 門市</strong></p>
-                <p style="margin:0;">店號: ${CVSStoreID}</p>
-                <p style="margin:0;">店名: ${CVSStoreName}</p>
-                <p style="margin:0;">地址: ${CVSAddress}</p>
-            `;
-            storeInfoDiv.style.display = 'block';
-        }
-        if (shippingSelect) {
-            shippingSelect.value = 'seven_eleven'; // Pre-select the dropdown
-        }
-
-        currentShippingCost = calculateCartTotal() < 1200 ? 70 : 0;
-
-        // Restore other form fields that might have been cleared by navigation
-        const savedCheckoutData = JSON.parse(sessionStorage.getItem('checkoutFormDataBeforeECPay'));
-        if (savedCheckoutData) {
-            document.getElementById('customer_name').value = savedCheckoutData.name || '未填寫完整';
-            document.getElementById('customer_email').value = savedCheckoutData.email || '';
-            document.getElementById('customer_phone').value = savedCheckoutData.phone || '';
-            document.getElementById('payment-option').value = savedCheckoutData.payment || 'pay_at_store';
-            if (savedCheckoutData.discountCode) {
-                document.getElementById('discount_code').value = savedCheckoutData.discountCode;
-                currentDiscountRate = savedCheckoutData.currentDiscountRate || 0; // Restore discount rate
-                // Visually update discount message if needed
-                if (currentDiscountRate > 0) {
-                    const discountMessageEl = document.getElementById('discount-message');
-                    discountMessageEl.textContent = `已套用 ${sessionStorage.getItem('discountTier') || ''} 折扣 (${currentDiscountRate}% off)!`;
-                    discountMessageEl.className = 'form-text text-success';
-                }
+            if (storeInfoDiv && shippingSelect) {
+                storeInfoDiv.innerHTML = `
+                    <p style="margin:0;"><strong>已選擇 7-11 門市</strong></p>
+                    <p style="margin:0;">店號: ${CVSStoreID}</p>
+                    <p style="margin:0;">店名: ${CVSStoreName}</p>
+                    <p style="margin:0;">地址: ${CVSAddress}</p>
+                `;
+                storeInfoDiv.style.display = 'block';
+                shippingSelect.value = 'seven_eleven';
             }
-            sessionStorage.removeItem('checkoutFormDataBeforeECPay'); // Clean up
-        }
-        
-        // 'cart' must be globally available or passed to updateOrderSummaryDisplay
-        updateOrderSummaryDisplay(cart, currentShippingCost, currentDiscountRate);
-
-        // Manually trigger change on shippingSelect to re-validate form and button states
-        if (shippingSelect) {
-            const event = new Event('change');
-            shippingSelect.dispatchEvent(event);
-        }
-        
-        // Clean URL: Remove ECPay parameters to prevent re-processing on refresh.
-        // Do this carefully, only if you're sure the state is fully restored.
-        // window.history.replaceState({}, document.title, window.location.pathname);
-    } else if (checkoutFormRefactored && !CVSStoreID && shippingSelect.value === 'seven_eleven' && !sessionStorage.getItem('selectedStoreInfo')) {
-        // If 7-11 is selected but no store info exists (e.g. user refreshed after ECPay redirect without params, or navigated back)
-        // and we are on checkout page, prompt to select store or clear selection
-        shippingSelect.value = ""; // Reset dropdown
-        document.getElementById('pickup-store-info-display').style.display = 'none';
-        currentShippingCost = 0;
-        updateOrderSummaryDisplay(cart, currentShippingCost, currentDiscountRate);
-        Swal.fire("請重新選擇7-11門市，或選擇其他取貨方式。");
-         const event = new Event('change');
-         shippingSelect.dispatchEvent(event); // Trigger validation
+            
+            currentShippingCost = calculateCartTotal() < 1200 ? 70 : 0;
+            updateOrderSummaryDisplay(cart, currentShippingCost, currentDiscountRate);
+        }, 100);
     }
 }
-
 
 // --- Utility: Validate Discount Code ---
 // Make sure membershipData is loaded before this is called.
@@ -2011,45 +1971,22 @@ async function init() {
     renderSideCart();
   }
 
-  // Handle URL parameters for special cases
+  // Handle URL parameters
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get('code');
   const CVSStoreID = urlParams.get('CVSStoreID');
-  const CVSStoreName = urlParams.get('CVSStoreName');
-  const CVSAddress = urlParams.get('CVSAddress');
 
   // Case 1: Returning from LINE login
   if (code) {
     await exchangeCodeForToken(code);
     window.history.replaceState({}, document.title, window.location.pathname);
-    
-    // Restore cart after login (if any)
-    const postLoginCart = localStorage.getItem('cart');
-    if (postLoginCart) cart = JSON.parse(postLoginCart);
-    
     renderMainContent();
     return;
   }
 
   // Case 2: Returning from 7-11 store selection
-  if (CVSStoreID && CVSStoreName && CVSAddress) {
-    const storeInfo = { CVSStoreID, CVSStoreName, CVSAddress };
-    sessionStorage.setItem('selectedStoreInfo', JSON.stringify(storeInfo));
-    
-    // Clean URL
-    window.history.replaceState({}, document.title, window.location.pathname);
-    
-    // Generate order ID if missing
-    if (!localStorage.getItem('currentOrderId')) {
-      const now = new Date();
-      const orderId = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}${String(now.getSeconds()).padStart(2,'0')}${Math.floor(Math.random()*1000)}`;
-      localStorage.setItem('currentOrderId', orderId);
-    }
-    
-    // Render checkout with stored cart
-    renderCheckoutPage(cart);
-    ECpayStoreDataBackTransfer(); // Update UI with store info
-    switchView('checkout');
+  if (CVSStoreID) {
+    ECpayStoreDataBackTransfer();
     return;
   }
 
