@@ -1960,10 +1960,8 @@ async function init() {
     await renderMainContent();      // Step 1: Fast, above-the-fold content
     defer(renderDeferredContent);  // Step 2: Lazy load background tasks
 }*/
-
 async function init() {
-  await loadMembershipData();
-
+ 
   // Restore cart from localStorage
   const savedCart = localStorage.getItem('cart');
   if (savedCart) {
@@ -1971,23 +1969,45 @@ async function init() {
     renderSideCart();
   }
 
-  // Handle URL parameters
+  // Handle URL parameters for special cases
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get('code');
   const CVSStoreID = urlParams.get('CVSStoreID');
+  const CVSStoreName = urlParams.get('CVSStoreName');
+  const CVSAddress = urlParams.get('CVSAddress');
 
   // Case 1: Returning from LINE login
   if (code) {
     await exchangeCodeForToken(code);
     window.history.replaceState({}, document.title, window.location.pathname);
+    
+    // Restore cart after login (if any)
+    const postLoginCart = localStorage.getItem('cart');
+    if (postLoginCart) cart = JSON.parse(postLoginCart);
+    
     renderMainContent();
     return;
   }
 
   // Case 2: Returning from 7-11 store selection
-  if (CVSStoreID) {
+  if (CVSStoreID && CVSStoreName && CVSAddress) {
+    const storeInfo = { CVSStoreID, CVSStoreName, CVSAddress };
+    sessionStorage.setItem('selectedStoreInfo', JSON.stringify(storeInfo));
+    
+    // Clean URL
+    window.history.replaceState({}, document.title, window.location.pathname);
+    
+    // Generate order ID if missing
+    if (!localStorage.getItem('currentOrderId')) {
+      const now = new Date();
+      const orderId = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}${String(now.getSeconds()).padStart(2,'0')}${Math.floor(Math.random()*1000)}`;
+      localStorage.setItem('currentOrderId', orderId);
+    }
+    
+    // Render checkout with stored cart
     renderCheckoutPage(cart);
-    ECpayStoreDataBackTransfer();
+    ECpayStoreDataBackTransfer(); // Update UI with store info
+    switchView('checkout');
     return;
   }
 
