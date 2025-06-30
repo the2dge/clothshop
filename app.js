@@ -272,6 +272,7 @@ function renderProductGrid(products) {
     });
 }
 
+
 async function renderItemDetails(productId) {
     if (!allItemDetails || !Object.keys(allItemDetails).length) {
         allItemDetails = await fetchData('items_test.json');
@@ -323,31 +324,46 @@ async function renderItemDetails(productId) {
         <select id="sizeSelect">
             ${initialSizeOptions}
         </select><br><br>`;
-    const sizesArr = sizes;
-    const chestWidths = itemData.chestWidth.split('/'); // ['50','52','54','58']
-    const bodyLengths = itemData.bodyLength.split('/'); // ['40','42','44','48']
 
-    const sizeTableHTML = `
-        <h3>尺寸表</h3>
-        <table class="size-chart" style="width:100%; border-collapse: collapse; margin-bottom: 1em; text-align: center;">
-            <thead>
-                <tr style="border-bottom: 2px solid #ccc;">
-                    <th style="padding: 8px; text-align: left;">尺寸</th>
-                    ${sizesArr.map(size => `<th style="padding: 8px;">${size}</th>`).join('')}
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="padding: 8px; text-align: left;">胸寬 (cm)</td>
-                    ${chestWidths.map(val => `<td style="padding: 8px;">${val}</td>`).join('')}
-                </tr>
-                <tr>
-                    <td style="padding: 8px; text-align: left;">衣長 (cm)</td>
-                    ${bodyLengths.map(val => `<td style="padding: 8px;">${val}</td>`).join('')}
-                </tr>
-            </tbody>
-        </table>
-    `;
+    // NEW: Conditionally generate size table only if there's meaningful data
+    let sizeTableHTML = '';
+    const chestWidthStr = itemData.chestWidth || '';
+    const bodyLengthStr = itemData.bodyLength || '';
+    
+    // Check if we have valid measurements data
+    const hasValidMeasurements = 
+        chestWidthStr.trim() !== '' && 
+        bodyLengthStr.trim() !== '' && 
+        !/^[\/;]+$/.test(chestWidthStr) && 
+        !/^[\/;]+$/.test(bodyLengthStr);
+    
+    if (hasValidMeasurements && sizes.length > 0) {
+        const chestWidths = chestWidthStr.split('/');
+        const bodyLengths = bodyLengthStr.split('/');
+        
+        sizeTableHTML = `
+            <h3>尺寸表</h3>
+            <table class="size-chart" style="width:100%; border-collapse: collapse; margin-bottom: 1em; text-align: center;">
+                <thead>
+                    <tr style="border-bottom: 2px solid #ccc;">
+                        <th style="padding: 8px; text-align: left;">尺寸</th>
+                        ${sizes.map(size => `<th style="padding: 8px;">${size}</th>`)}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 8px; text-align: left;">胸寬 (cm)</td>
+                        ${chestWidths.map(val => `<td style="padding: 8px;">${val}</td>`)}
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; text-align: left;">衣長 (cm)</td>
+                        ${bodyLengths.map(val => `<td style="padding: 8px;">${val}</td>`)}
+                    </tr>
+                </tbody>
+            </table>
+        `;
+    }
+
     mainBody.itemWrapper.innerHTML = `
         <article class="item-detail">
             <div class="image-gallery">
@@ -385,19 +401,9 @@ async function renderItemDetails(productId) {
     const sizeSelect = mainBody.itemWrapper.querySelector('#sizeSelect');
 
     colorSelect.addEventListener('change', () => {
-    const colorIndex = parseInt(colorSelect.value, 10);
-
-    // Update size dropdown options dynamically
-    sizeSelect.innerHTML = '';
-    sizes.forEach((size, idx) => {
-        const inStock = stockMatrix[colorIndex][idx] === 'Y';
-        const option = document.createElement('option');
-        option.value = size;
-        option.textContent = inStock ? size : `${size}（無庫存）`;
-        if (!inStock) option.disabled = true;
-        sizeSelect.appendChild(option);
+        const colorIndex = parseInt(colorSelect.value, 10);
+        sizeSelect.innerHTML = generateSizeOptions(colorIndex);
     });
-});
 
     // Back button
     mainBody.itemWrapper.querySelector('.back-to-products-btn')?.addEventListener('click', e => {
