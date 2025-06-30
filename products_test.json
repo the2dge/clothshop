@@ -7,7 +7,7 @@
     "images": "[\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/navy_polo.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/Polo_shirt_red.jpg\",\"https://mrbeana1200.s3.ap-northeast-2.amazonaws.com/clothshop/Polo_shirt_green.jpg\"]",
     "title": "100%純棉",
     "category": "服裝",
-    "stock": "Y/Y/N/N;Y/Y/Y/N"
+    "stock": "Y/Y/N/N;Y/Y/Y/N;N/N/N/N"
   },
   {
     "id": "p002",
