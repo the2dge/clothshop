@@ -59,6 +59,7 @@ body { margin: 0; font-family: sans-serif; }
 
 /* Right section (login, cart, hamburger) */
 .nav-right {
+  margin-right:30px;
   display: flex;
   align-items: center;
   gap: 15px;
