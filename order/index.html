@@ -59,6 +59,7 @@
       <button class="nav-button" onclick="loadPage('order')">訂單管理</button>
       <button class="nav-button" onclick="loadPage('ecpay')">ECPay</button>
       <button class="nav-button" onclick="loadPage('cms')">CMS</button>
+        <button class="nav-button" onclick="loadPage('content')">內容</button>
     </div>
     <iframe id="webapp-frame" style="border:none;width:100%;height:calc(100vh - 60px)"></iframe>
   </div>
@@ -86,7 +87,7 @@
     function loadPage(page) {
       document.querySelectorAll('.nav-button').forEach(b=>b.classList.remove('active'));
       const btn = [...document.querySelectorAll('.nav-button')]
-        .find(b=>b.textContent.includes({ home:'訂單總覽',order:'訂單管理',ecpay:'ECPay',cms:'CMS' }[page]));
+        .find(b=>b.textContent.includes({ home:'訂單總覽',order:'訂單管理',ecpay:'ECPay',cms:'CMS', content:'內容' }[page]));
       if (btn) btn.classList.add('active');
 
       document.getElementById('webapp-frame')
